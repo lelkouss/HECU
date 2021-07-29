@@ -31,6 +31,8 @@ function setup() {
   paddles = [];
   balls = [];
   
+  // Testing if can use notepad++ to directly send edits to github
+  
   time = 0;
   
   scores_record_red = [];
