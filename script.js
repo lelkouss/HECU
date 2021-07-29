@@ -33,6 +33,7 @@ function setup() {
   
   // Testing if can use notepad++ to directly send edits to github
   // Testing again if I can use VSC to send edits to github
+  // Testing if I can make edits
   
   time = 0;
   
