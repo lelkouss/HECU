@@ -12,7 +12,14 @@ html {
   
   /* adjust typography defaults */
   body {
-    margin: 1rem;
+    margin: 0;
+  display: flex;
+
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
     font-family: sans-serif;
     line-height: 1.5;
   }

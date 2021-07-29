@@ -3,10 +3,14 @@ let spriteFloor, spriteWall;
 let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft; 
 
 function setup() {
-  width = 400;
-  height = 400;
+  displayScale = 3;
+  width = 219*displayScale;
+  height = 184*displayScale;
   createCanvas(width, height);
+  canvasBuffer = createGraphics(width,height);
+  canvasBuffer.noSmooth();
   colorMode(HSB, 360, 100, 100);
+  
   spriteFloor = loadImage("/assets/tile.png");
   spriteWall = loadImage("/assets/wall.png");
   spriteBorderBottom = loadImage("/assets/borderbottom.png");
@@ -32,12 +36,14 @@ function setup() {
 
 function draw() {
   background(0);
-  image(spriteBorderBottom, 0, 0, 219, 184);
-  image(spriteBorderTop, 0, 0, 219, 184);
-  image(spriteBorderRight, 0, 0, 219, 184);
-  image(spriteBorderLeft, 0, 0, 219, 184);
+  canvasBuffer.image(spriteBorderBottom, 0, 0, 219, 184);
+  canvasBuffer.image(spriteBorderTop, 0, 0, 219, 184);
+  canvasBuffer.image(spriteBorderRight, 0, 0, 219, 184);
+  canvasBuffer.image(spriteBorderLeft, 0, 0, 219, 184);
   room.display();
   player.update();
+  scale(displayScale);
+  image(canvasBuffer,0,0);
 }
 
 class Room {
@@ -55,7 +61,7 @@ class Room {
     for(let i=0; i<this.tiles.length; i++) {
       for(let j=0; j<this.tiles[i].length; j++) {
         let sprite = this.tileSprites[this.tiles[i][j]];
-        image(sprite, j*this.tileWidth+this.borderOffset, i*this.tileHeight+this.borderOffset, this.tileWidth, this.tileHeight);
+        canvasBuffer.image(sprite, j*this.tileWidth+this.borderOffset, i*this.tileHeight+this.borderOffset, this.tileWidth, this.tileHeight);
       }
     }
   }
@@ -78,7 +84,7 @@ class Player {
 
   display() {
     fill(0, 0, 255);
-    rect(this.x, this.y, this.width, this.height);
+    canvasBuffer.rect(this.x, this.y, this.width, this.height);
   }
 
   move() {
