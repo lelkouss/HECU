@@ -1,4 +1,4 @@
-let room, tiles, player;
+let room, tiles, player, rooms;
 let spriteFloor, spriteWall;
 let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft; 
 
@@ -26,13 +26,26 @@ function setup() {
             [0, 0, 0, 1, 0, 0, 0],
             [0, 1, 0, 0, 0, 1, 0],
             [0, 0, 0, 0, 0, 0, 0] ];
-  room = new Room(tiles);
+
+  tiles2 = [ [0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 1, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 1, 0, 0, 0] ];
+
+  //sets up Levels (individual rooms included in a single array)
+  level = [new Room(tiles, 0), new Room(tiles, 1)];
 
   //init player
   player = new Player(25*3, 20*6, room);
 
   // setting up canvas
 }
+/*collisionX (x_current, x_destination) {
+  return x_out
+}*/
 
 function draw() {
   background(0);

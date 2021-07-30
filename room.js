@@ -1,5 +1,5 @@
 class Room {
-    constructor(tiles) {
+    constructor(tiles, id) {
       this.tiles = tiles;
       this.tileWidth = 25;
       this.tileHeight = 20;
@@ -7,6 +7,7 @@ class Room {
       this.height = 184;
       this.tileSprites = {0: spriteFloor, 1: spriteWall};
       this.borderOffset = 22;
+      this.roomID = id;
     }
   
     display() {
