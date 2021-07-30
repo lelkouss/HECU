@@ -38,6 +38,7 @@ function setup() {
   //sets up Levels (individual rooms included in a single array)
   level = [new Room(tiles, 0), new Room(tiles, 1)];
 
+  room = level[0];
   //init player
   player = new Player(25*3, 20*6, room);
 
