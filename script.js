@@ -1,4 +1,4 @@
-let room, tiles, player, rooms;
+let room, tiles0, borders0, player, rooms;
 let spriteFloor, spriteWall;
 let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft; 
 
@@ -18,42 +18,28 @@ function setup() {
   spriteBorderRight = loadImage("/assets/borderright.png");
   spriteBorderLeft = loadImage("/assets/borderleft.png");
 
+
+  level = [];
   //init room
-  tiles = [ [0, 0, 0, 0, 0, 0, 0],
+  tiles0 = [ [0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 1, 0],
             [0, 0, 0, 1, 0, 0, 0],
             [0, 0, 0, 1, 0, 0, 0],
             [0, 0, 0, 1, 0, 0, 0],
             [0, 1, 0, 0, 0, 1, 0],
             [0, 0, 0, 0, 0, 0, 0] ];
-
-  tiles2 = [ [0, 1, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 1, 0],
-            [0, 0, 0, 1, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 1, 0],
-            [0, 0, 0, 1, 0, 0, 0] ];
+  borders0 = ["A_1", "B_1", "C_1", "D_1"];
 
   //sets up Levels (individual rooms included in a single array)
-  level = [new Room(tiles, 0), new Room(tiles, 1)];
-
+  level.push(new Room(0, tiles0, borders0));
   room = level[0];
+  
   //init player
   player = new Player(25*3, 20*6, room);
-
-  // setting up canvas
 }
-/*collisionX (x_current, x_destination) {
-  return x_out
-}*/
 
 function draw() {
   background(0);
-  canvasBuffer.image(spriteBorderBottom, 0, 0, 219, 184);
-  canvasBuffer.image(spriteBorderTop, 0, 0, 219, 184);
-  canvasBuffer.image(spriteBorderRight, 0, 0, 219, 184);
-  canvasBuffer.image(spriteBorderLeft, 0, 0, 219, 184);
   room.display();
   player.update();
   scale(displayScale);
