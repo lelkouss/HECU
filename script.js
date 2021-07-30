@@ -1,9 +1,10 @@
-let currentRoom, tiles0, borders0;
+let currentRoom;
 let player, rooms, spawners, enemies, bullets;
 
 //SPRITES
 let spriteFloor, spriteWall;
-let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft; 
+let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft;
+let SPRITE_TILES, SPRITE_BORDERS;
 
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
@@ -13,32 +14,26 @@ function preload() {
   spriteBorderTop = loadImage("/assets/bordertop.png");
   spriteBorderRight = loadImage("/assets/borderright.png");
   spriteBorderLeft = loadImage("/assets/borderleft.png");
+  SPRITE_TILES = {0: spriteFloor, 1: spriteWall};
+  SPRITE_BORDERS = {"A_1": spriteBorderTop, "B_1": spriteBorderRight, "C_1": spriteBorderBottom, "D_1": spriteBorderLeft};
 }
 
 
 function setup() {
   displayScale = 3;
-  width = 219*displayScale;
-  height = 184*displayScale;
+  width = 219 * displayScale;
+  height = 184 * displayScale;
   createCanvas(width, height);
   canvasBuffer = createGraphics(width,height);
   canvasBuffer.noSmooth();
   colorMode(HSB, 360, 100, 100);
-  
-  // THIS WILL BE MOVED TO A DIFFERENT CLASS LATER
-  tiles0 = [  [0, 0, 0, 0, 0, 0, 0],
-              [0, 1, 0, 0, 0, 1, 0],
-              [0, 0, 0, 1, 0, 0, 0],
-              [0, 0, 0, 1, 0, 0, 0],
-              [0, 0, 0, 1, 0, 0, 0],
-              [0, 1, 0, 0, 0, 1, 0],
-              [0, 0, 0, 0, 0, 0, 0] ];
-  borders0 =  ["A_1", "B_1", "C_1", "D_1"];
 
-  
   // set up the arrays for the current state of the game
-  rooms = [new Room(0, tiles0, borders0)];
-  currentRoom = rooms[0];
+
+  rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array
+  initRooms();
+
+  currentRoom = rooms[0][0];
   spawners = []; //currentRoom.spawners;
   //currentSpawner = spawners[0];
   enemies = []; //currentSpawner.enemies;
