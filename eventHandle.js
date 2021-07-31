@@ -1,4 +1,4 @@
-function mouseClicked(){
+function mousePressed(){
     player.shoot();
 }
 
@@ -14,6 +14,9 @@ function keyPressed(){
     }
     if(key.toLowerCase() == 's' || keyCode == DOWN_ARROW) {
         player.dy = 1;
+    }
+    if(keyCode == 32) {
+        player.shoot();
     }
 }
 

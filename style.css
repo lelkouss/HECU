@@ -13,8 +13,8 @@ html {
   /* adjust typography defaults */
   body {
     margin: 0;
-  display: flex;
-  background: black;
+    display: flex;
+    background: rgb(103, 173, 175);
 
   /* This centers our sketch horizontally. */
   justify-content: center;
@@ -30,4 +30,9 @@ html {
   video {
     height: auto;
     max-width: 100%;
+  }
+
+  #canvasDiv{
+    position: absolute;
+    top: 12.5%;
   }

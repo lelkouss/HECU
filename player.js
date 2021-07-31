@@ -54,6 +54,7 @@ class Player {
 
           this.x = door.spawn_x;
           this.y = door.spawn_y;
+          bullets = [] //clear all bullets
           this.room = currentRoom; // update player view of the room
         }
       }
