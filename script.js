@@ -2,12 +2,14 @@ let currentRoom;
 let player, rooms, spawners, enemies, bullets;
 
 //SPRITES
+let spriteCrosshair
 let spriteFloor, spriteWall;
 let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft;
 let SPRITE_TILES, SPRITE_BORDERS;
 
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
+  spriteCrosshair = loadImage("/assets/crosshair.png");
   spriteFloor = loadImage("/assets/tile.png");
   spriteWall = loadImage("/assets/wall.png");
   spriteBorderBottom = loadImage("/assets/borderbottom.png");
@@ -51,7 +53,6 @@ function draw() {
   for(const bullet of bullets){
     bullet.update();
   }
-  
   scale(displayScale);
   image(canvasBuffer,0,0);
 }

@@ -10,8 +10,11 @@ class Player {
     }
   
     update() {
+      getKeyboardInput();
       this.move();
       this.display();
+      this.dx = 0;
+      this.dy = 0;
     }
   
     display() {
@@ -24,7 +27,6 @@ class Player {
       let oldY = this.y;
       
       this.x += this.dx;
-      
       // check if collided with a wall on the x axis
       for(let i=0; i<this.room.tiles.length; i++) {
         for(let j=0; j<this.room.tiles[i].length; j++) {
@@ -36,7 +38,6 @@ class Player {
       }
 
       this.y += this.dy;
-
       // check if collided with a wall on the y axis
       for(let i=0; i<this.room.tiles.length; i++) {
         for(let j=0; j<this.room.tiles[i].length; j++) {
@@ -47,7 +48,7 @@ class Player {
         }
       } 
       
-
+      //check if collided with a door
       for(const door of this.room.doors) {
         if( door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
           currentRoom = getRoom(currentRoom.id, door.direction); //change current room
@@ -58,7 +59,6 @@ class Player {
         }
       }
 
-
       // check if collided with a border on the x axis
       if(this.x < this.room.borderOffset || this.x + this.width > this.room.width-this.room.borderOffset) {
         this.x = oldX;
@@ -67,7 +67,6 @@ class Player {
       if(this.y < this.room.borderOffset || this.y + this.height > this.room.height-this.room.borderOffset) {
         this.y = oldY;
       }
-
     }
 
     shoot(){
