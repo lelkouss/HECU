@@ -25,7 +25,8 @@ function setup() {
   displayScale = 3;
   width = 219 * displayScale;
   height = 184 * displayScale;
-  createCanvas(width, height);
+  let canvasDIV =   createCanvas(width, height);
+  canvasDIV.parent("canvasDiv"); // connect to html div
   canvasBuffer = createGraphics(width,height);
   canvasBuffer.noSmooth();
   angleMode(DEGREES);

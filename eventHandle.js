@@ -1,4 +1,4 @@
-function mouseClicked(){
+function mousePressed(){
     player.shoot();
 }
 
