@@ -5,6 +5,7 @@ class Room {
       this.tiles = tiles;
       this.borders = borders;
       this.doors = createDoors(this.borders);
+      
 
       // dimensions
       this.tileWidth = 25;

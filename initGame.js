@@ -1,7 +1,9 @@
  //push all rooms into the global rooms function
+
+ //IMPORTANT
  //*rooms is a 4 by 7 array, init ID should mimic index
-function initRooms(){
-    let tiles = [    [0, 0, 0, 0, 0, 0, 0], //room 1
+function initGame(){
+    let tiles = [   [0, 0, 0, 0, 0, 0, 0], //room 1
                     [0, 1, 0, 0, 0, 1, 0],
                     [0, 0, 0, 1, 0, 0, 0],
                     [0, 0, 0, 1, 0, 0, 0],
@@ -30,26 +32,6 @@ function initRooms(){
                     [0, 0, 0, 0, 0, 0, 0] ];
     borders =      ["A_1", "B_1", "C_1", "D_1"];
     rooms[0][2] = new Room(2, tiles, borders);
-
-    tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 4
-                    [0, 1, 0, 1, 1, 1, 0],
-                    [0, 1, 0, 1, 0, 0, 0],
-                    [0, 1, 0, 1, 1, 0, 0],
-                    [0, 0, 0, 1, 0, 0, 0],
-                    [0, 1, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0] ];
-    borders =      ["A_1", "B_1", "C_1", "D_1"];
-    rooms[0][3] = new Room(3, tiles, borders);
-        
-    tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 5
-                    [0, 1, 0, 0, 0, 1, 0],
-                    [0, 0, 0, 1, 0, 0, 0],
-                    [0, 0, 0, 1, 0, 0, 0],
-                    [0, 0, 0, 1, 0, 0, 0],
-                    [0, 1, 0, 0, 0, 1, 0],
-                    [0, 0, 0, 0, 0, 0, 0] ];
-    borders =      ["A_1", "B_1", "C_1", "D_1"];
-    rooms[0][4] = new Room(4, tiles, borders);
 
     return rooms;
 }

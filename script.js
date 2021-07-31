@@ -26,17 +26,18 @@ function setup() {
   createCanvas(width, height);
   canvasBuffer = createGraphics(width,height);
   canvasBuffer.noSmooth();
+  angleMode(DEGREES);
   colorMode(HSB, 360, 100, 100);
 
   // set up the arrays for the current state of the game
 
   rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array
-  initRooms();
+  initGame();
 
   currentRoom = rooms[0][0];
-  spawners = []; //currentRoom.spawners;
-  //currentSpawner = spawners[0];
-  enemies = []; //currentSpawner.enemies;
+  spawners = []; //currentRoom.spawners; 
+  //currentSpawner = spawners[0]; 
+  //enemies = currentSpawner.enemies; 
   player = new Player(25*3, 20*6, currentRoom);
   bullets = [];
 }
@@ -47,8 +48,10 @@ function draw() {
   player.update();
   //update enemies
   //update bullets
-
-
+  for(const bullet of bullets){
+    bullet.update();
+  }
+  
   scale(displayScale);
   image(canvasBuffer,0,0);
 }

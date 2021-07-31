@@ -2,6 +2,8 @@ class Player {
     constructor(x, y, room) {
       this.x = x;
       this.y = y;
+      this.dx = 0;
+      this.dy = 0;
       this.width = 10;
       this.height = 10;
       this.room = currentRoom;
@@ -20,12 +22,8 @@ class Player {
     move() {
       let oldX = this.x;
       let oldY = this.y;
-  
-      if (keyIsDown(LEFT_ARROW)) {
-        this.x -= 1;
-      } if (keyIsDown(RIGHT_ARROW)) {
-        this.x += 1;
-      }
+      
+      this.x += this.dx;
       
       // check if collided with a wall on the x axis
       for(let i=0; i<this.room.tiles.length; i++) {
@@ -37,11 +35,7 @@ class Player {
         }
       }
 
-      if (keyIsDown(UP_ARROW)) {
-        this.y -= 1;
-      } if (keyIsDown(DOWN_ARROW)) {
-        this.y += 1;
-      }
+      this.y += this.dy;
 
       // check if collided with a wall on the y axis
       for(let i=0; i<this.room.tiles.length; i++) {
@@ -58,8 +52,8 @@ class Player {
         if( door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
           currentRoom = getRoom(currentRoom.id, door.direction); //change current room
 
-          this.x = 25*3; //move back to spawn
-          this.y = 20*6; 
+          this.x = door.spawn_x;
+          this.y = door.spawn_y;
           this.room = currentRoom; // update player view of the room
         }
       }
@@ -74,5 +68,13 @@ class Player {
         this.y = oldY;
       }
 
+    }
+
+    shoot(){
+      let mouseVector = createVector(mouseX/3 - this.x-4, mouseY/3 - this.y-4);
+      mouseVector.normalize();
+
+      let new_bullet = new Bullet(this.x + 5, this.y + 5, mouseVector.mult(4.5));
+      bullets.push(new_bullet);
     }
   }
