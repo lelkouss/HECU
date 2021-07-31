@@ -36,3 +36,7 @@ html {
     position: absolute;
     top: 12.5%;
   }
+
+  #canvasDiv:hover{
+    cursor: crosshair;
+  }
