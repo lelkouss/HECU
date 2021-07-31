@@ -49,6 +49,15 @@ class Door {
         }
 
         (array[1] == "0") ? this.exists = false : this.exists = true;
+        this.available = false;
+    }
+
+    checkAvailability(){ //add key's to this down the line
+        if(enemies.length != 0 || spawners.length != 0){ //door is closed if enemies or spawners exist
+            this.available = false;
+            return;
+        }
+
         this.available = true;
     }
 }

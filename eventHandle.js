@@ -4,7 +4,6 @@ function mousePressed(){
 
 function getKeyboardInput() {
     if(keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-        console.log("left");
         player.dx--;
     }
     if(keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {

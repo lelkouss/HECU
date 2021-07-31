@@ -1,5 +1,5 @@
 let currentRoom;
-let player, rooms, spawners, enemies, bullets;
+let player, rooms, spawners, enemies, bullets, doors;
 
 //SPRITES
 let spriteCrosshair
@@ -29,7 +29,6 @@ function setup() {
   canvasDIV.parent("canvasDiv"); // connect to html div
   canvasBuffer = createGraphics(width,height);
   canvasBuffer.noSmooth();
-  angleMode(DEGREES);
   colorMode(HSB, 360, 100, 100);
 
   // set up the arrays for the current state of the game
@@ -38,22 +37,40 @@ function setup() {
   initGame();
 
   currentRoom = rooms[0][0];
+  enemies = [];
   spawners = []; //currentRoom.spawners; 
-  //currentSpawner = spawners[0]; 
-  //enemies = currentSpawner.enemies; 
+
+  //example of spawners
+  //not intended to stay
+  for(let i = 0; i < 4; i++){
+    let new_spawner = new Spawner(i*2);
+    spawners.push(new_spawner); //spawners[0]; 
+  }
+   // currentSpawner.enemies; 
   player = new Player(25*3, 20*6, currentRoom);
   bullets = [];
+  doors = createDoors(currentRoom.borders);
 }
 
 function draw() {
   background(0);
   currentRoom.display();
   player.update();
+  if(spawners.length > 0){
+    spawners[0].tick();
+  }
   //update enemies
   //update bullets
   for(const bullet of bullets){
     bullet.update();
   }
+  for(const enemy of enemies) {
+    enemy.update();
+  }
+  for(const door of doors) {
+    door.checkAvailability();
+  }
+  
   scale(displayScale);
   image(canvasBuffer,0,0);
 }

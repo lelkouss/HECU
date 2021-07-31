@@ -12,7 +12,7 @@ function initGame(){
                     [0, 0, 0, 0, 0, 0, 0] ];
     let borders =  ["A_1", "B_1", "C_1", "D_1"];
     rooms[0][0] = new Room(0, tiles, borders);
-    
+
     tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 2
                     [0, 0, 0, 0, 0, 1, 0],
                     [0, 0, 0, 1, 0, 0, 0],
@@ -21,6 +21,7 @@ function initGame(){
                     [0, 1, 0, 0, 0, 1, 0],
                     [0, 0, 0, 0, 0, 0, 0] ];
     borders =      ["A_1", "B_1", "C_1", "D_1"];
+    spawner_info = [];
     rooms[0][1] = new Room(1, tiles, borders);
         
     tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 3

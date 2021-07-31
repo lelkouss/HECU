@@ -22,3 +22,13 @@ function getRoom(room_ID, direction){
     //return the current room if there is an issure with the found room (door should've be closed)
     return (found_room == undefined || found_room == null) ? rooms[row][col] : found_room;
 }
+
+
+function moveRooms(door){
+    currentRoom = getRoom(currentRoom.id, door.direction); //change current room
+    player.x = door.spawn_x;
+    player.y = door.spawn_y;
+    bullets = [] //clear all bullets
+    player.room = currentRoom; // update player view of the room
+    doors = createDoors(currentRoom.borders); //update the doors in the new room
+}

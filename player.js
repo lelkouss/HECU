@@ -37,6 +37,13 @@ class Player {
         }
       }
 
+      // check if colldied with an enemy on x axis
+      for(const enemy of enemies) {
+        if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
+          this.x = oldX;
+        }
+      }
+
       this.y += this.dy;
       // check if collided with a wall on the y axis
       for(let i=0; i<this.room.tiles.length; i++) {
@@ -48,15 +55,18 @@ class Player {
         }
       } 
       
-      //check if collided with a door
-      for(const door of this.room.doors) {
-        if( door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
-          currentRoom = getRoom(currentRoom.id, door.direction); //change current room
+      // check if colldied with an enemy on y axis
+      for(const enemy of enemies) {
+        if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
+          this.y = oldY;
+        }
+      }
 
-          this.x = door.spawn_x;
-          this.y = door.spawn_y;
-          bullets = [] //clear all bullets
-          this.room = currentRoom; // update player view of the room
+
+      //check if collided with a door
+      for(const door of doors) {
+        if(door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
+          moveRooms(door); //update canvas and new screen
         }
       }
 
@@ -74,7 +84,7 @@ class Player {
       let mouseVector = createVector(mouseX/3 - this.x-4, mouseY/3 - this.y-4);
       mouseVector.normalize();
 
-      let new_bullet = new Bullet(this.x + 5, this.y + 5, mouseVector.mult(4.5));
+      let new_bullet = new Bullet(this.x + 5, this.y + 5, mouseVector.mult(4.5), 0);
       bullets.push(new_bullet);
     }
   }
