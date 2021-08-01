@@ -1,11 +1,22 @@
 
 class Room {
-    constructor(id, tiles, doors) {
+
+    constructor(id, tiles, borders, spawner_info = []) {
       this.id = id;
       this.tiles = tiles;
-      this.doors = createDoors(doors);
-      console.log(this.doors);
-      
+      this.doors = createDoors(this.borders);
+      this.spawners = [];
+
+      //initialize the rooms spawners
+      let initSpawners = (_info) => {
+        _info.forEach((num_enemies) => {
+          let new_spawner = new Spawner(num_enemies);
+          this.spawners.push(new_spawner);
+        });
+      }
+      this.info = spawner_info;
+      initSpawners(this.info);
+
       // dimensions
       this.tileWidth = 25;
       this.tileHeight = 20;

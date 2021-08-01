@@ -13,6 +13,8 @@ let SPRITE_TILES, SPRITE_BORDERS;
 
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
+  //explode_sprite_sheet = loadSpriteSheet('assets/player', 171, 158, 11);
+
   spriteCrosshair = loadImage("/assets/crosshair.png");
   spriteFloor = loadImage("/assets/tiile.png");
   spriteWall = loadImage("/assets/wall.png");
