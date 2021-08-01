@@ -4,7 +4,7 @@ class Room {
     constructor(id, tiles, borders, spawner_info = []) {
       this.id = id;
       this.tiles = tiles;
-      this.doors = createDoors(this.borders);
+      this.doors = createDoors(borders);
       this.spawners = [];
 
       //initialize the rooms spawners

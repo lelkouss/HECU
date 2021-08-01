@@ -27,7 +27,7 @@ function initGame(){
         }
     } */
     rooms[0][0] = new Room(0, tiles, borders); //first room cannot contain a spawner
-
+    currentRoom = rooms[0][0];
     tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 2
                     [0, 0, 0, 0, 0, 1, 0],
                     [0, 0, 0, 1, 0, 0, 0],
