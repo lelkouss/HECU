@@ -11,6 +11,20 @@ class Spawner{
             }
         }
 
+        /*
+        let initEnemies = (enemies) =>{
+            enemies.forEach((enemy) => {
+                for(let i = 0; i < enemy.num; i++){
+                    for(const pos of enemy.positions){
+                        if(pos.length == 1 && pos == undefined)
+                    }
+                }
+            let enemy_info = [posx, posy]
+            let new_enemy = Reflect.construct(enemyType, enemy_info);
+            })
+        }
+        */
+
         let initEnemies = () => { //find spawning position for enemies
             let options = findOpenTiles();
             while(this.num_enemies > 0){
@@ -52,20 +66,19 @@ class Spawner{
 
 //find tiles with no walls
 function findOpenTiles(){
-    let tiles = currentRoom.tiles, options = [], j = 0; 
+    let tiles = currentRoom.tiles, open_tiles = [], j = 0; 
     for(const [i, tile_row] of tiles.entries()){
         tile_row.forEach((spot) => {
             if(spot == 0)
-                options.push(i *10 + j);
+                open_tiles.push(i *10 + j);
             j++;
         })
         j = 0;
     }
-    return options;
+    return open_tiles;
 }
 
 function indexToPosition(row, col){ 
     let pos = createVector(col*currentRoom.tileWidth + currentRoom.borderOffset + 7.5, row*currentRoom.tileHeight + currentRoom.borderOffset + 5);
-
     return pos;
 }
