@@ -4,6 +4,13 @@ class Spawner{
         this.cooldown = 60;
         this.enemyList = [];
 
+        this.timer = {
+            count: 60,
+            decrement: function(){
+                this.count--;
+            }
+        }
+
         let initEnemies = () => { //find spawning position for enemies
             let options = findOpenTiles();
             while(this.num_enemies > 0){
@@ -19,10 +26,11 @@ class Spawner{
         initEnemies();
     }
     tick(){
-        this.cooldown--;
-        this.draw();
-        if(this.cooldown <= 0){ //after 60 ticks
+        this.timer.decrement();
+        if(this.timer.count <= 0){ //when timer runs out, spawn enemies
             this.spawnEnemies();
+        } else{
+            this.draw(); //draw the spawning indicaiton if the timer isn't at 0
         }
         if(enemies.length == 0 && this.enemyList.length == 0){ // if all enemies are dead, remove the spawner from the spawners array
             spawners.splice(spawners.indexOf(this), 1);
@@ -44,14 +52,14 @@ class Spawner{
 
 //find tiles with no walls
 function findOpenTiles(){
-    let tiles = currentRoom.tiles; 
-    let options = [];
-    for(let i = 0; i < tiles.length; i++){//find spot that isn't a wall for the enemies to spawn on
-     for(let j = 0; j < tiles[i].length; j++){
-        if(tiles[i][j] == 0){ //if tile is free
-            options.push(i*10+j) //push it to the options
-        }
-     }   
+    let tiles = currentRoom.tiles, options = [], j = 0; 
+    for(const [i, tile_row] of tiles.entries()){
+        tile_row.forEach((spot) => {
+            if(spot == 0)
+                options.push(i *10 + j);
+            j++;
+        })
+        j = 0;
     }
     return options;
 }
