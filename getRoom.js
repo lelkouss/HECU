@@ -31,4 +31,5 @@ function moveRooms(door){
     bullets = [] //clear all bullets
     player.room = currentRoom; // update player view of the room
     doors = createDoors(currentRoom.borders); //update the doors in the new room
+    spawners = JSON.parse(JSON.stringify(currentRoom.spawners)); //change spawners to the current rooms (deep clone)
 }
