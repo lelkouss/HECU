@@ -1,12 +1,11 @@
 
 class Room {
-    constructor(id, tiles, borders) {
+    constructor(id, tiles, doors) {
       this.id = id;
       this.tiles = tiles;
-      this.borders = borders;
-      this.doors = createDoors(this.borders);
+      this.doors = createDoors(doors);
+      console.log(this.doors);
       
-
       // dimensions
       this.tileWidth = 25;
       this.tileHeight = 20;
@@ -17,8 +16,10 @@ class Room {
 
     display() {
       // display borders
-      for(const border of this.borders) {
-        let sprite = SPRITE_BORDERS[border];
+      for(const door of this.doors) {
+        door.update();
+        let sprite = SPRITE_BORDERS[door.sprite];
+        console.log(sprite);
         canvasBuffer.image(sprite, 0, 0, 219, 184);
       }
       // display tiles

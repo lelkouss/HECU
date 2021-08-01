@@ -1,23 +1,44 @@
 let currentRoom;
-let player, rooms, spawners, enemies, bullets, doors;
+let player, rooms, spawners, enemies, bullets;
 
 //SPRITES
 let spriteCrosshair
-let spriteFloor, spriteWall;
-let spriteBorderBottom, spriteBorderTop, spriteBorderRight, spriteBorderLeft;
+let spriteTile, spriteWall;
+let spriteBorderUpNone, spriteBorderUpBlocked, spriteBorderUpOpen;
+let spriteBorderRightNone, spriteBorderRightBlocked, spriteBorderRightOpen;
+let spriteBorderDownNone, spriteBorderDownBlocked, spriteBorderDownOpen;
+let spriteBorderLeftNone, spriteBorderLeftBlocked, spriteBorderLeftOpen;
+
 let SPRITE_TILES, SPRITE_BORDERS;
 
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
   spriteCrosshair = loadImage("/assets/crosshair.png");
-  spriteFloor = loadImage("/assets/tile.png");
+  spriteFloor = loadImage("/assets/tiile.png");
   spriteWall = loadImage("/assets/wall.png");
-  spriteBorderBottom = loadImage("/assets/borderbottom.png");
-  spriteBorderTop = loadImage("/assets/bordertop.png");
-  spriteBorderRight = loadImage("/assets/borderright.png");
-  spriteBorderLeft = loadImage("/assets/borderleft.png");
+  
+  spriteBorderUpNone = loadImage("/assets/border_top_none.png");
+  spriteBorderUpBlocked = loadImage("/assets/border_top_closed.png");
+  spriteBorderUpOpen = loadImage("/assets/border_top_open.png");
+
+  spriteBorderRightNone = loadImage("/assets/border_right_none.png");
+  spriteBorderRightBlocked = loadImage("/assets/border_right_closed.png");
+  spriteBorderRightOpen = loadImage("/assets/border_right_open.png");
+
+  spriteBorderDownNone = loadImage("/assets/border_bottom_none.png");
+  spriteBorderDownBlocked = loadImage("/assets/border_bottom_closed.png");
+  spriteBorderDownOpen = loadImage("/assets/border_bottom_open.png");
+
+  spriteBorderLeftNone = loadImage("/assets/border_left_none.png");
+  spriteBorderLeftBlocked = loadImage("/assets/border_left_closed.png");
+  spriteBorderLeftOpen = loadImage("/assets/border_left_open.png");
+
+
   SPRITE_TILES = {0: spriteFloor, 1: spriteWall};
-  SPRITE_BORDERS = {"A_1": spriteBorderTop, "B_1": spriteBorderRight, "C_1": spriteBorderBottom, "D_1": spriteBorderLeft};
+  SPRITE_BORDERS = {  "up_NONE": spriteBorderUpNone, "up_BLOCKED": spriteBorderUpBlocked, "up_OPEN": spriteBorderUpOpen,
+                      "right_NONE": spriteBorderRightNone, "right_BLOCKED": spriteBorderRightBlocked, "right_OPEN": spriteBorderRightOpen, 
+                      "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
+                      "left_NONE": spriteBorderLeftNone, "left_BLOCKED": spriteBorderLeftBlocked, "left_OPEN": spriteBorderLeftOpen, }
 }
 
 
@@ -49,7 +70,6 @@ function setup() {
    // currentSpawner.enemies; 
   player = new Player(25*3, 20*6, currentRoom);
   bullets = [];
-  doors = createDoors(currentRoom.borders);
 }
 
 function draw() {
@@ -66,9 +86,6 @@ function draw() {
   }
   for(const enemy of enemies) {
     enemy.update();
-  }
-  for(const door of doors) {
-    door.checkAvailability();
   }
   
   scale(displayScale);

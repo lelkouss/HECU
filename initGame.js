@@ -10,7 +10,7 @@ function initGame(){
                     [0, 0, 0, 1, 0, 0, 0],
                     [0, 1, 0, 0, 0, 1, 0],
                     [0, 0, 0, 0, 0, 0, 0] ];
-    let borders =  ["A_1", "B_1", "C_1", "D_1"];
+    let borders =  ["A_0", "B_1", "C_0", "D_0"];
     rooms[0][0] = new Room(0, tiles, borders);
 
     tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 2

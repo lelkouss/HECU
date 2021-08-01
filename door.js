@@ -1,10 +1,7 @@
 function createDoors(borders) {
     let doors = [];
     for(const border of borders) {
-        let door = new Door(border);
-        if(door.exists) {
-            doors.push(new Door(border));
-        }
+        doors.push(new Door(border));
     }
     return doors;
 }
@@ -50,14 +47,29 @@ class Door {
 
         (array[1] == "0") ? this.exists = false : this.exists = true;
         this.available = false;
+        this.setSprite();
+    }
+
+    update() {
+        this.checkAvailability();
+        this.setSprite();
     }
 
     checkAvailability(){ //add key's to this down the line
-        if(enemies.length != 0 || spawners.length != 0){ //door is closed if enemies or spawners exist
+        if(enemies.length != 0 || spawners.length != 0 && this.exists){ //door is closed if enemies or spawners exist
             this.available = false;
             return;
         }
-
         this.available = true;
+    }
+
+    setSprite() {
+        if(this.exists && this.available) {
+            this.sprite = this.direction + "_OPEN"; 
+        } else if(this.exists) {
+            this.sprite = this.direction + "_BLOCKED";
+        } else {
+            this.sprite = this.direction + "_NONE";
+        }
     }
 }

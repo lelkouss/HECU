@@ -30,5 +30,4 @@ function moveRooms(door){
     player.y = door.spawn_y;
     bullets = [] //clear all bullets
     player.room = currentRoom; // update player view of the room
-    doors = createDoors(currentRoom.borders); //update the doors in the new room
 }
