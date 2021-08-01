@@ -1,5 +1,3 @@
-const BULLET_COLORS = {0:[0, 255, 255, 200], 1:[255, 20, 20, 230]};
-
 class Bullet {
     constructor(x, y, v, team) {
         this.x = x;
@@ -8,11 +6,15 @@ class Bullet {
         this.velX = v.x;
         this.velY = v.y;
         this.team = team;
+
+        this.frame = 0;
+        this.sprite = 0;
     }
 
     update() {
         this.move();
         this.display();
+        this.frame = (this.frame + 1) % 8;
     }
 
     move() {
@@ -42,10 +44,7 @@ class Bullet {
     }
 
     display() {
-        canvasBuffer.fill(BULLET_COLORS[this.team]);
-        canvasBuffer.stroke(0, 100, 100);
-        canvasBuffer.ellipse(this.x, this.y, this.radius*2);
-        canvasBuffer.stroke(0);
-        canvasBuffer.fill(255);
+        let data = SPRITE_BULLETS[this.team];
+        canvasBuffer.image(data[0].get(floor(this.frame/2)*data[1], 0, data[1], data[2]), this.x-data[1]/2, this.y-data[2]/2);
     }
 }

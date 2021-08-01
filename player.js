@@ -7,6 +7,8 @@ class Player {
       this.width = 10;
       this.height = 10;
       this.room = currentRoom;
+      this.sprite = 'right'; //
+      this.frame = 0;
     }
   
     update() {
@@ -18,8 +20,34 @@ class Player {
     }
   
     display() {
-      fill(0, 0, 255);
-      canvasBuffer.rect(this.x, this.y, this.width, this.height);
+      let sprite = '';
+      // direction moved
+      if(this.dy == 1) {
+        sprite = 'down';
+      } else if(this.dy == -1) {
+        sprite = 'up';
+      } else if(this.dx == 1) {
+        sprite = 'right';
+      } else if(this.dx == -1) {
+        sprite = 'left';
+      } else {
+        sprite = 'idle';
+      }
+
+      //setting sprite based on direction
+      if(sprite == 'idle') {
+        this.frame = 0;
+      } else if(this.sprite == sprite) {
+        this.sprite = sprite;
+        this.frame = this.frame + 1 >= 25? 5: this.frame+1;
+      } else {
+        this.sprite = sprite;
+        this.frame = 4;
+      }
+
+      //getting sprite and draw
+      let data = SPRITE_PLAYER[this.sprite];
+      canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
     }
   
     move() {
@@ -81,10 +109,10 @@ class Player {
     }
 
     shoot(){
-      let mouseVector = createVector(mouseX/3 - this.x-4, mouseY/3 - this.y-4);
+      let mouseVector = createVector(mouseX/3 - this.x-this.width/2, mouseY/3 - this.y-this.height/2);
       mouseVector.normalize();
 
-      let new_bullet = new Bullet(this.x + 5, this.y + 5, mouseVector.mult(4.5), 0);
+      let new_bullet = new Bullet(this.x + this.width/2, this.y + this.height/2, mouseVector.mult(4.5), 0);
       bullets.push(new_bullet);
     }
   }
