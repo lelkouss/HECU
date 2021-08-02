@@ -2,8 +2,8 @@
 
 class Enemy {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        this.x = x-5;
+        this.y = y-5;
         this.width = 10;
         this.height = 10;
         this.health = 10; //needs to be dependent on type - inheritance
@@ -12,7 +12,7 @@ class Enemy {
       
     display(sprite) {
       let data = SPRITE_ENEMIES[sprite];
-      canvasBuffer.image(data[0], this.x-(this.width/2 + (data[1]-this.width)/2), this.y-(this.height/2 + (data[2]-this.height)/2), data[1], data[2]);
+      canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
     }
 
     shoot() {

@@ -27,7 +27,7 @@ class Spawner {
   draw() {
     //draw hitmarker at each enemies location
     for (const enemy of this.enemyList) {
-      canvasBuffer.image(spriteCrosshair, enemy.x-currentRoom.tileWidth/2 , enemy.y-currentRoom.tileHeight/2 , 25, 20);
+      canvasBuffer.image(spriteCrosshair, enemy.x-currentRoom.tileWidth/2+enemy.width/2, enemy.y-currentRoom.tileHeight/2+enemy.height/2 , 25, 20);
     }
   }
   spawnEnemies() {
