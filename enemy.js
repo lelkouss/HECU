@@ -15,9 +15,6 @@ class Enemy {
 
     update(){
 
-    }
-
-
     shoot() {
         let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
         playerVector.normalize();
@@ -42,18 +39,17 @@ class Roomba extends Enemy{
         //this.speedY = 0;
       }
 
-    update() {
-      super.update();     
-      canvasBuffer.rect(this.x, this.y, this.width, this.height);
-      this.shootCoolDown--;
-      //shoots every 2 seconds
-      if(this.shootCoolDown < 0) {
-          this.shoot();
-          this.shootCoolDown = 120;
-      } 
-      this.move();
-  }
-
+      update() {   
+        this.move();  
+        super.display();
+        super.shootCoolDown -= 1;
+        //shoots every 2 seconds
+        if(super.shootCoolDown < 0) {
+          super.shoot();
+          super.shootCoolDown = 120;
+        }
+        
+    }
 
       move() {
         let oldX = this.x;
@@ -138,15 +134,20 @@ class Turret extends Enemy{
     constructor(x, y) {
         super(x, y);
         this.health = 15;
+        this.sprite = 'turret_static';
       }
 
-  update() {
-    this.display();
-    if(this.shootCoolDown-- < 0) {
-      super.shoot();
-      this.shootCoolDown = 120;
+    update() {
+      this.display();
+      if(this.shootCoolDown-- < 0) {
+        super.shoot();
+        this.shootCoolDown = 120;
+      }
     }
-  }
+
+    display() {
+      let img = SPRITE_ENEMIES[this.sprite];
+      canvasBuffer.image(img, this.x, this.y, this.width, this.height);
+    }
 
 }
-
