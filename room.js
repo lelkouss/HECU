@@ -11,19 +11,6 @@ class Room {
         this.spawners = initSpawners(this.spawner_info);
 
       this.spawner_info = spawner_info;
-      let new_spawner = new Spawner(this.spawner_info);
-      this.spawners.push(new_spawner);
-
-      //initialize the rooms spawners
-      /*let initSpawners = (_info) => {
-        console.log(_info);
-        _info.forEach((num_enemies) => {
-          let new_spawner = new Spawner(num_enemies);
-          this.spawners.push(new_spawner);
-        });
-      }*/
-      //this.info = spawner_info;
-     // initSpawners(this.info);
 
       // dimensions
       this.tileWidth = 25;
@@ -38,7 +25,6 @@ class Room {
       for(const door of this.doors) {
         door.update();
         let sprite = SPRITE_BORDERS[door.sprite];
-        console.log(sprite);
         canvasBuffer.image(sprite, 0, 0, 219, 184);
       }
       // display tiles
