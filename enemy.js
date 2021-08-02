@@ -12,8 +12,7 @@ class Enemy {
 
         //this.colorMap = {0: [0, 100, 100], 1:[120, 100, 100], 2:[240, 100, 100]};
     }
-
-    update(){
+      
 
     shoot() {
         let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
@@ -36,12 +35,11 @@ class Roomba extends Enemy{
         super(x, y);
         this.health = 10;
         this.speedX = 1;
-        //this.speedY = 0;
+        this.speedY = 0;
       }
 
       update() {   
         this.move();  
-        super.display();
         super.shootCoolDown -= 1;
         //shoots every 2 seconds
         if(super.shootCoolDown < 0) {
@@ -55,21 +53,21 @@ class Roomba extends Enemy{
         let oldX = this.x;
         let oldY = this.y;
         
-        if(speedX > 0){
-          speedY = 0;
+        if(this.speedX > 0){
+          this.speedY = 0;
         }
-        else if(speedY > 0){
-          speedX = 0;
+        else if(this.speedY > 0){
+          this.speedX = 0;
         }
         //random movement for roomba
-        this.x = this.x + speedX;
+        this.x = this.x + this.speedX;
         this.y = this.y + 0;
 
         if(this.x > width){
-          speedX = speedX * -1;
+          this.speedX = this.speedX * -1;
         }
         if(this.x < 0){
-          speedX = speedX * -1;
+          this.speedX = this.speedX * -1;
         }
         /*if(this.y < 0){
           speedY = speedY * -1;
