@@ -63,8 +63,8 @@ function setup() {
   displayScale = 3;
   width = 219 * displayScale;
   height = 184 * displayScale;
-  let canvasDIV =   createCanvas(width, height);
-  canvasDIV.parent("canvasDiv"); // connect to html div
+  let canvasDIV =  createCanvas(width, height);
+  canvasDIV.parent("canvas_div"); // connect to html div
   canvasBuffer = createGraphics(width,height);
   canvasBuffer.noSmooth();
   colorMode(HSB, 360, 100, 100);
@@ -78,12 +78,6 @@ function setup() {
   enemies = [];
   spawners = []; //currentRoom.spawners; 
 
-  //example of spawners
-  //not intended to stay
-  for(let i = 0; i < 4; i++){
-    let new_spawner = new Spawner(i*2);
-    spawners.push(new_spawner); //spawners[0]; 
-  }
    // currentSpawner.enemies; 
   player = new Player(25*3, 20*6, currentRoom);
   bullets = [];

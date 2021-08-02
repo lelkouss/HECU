@@ -33,11 +33,11 @@ html {
     max-width: 100%;
   }
 
-  #canvasDiv{
+  #canvas_div{
     position: absolute;
     top: 12.5%;
   }
 
-  #canvasDiv:hover{
+  #canvas_div:hover{
     cursor: crosshair;
   }

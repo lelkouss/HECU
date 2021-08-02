@@ -1,21 +1,29 @@
 
 class Room {
-
-    constructor(id, tiles, borders, spawner_info = []) {
+    constructor(id, tiles, borders, spawner_info = -1) {
       this.id = id;
       this.tiles = tiles;
       this.doors = createDoors(borders);
       this.spawners = [];
+      this.spawner_info = spawner_info;
+
+      if(this.spawner_info != -1)
+        this.spawners = initSpawners(this.spawner_info);
+
+      this.spawner_info = spawner_info;
+      let new_spawner = new Spawner(this.spawner_info);
+      this.spawners.push(new_spawner);
 
       //initialize the rooms spawners
-      let initSpawners = (_info) => {
+      /*let initSpawners = (_info) => {
+        console.log(_info);
         _info.forEach((num_enemies) => {
           let new_spawner = new Spawner(num_enemies);
           this.spawners.push(new_spawner);
         });
-      }
-      this.info = spawner_info;
-      initSpawners(this.info);
+      }*/
+      //this.info = spawner_info;
+     // initSpawners(this.info);
 
       // dimensions
       this.tileWidth = 25;
@@ -42,3 +50,13 @@ class Room {
       }
     }
   }
+
+
+function initSpawners(spawner_info){
+  let obj_spawners = [];
+    Object.keys(spawner_info).forEach((wave) =>{
+      let new_spawner = new Spawner(spawner_info[`${wave}`]);
+      obj_spawners.push(new_spawner);
+    })
+    return obj_spawners;
+}

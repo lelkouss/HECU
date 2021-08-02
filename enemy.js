@@ -45,24 +45,36 @@ class Enemy {
     }
 }
 
-class Roomba extends Enemy(){
-    constructor(x, y, health) {
+class Roomba extends Enemy{
+    constructor(x, y) {
         super(x, y);
         this.health = 10;
       }
+
+      update() {   
+        this.move();  
+        super.display();
+        super.shootCoolDown--;
+        //shoots every 2 seconds
+        if(super.shootCoolDown < 0) {
+          super.shoot();
+          super.shootCoolDown = 120;
+        }
+        
+    }
 
       move() {
         let oldX = this.x;
         let oldY = this.y;
         
         //random movement for roomba
-        //this.x = this.x + random(-10, 10);
-        //this.y = this.y + random(-10, 10);
+        this.x = this.x + random(-5, 5);
+        this.y = this.y + random(-5, 5);
 
         // check if collided with a wall on the x axis
-        for(let i=0; i<this.room.tiles.length; i++) {
-          for(let j=0; j<this.room.tiles[i].length; j++) {
-            if(this.room.tiles[i][j] == 1 && collideRectRect(this.x, this.y, this.width, this.height, j*this.room.tileWidth+this.room.borderOffset, i*this.room.tileHeight+this.room.borderOffset, this.room.tileWidth, this.room.tileHeight)) {
+        for(let i=0; i<currentRoom.tiles.length; i++) {
+          for(let j=0; j<currentRoom.tiles[i].length; j++) {
+            if(currentRoom.tiles[i][j] == 1 && collideRectRect(this.x, this.y, this.width, this.height, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
               this.x = oldX;
               break;
             } 
@@ -75,9 +87,9 @@ class Roomba extends Enemy(){
           }
 
         // check if collided with a wall on the y axis
-        for(let i=0; i<this.room.tiles.length; i++) {
-          for(let j=0; j<this.room.tiles[i].length; j++) {
-            if(this.room.tiles[i][j] == 1 && collideRectRect(this.x, this.y, this.width, this.height, j*this.room.tileWidth+this.room.borderOffset, i*this.room.tileHeight+this.room.borderOffset, this.room.tileWidth, this.room.tileHeight)) {
+        for(let i=0; i<currentRoom.tiles.length; i++) {
+          for(let j=0; j<currentRoom.tiles[i].length; j++) {
+            if(currentRoom.tiles[i][j] == 1 && collideRectRect(this.x, this.y, this.width, this.height, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
               this.y = oldY;
               break;
             }
@@ -91,11 +103,11 @@ class Roomba extends Enemy(){
 
   
         // check if collided with a border on the x axis
-        if(this.x < this.room.borderOffset || this.x + this.width > this.room.width-this.room.borderOffset) {
+        if(this.x < currentRoom.borderOffset || this.x + this.width > currentRoom.width-currentRoom.borderOffset) {
           this.x = oldX;
         }
         //check if collided with a border on the y axis
-        if(this.y < this.room.borderOffset || this.y + this.height > this.room.height-this.room.borderOffset) {
+        if(this.y < currentRoom.borderOffset || this.y + this.height > currentRoom.height-currentRoom.borderOffset) {
           this.y = oldY;
         }
 
@@ -103,8 +115,8 @@ class Roomba extends Enemy(){
       }
   
 }
-class Turret extends Enemy(){
-    constructor(x, y, health) {
+class Turret extends Enemy{
+    constructor(x, y) {
         super(x, y);
         this.health = 15;
       }

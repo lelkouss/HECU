@@ -1,8 +1,8 @@
 class Spawner{
-    constructor(num_enemies){
-        this.num_enemies = num_enemies;
+    constructor(enemies){
+        this.enemies = enemies;
         this.cooldown = 60;
-        this.enemyList = [];
+        this.enemyList = []; //enemies are initialize on room transitions (getRoom.js)
 
         this.timer = {
             count: 60,
@@ -10,34 +10,6 @@ class Spawner{
                 this.count--;
             }
         }
-
-        /*
-        let initEnemies = (enemies) =>{
-            enemies.forEach((enemy) => {
-                for(let i = 0; i < enemy.num; i++){
-                    for(const pos of enemy.positions){
-                        if(pos.length == 1 && pos == undefined)
-                    }
-                }
-            let enemy_info = [posx, posy]
-            let new_enemy = Reflect.construct(enemyType, enemy_info);
-            })
-        }
-        */
-
-        let initEnemies = () => { //find spawning position for enemies
-            let options = findOpenTiles();
-            while(this.num_enemies > 0){
-                let index = Math.floor(random(0, options.length)); // find a place to put the enemy
-                let spawn_placement = options[index];//chose a random empty tile to spawn the enemy
-                let spawn_pos = indexToPosition(Math.floor(spawn_placement/10%10), spawn_placement%10); //find the position of that tile
-                let new_enemy = new Enemy(spawn_pos.x, spawn_pos.y, 1);
-                this.enemyList.push(new_enemy); 
-                options.splice(index, 1); //prevent enemies from spawning on the same tile
-                this.num_enemies--;
-            }
-        }
-        initEnemies();
     }
     tick(){
         this.timer.decrement();
@@ -64,6 +36,34 @@ class Spawner{
 
 }
 
+//create enemies from object input
+function initEnemies(enemies){
+    let enemy_list = [], spawn_pos;
+    let options = findOpenTiles();
+    Object.keys(enemies).forEach((enemy) => {
+        for(let i = 0; i < enemies[`${enemy}`].num; i++){
+            let pos = enemies[`${enemy}`].positions[Math.min(enemies[`${enemy}`].positions.length-1, i)]
+            if(pos == undefined){
+                let index = Math.floor(random(0, options.length)); // find a place to put the enemy
+                let spawn_placement = options[index];//chose a random empty tile to spawn the enemy
+                spawn_pos = indexToPosition(Math.floor(spawn_placement/10%10), spawn_placement%10); //find the position of that tile
+                options.splice(index, 1);
+            } else{
+                let tile_index = pos;
+                if(currentRoom.tiles[Math.floor(tile_index/10%10)][tile_index%10] != 0){
+                    console.log("YOU POSITIONED AN ENEMY ON A WALL IN initGAME() (spawn_info)");
+                } else{
+                    spawn_pos = indexToPosition(Math.floor(tile_index/10%10), tile_index%10);
+                    options.splice(options.indexOf(tile_index), 1);
+                }
+            }
+            let new_enemy = Reflect.construct(stringToFunction(enemy), [spawn_pos.x, spawn_pos.y])
+            enemy_list.push(new_enemy);
+        }
+    })
+    return enemy_list;
+}
+
 //find tiles with no walls
 function findOpenTiles(){
     let tiles = currentRoom.tiles, open_tiles = [], j = 0; 
@@ -81,4 +81,15 @@ function findOpenTiles(){
 function indexToPosition(row, col){ 
     let pos = createVector(col*currentRoom.tileWidth + currentRoom.borderOffset + 7.5, row*currentRoom.tileHeight + currentRoom.borderOffset + 5);
     return pos;
+}
+
+function stringToFunction(type){
+    switch(type){
+        case "Roomba":
+            return Roomba;
+        case "Turret":
+            return Turret;
+        default:
+            console.log(`Add ${type} to stringToFunction()`);
+    }
 }
