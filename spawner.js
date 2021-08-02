@@ -27,7 +27,7 @@ class Spawner {
   draw() {
     //draw hitmarker at each enemies location
     for (const enemy of this.enemyList) {
-      canvasBuffer.image(spriteCrosshair, enemy.x, enemy.y, 10, 10);
+      canvasBuffer.image(spriteCrosshair, enemy.x-currentRoom.tileWidth/2 , enemy.y-currentRoom.tileHeight/2 , 25, 20);
     }
   }
   spawnEnemies() {
@@ -102,8 +102,8 @@ function findOpenTiles() {
 
 function indexToPosition(row, col) {
   let pos = createVector(
-    col * currentRoom.tileWidth + currentRoom.borderOffset + 7.5,
-    row * currentRoom.tileHeight + currentRoom.borderOffset + 5
+    col * currentRoom.tileWidth + currentRoom.borderOffset + currentRoom.tileWidth/2, //
+    row * currentRoom.tileHeight + currentRoom.borderOffset + currentRoom.tileHeight/2
   );
   return pos;
 }

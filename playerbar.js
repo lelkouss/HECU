@@ -36,8 +36,10 @@ $(document).ready(function(){
         }
     }
 
-    $('.btn').click(function() {
-        console.log("clicked");
+    $('#btn-img-yes').click(function() {
         resetGame();
+    })
+    $('#btn-img-no').click(function() {
+        //go to start screen
     })
 })
