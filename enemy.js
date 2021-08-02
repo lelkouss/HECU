@@ -25,7 +25,6 @@ class Enemy {
     }
 
     display() {
-        //canvasBuffer.fill(this.colorMap[this.type]);
         canvasBuffer.rect(this.x, this.y, this.width, this.height);
     }
 
@@ -54,7 +53,7 @@ class Roomba extends Enemy{
       update() {   
         this.move();  
         super.display();
-        super.shootCoolDown--;
+        super.shootCoolDown -= 1;
         //shoots every 2 seconds
         if(super.shootCoolDown < 0) {
           super.shoot();
@@ -119,6 +118,20 @@ class Turret extends Enemy{
     constructor(x, y) {
         super(x, y);
         this.health = 15;
+        this.sprite = 'turret_static';
       }
+
+    update() {
+      this.display();
+      if(this.shootCoolDown-- < 0) {
+        super.shoot();
+        this.shootCoolDown = 120;
+      }
+    }
+
+    display() {
+      let img = SPRITE_ENEMIES[this.sprite];
+      canvasBuffer.image(img, this.x, this.y, this.width, this.height);
+    }
 
 }

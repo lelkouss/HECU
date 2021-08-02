@@ -10,15 +10,14 @@ let spriteBorderRightNone, spriteBorderRightBlocked, spriteBorderRightOpen;
 let spriteBorderDownNone, spriteBorderDownBlocked, spriteBorderDownOpen;
 let spriteBorderLeftNone, spriteBorderLeftBlocked, spriteBorderLeftOpen;
 
-let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft;  //PLAYER SPRITES
+let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft;  //PLAYER ANIMATIONS
+let spriteTurretStatic, spriteTurretClosed //TURRET SPRITES
+let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 
-let spriteBulletPlayer, spriteBulletEnemy; //BULLET SPRITES
-
-let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_BULLETS; //SPRITE MAPS
+let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS; //SPRITE MAPS
 
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
-  //explode_sprite_sheet = loadSpriteSheet('assets/player', 171, 158, 11);
 
   spriteCrosshair = loadImage("/assets/crosshair.png");
   spriteFloor = loadImage("/assets/tiile.png");
@@ -40,12 +39,15 @@ function preload() {
   spriteBorderLeftBlocked = loadImage("/assets/border_left_closed.png");
   spriteBorderLeftOpen = loadImage("/assets/border_left_open.png");
 
-  spritePlayerUp = loadImage("/assets/player_up_anim.png");     //PLAYER IMAGES (animations)
+  spritePlayerUp = loadImage("/assets/player_up_anim.png");     //PLAYER ANIMATIONS
   spritePlayerRight = loadImage("/assets/player_right_anim.png");
   spritePlayerDown = loadImage("/assets/player_down_anim.png");
   spritePlayerLeft = loadImage("/assets/player_left_anim.png");
 
-  spriteBulletPlayer = loadImage("/assets/bullet_player_anim.png");//BULLET SPRITES
+  spriteTurretStatic = loadImage("/assets/turret_static.png"); //TURRET SPRITES
+  spriteTurretClosed = loadImage("/assets/turret_closed.png");
+
+  spriteBulletPlayer = loadImage("/assets/bullet_player_anim.png");//BULLET ANIMATIONS
   spriteBulletEnemy = loadImage("/assets/bullet_enemy_anim.png");
 
 
@@ -55,6 +57,7 @@ function preload() {
                       "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
                       "left_NONE": spriteBorderLeftNone, "left_BLOCKED": spriteBorderLeftBlocked, "left_OPEN": spriteBorderLeftOpen };
   SPRITE_PLAYER = {   "up": [spritePlayerUp, 13, 22], "right": [spritePlayerRight, 18, 22], "down": [spritePlayerDown, 13, 22], "left": [spritePlayerLeft, 18, 22]};
+  SPRITE_ENEMIES = {  "turret_static": spriteTurretStatic};
   SPRITE_BULLETS = {   0: [spriteBulletPlayer, 8, 8], 1: [spriteBulletEnemy, 8, 8] };
 }
 
