@@ -83,7 +83,7 @@ function setup() {
   spawners = []; //currentRoom.spawners; 
 
    // currentSpawner.enemies; 
-  player = new Player(25*3, 20*6, currentRoom);
+  player = new Player(3*currentRoom.tileWidth + currentRoom.tileWidth/2, 6*currentRoom.tileHeight + currentRoom.tileHeight/2, currentRoom);
   bullets = [];
 
   //draw players initial hearts and cores

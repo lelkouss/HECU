@@ -28,7 +28,7 @@ class Player {
     display() {
       //getting sprite and draw
       let data = SPRITE_PLAYER[this.sprite];
-      canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
+      canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x, this.y, data[1], data[2]);
     }
   
     move() {
