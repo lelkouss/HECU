@@ -10,6 +10,7 @@ $(document).ready(function(){
     window.updatePlayerHearts = () => {  //display hearts, call window.updatePlayerHearts() to refresh the player's hearts
         if(typeof player !== "undefined"){
             $("#player_health_container").empty();
+            $("#player_health_container").append('<img src="./assets/hp_meter.png" alt="HP Meter" style="position: absolute; left: 15px; top: 30%; height: 50%; width: auto">');
             for (let i = 0; i < player.health; i++) {
                 $("#player_health_container").append(heart);
             }
@@ -30,7 +31,7 @@ $(document).ready(function(){
             for (let i = 0; i < unfound_cores; i++) { //add unfilled cores
                 $("#found_keys_container").append(empty_core);
             }
-            $("#found_keys_container").append('<img src="./assets/core_meter.png" alt="core meter"  style = "position: absolute; right: 0; top: 50%; height: 50%; width: auto"></img>'); //show core meter
+            $("#found_keys_container").append('<img src="./assets/core_meter.png" alt="core meter"  style = "position: absolute; right: 15px; top: 35%; height: 50%; width: auto"></img>'); //show core meter
 
         }
     }

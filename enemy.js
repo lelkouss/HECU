@@ -6,11 +6,8 @@ class Enemy {
         this.y = y;
         this.width = 10;
         this.height = 10;
-        //this.type = type;
         this.health = 10; //needs to be dependent on type - inheritance
         this.shootCoolDown = 120;
-
-        //this.colorMap = {0: [0, 100, 100], 1:[120, 100, 100], 2:[240, 100, 100]};
     }
       
     display(sprite) {
@@ -97,9 +94,9 @@ class Roomba extends Enemy{
               break;
             } 
           }
-        }
+        }*/
         
-        // check if collidied with player on x axis
+        //check if collidied with player on x axis
           if(collideRectRect(this.x, this.y, this.width, this.height, player.x, player.y, player.width, player.height)) {
             this.x = oldX;
           }
@@ -113,7 +110,7 @@ class Roomba extends Enemy{
             }
           }
         }
-        
+        /*
         // check if colldied with player on y axis
           if(collideRectRect(this.x, this.y, this.width, this.height, player.x, player.y, player.width, player.height)) {
             this.y = oldY;

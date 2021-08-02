@@ -10,7 +10,7 @@ let gameOver = () => {
 }
 
 function startGame(){
-
+    
 }
 
 function keyClicked(){
