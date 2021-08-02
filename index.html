@@ -36,7 +36,9 @@
   </head>
   <body>
     <div id="player_bar">
-      <div id="player_health_container" onload='updatePlayerHearts()'>Hearts will go here</div>
+      <div id="player_health_container" onload='updatePlayerHearts()'>
+        <img src="hp_meter.png" alt="HP Meter" style="position: absolute; left: 0; top: 50%; z-index: 2; height: 30px; width: 100px;">
+      </div>
       <div id="found_keys_container">Keys will go here</div>
     </div>
     <div id="canvas_div"></div>

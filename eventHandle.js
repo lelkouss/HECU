@@ -11,9 +11,6 @@ function getKeyboardInput() {
     if(keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
         player.dy++;
     }
-    if(key == 'g'){
-        gameOver();
-    }
 }
 
 function getMouseInput() {

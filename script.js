@@ -86,7 +86,9 @@ function setup() {
   player = new Player(25*3, 20*6, currentRoom);
   bullets = [];
 
+  //draw players initial hearts and cores
   window.updatePlayerHearts();
+  window.updatePlayerCores();
 }
 
 function draw() {

@@ -12,7 +12,7 @@ class Player {
       this.shootingDirection = 'right';
       this.shotCoolDown = 10;
       this.frame = 0;
-      this.hearts = 10;
+      this.health = 10;
     }
   
     update() {
@@ -112,6 +112,14 @@ class Player {
       bullets.push(new_bullet);
     }
 
+    //remove health if shot
+    shot(){
+      this.health--;
+      window.updatePlayerHearts();
+       //check if game ended
+       if(this.health < 0)
+          gameOver();
+    }
 
     setSprite() {
       let sprite = '';

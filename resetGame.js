@@ -1,15 +1,12 @@
 function resetGame(){
     $('#game-over').hide();
     setup();
+    loop();
 }
 
 let gameOver = () => {
     $('#game-over').show();
     noLoop();
-    $('.btn').click(function() {
-        console.log("clicked");
-        resetGame();
-    })
 }
 
 function startGame(){

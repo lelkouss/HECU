@@ -38,6 +38,7 @@ class Roomba extends Enemy{
     constructor(x, y) {
         super(x, y);
         this.health = 10;
+        
         this.speedX = 1;
         this.speedY = 0;
         this.sprite = 'roomba';
@@ -60,35 +61,33 @@ class Roomba extends Enemy{
         if(this.speedX > 0){
           this.speedY = 0;
         }
-        else if(this.speedY > 0){
+        if(this.speedY > 0){
           this.speedX = 0;
         }
 
         //random movement for roomba
-        this.x = this.x + this.speedX;
-        this.y = this.y + 0;
+        //
+        if(this.x < 400){
+          this.x = this.x + this.speedX;
+        }
+        if(this.y < 400){
+          this.y = this.y + this.speedY;
+        }
 
-        if(this.x > width){
+        if(this.x > 400){
           this.speedX = this.speedX * -1;
         }
         if(this.x < 0){
           this.speedX = this.speedX * -1;
         }
-        if(this.y < 0){
-          speedY = speedY * -1;
+        if(this.y < 50){
+          this.speedY = this.speedY * -1;
         }
-        if(this.y > height){
-          speedY = speedY * -1;
+        if(this.y > 400){
+          this.speedY = this.speedY * -1;
         }
         
-        /*constructor(position_  = createVector(random(-0.01, 0.01), -r/2), velocity_ = createVector(random(-30, 30), random(-30, 30))){
-          this.pos = position_;
-          this.v = velocity_;
-          this.a = createVector(0, a);
-          this.r = 0.5;
-          this.points = [];
-          this.drawing = true;
-        }*/
+
 
         /*// check if collided with a wall on the x axis
         for(let i=0; i<currentRoom.tiles.length; i++) {
@@ -100,7 +99,7 @@ class Roomba extends Enemy{
           }
         }
         
-        // check if colldied with player on x axis
+        // check if collidied with player on x axis
           if(collideRectRect(this.x, this.y, this.width, this.height, player.x, player.y, player.width, player.height)) {
             this.x = oldX;
           }
@@ -123,11 +122,14 @@ class Roomba extends Enemy{
   
         // check if collided with a border on the x axis
         if(this.x < currentRoom.borderOffset || this.x + this.width > currentRoom.width-currentRoom.borderOffset) {
-          this.x = oldX;
+          //this.x = oldX;
+          this.speedX = this.speedX * -1;
         }
         //check if collided with a border on the y axis
         if(this.y < currentRoom.borderOffset || this.y + this.height > currentRoom.height-currentRoom.borderOffset) {
-          this.y = oldY;
+          //this.y = oldY;
+          this.speedY = this.speedY * -1;
+
         }*/
         
       }
