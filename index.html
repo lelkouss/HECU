@@ -35,13 +35,18 @@
     <!--<script src="lib/p5.play.js" type="text/javascript"></script>-->
   </head>
   <body>
-    <div id="player_bar">
-      <div id="player_health_container" onload='updatePlayerHearts()'>
-      </div>
+    <div id="player_bar"> <!-- Player hp and cores-->
+      <div id="player_health_container" onload='updatePlayerHearts()'></div>
       <div id="found_keys_container">Keys will go here</div>
     </div>
-    <div id="canvas_div"></div>
-    <div id="game-over">
+
+    <div id="canvas_div"></div> <!--Sketch-->
+
+    <div id="start-game"> <!-- Starting screen -->
+
+    </div>
+
+    <div id="game-over"> <!-- Game over screen-->
         <div id="over-image-container">
           <div class="btn-container">
               <div class="btn" style="margin-top: 40vh !important">

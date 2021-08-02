@@ -12,7 +12,7 @@ class Enemy {
       
     display(sprite) {
       let data = SPRITE_ENEMIES[sprite];
-      canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
+      canvasBuffer.image(data[0], this.x-(this.width/2 + (data[1]-this.width)/2), this.y-(this.height/2 + (data[2]-this.height)/2), data[1], data[2]);
     }
 
     shoot() {

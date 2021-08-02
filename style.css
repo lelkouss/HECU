@@ -81,6 +81,10 @@ html {
     align-items: center;
   }
 
+  #start-game{
+    
+  }
+
   #game-over{
     position: absolute;
     top: 0;
