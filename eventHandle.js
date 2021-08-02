@@ -11,6 +11,9 @@ function getKeyboardInput() {
     if(keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
         player.dy++;
     }
+    if(key == 'g'){
+        gameOver();
+    }
 }
 
 function getMouseInput() {
@@ -24,6 +27,6 @@ function getMouseInput() {
         
     } else {
         player.shooting = false;
-        player.shotCoolDown = 10;
+        player.shotCoolDown = 0;
     }
 }

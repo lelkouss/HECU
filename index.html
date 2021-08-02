@@ -7,6 +7,9 @@
 
     <title>HECU</title>
 
+    <!-- import jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css" />
 
@@ -21,6 +24,8 @@
     <script src="/eventHandle.js"></script>
     <script src="/spawner.js"></script>
     <script src="/enemy.js"></script>
+    <script src="/playerbar.js"></script>
+    <script src="/resetGame.js"></script>
     
     <!-- import p5 libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
@@ -30,7 +35,21 @@
     <!--<script src="lib/p5.play.js" type="text/javascript"></script>-->
   </head>
   <body>
+    <div id="player_bar">
+      <div id="player_health_container" onload='updatePlayerHearts()'>Hearts will go here</div>
+      <div id="found_keys_container">Keys will go here</div>
+    </div>
     <div id="canvas_div"></div>
+    <div id="game-over">
+      <div>
+        <h1>Game Over</h1>
+      </div>
+      <div class="btn-container">
+        <div class="btn">
+          <p>Play Again</p>
+        </div>
+      </div>
+    </div>
     <!-- this is the start of content -->
   </body>
 </html>

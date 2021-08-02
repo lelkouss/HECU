@@ -40,7 +40,7 @@ function preload() {
   spriteBorderLeftBlocked = loadImage("/assets/border_left_closed.png");
   spriteBorderLeftOpen = loadImage("/assets/border_left_open.png");
 
-  spritePlayerUp = loadImage("/assets/player_up_anim.png");     //PLAYER IMAGES (animations)
+  spritePlayerUp = loadImage("/assets/player_up_anim copy.png");     //PLAYER IMAGES (animations)
   spritePlayerRight = loadImage("/assets/player_right_anim.png");
   spritePlayerDown = loadImage("/assets/player_down_anim.png");
   spritePlayerLeft = loadImage("/assets/player_left_anim.png");
@@ -58,7 +58,6 @@ function preload() {
   SPRITE_BULLETS = {   0: [spriteBulletPlayer, 8, 8], 1: [spriteBulletEnemy, 8, 8] };
 }
 
-
 function setup() {
   displayScale = 3;
   width = 219 * displayScale;
@@ -67,6 +66,7 @@ function setup() {
   canvasDIV.parent("canvas_div"); // connect to html div
   canvasBuffer = createGraphics(width,height);
   canvasBuffer.noSmooth();
+  frameRate(60);
   colorMode(HSB, 360, 100, 100);
 
   // set up the arrays for the current state of the game
@@ -81,6 +81,8 @@ function setup() {
    // currentSpawner.enemies; 
   player = new Player(25*3, 20*6, currentRoom);
   bullets = [];
+
+  window.updatePlayerHearts();
 }
 
 function draw() {

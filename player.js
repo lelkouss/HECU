@@ -12,6 +12,7 @@ class Player {
       this.shootingDirection = 'right';
       this.shotCoolDown = 10;
       this.frame = 0;
+      this.hearts = 10;
     }
   
     update() {
