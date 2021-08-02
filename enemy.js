@@ -13,6 +13,10 @@ class Enemy {
         //this.colorMap = {0: [0, 100, 100], 1:[120, 100, 100], 2:[240, 100, 100]};
     }
       
+    display(sprite) {
+      let img = SPRITE_ENEMIES[sprite];
+      canvasBuffer.image(img, this.x, this.y, this.width, this.height);
+    }
 
     shoot() {
         let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
@@ -38,16 +42,15 @@ class Roomba extends Enemy{
         this.speedY = 0;
       }
 
-      update() {   
-        this.move();  
-        super.shootCoolDown -= 1;
-        //shoots every 2 seconds
-        if(super.shootCoolDown < 0) {
-          super.shoot();
-          super.shootCoolDown = 120;
-        }
-        
-    }
+    update() {
+      this.move();
+      super.display("turret_static");
+      if(this.shootCoolDown-- < 0) {
+        super.shoot();
+        this.shootCoolDown = 120;
+      }
+
+  }
 
       move() {
         let oldX = this.x;
@@ -59,6 +62,7 @@ class Roomba extends Enemy{
         else if(this.speedY > 0){
           this.speedX = 0;
         }
+
         //random movement for roomba
         this.x = this.x + this.speedX;
         this.y = this.y + 0;
@@ -69,12 +73,12 @@ class Roomba extends Enemy{
         if(this.x < 0){
           this.speedX = this.speedX * -1;
         }
-        /*if(this.y < 0){
+        if(this.y < 0){
           speedY = speedY * -1;
         }
         if(this.y > height){
           speedY = speedY * -1;
-        } */
+        }
         
         /*constructor(position_  = createVector(random(-0.01, 0.01), -r/2), velocity_ = createVector(random(-30, 30), random(-30, 30))){
           this.pos = position_;
@@ -129,23 +133,17 @@ class Roomba extends Enemy{
   
 }
 class Turret extends Enemy{
-    constructor(x, y) {
-        super(x, y);
-        this.health = 15;
-        this.sprite = 'turret_static';
-      }
-
-    update() {
-      this.display();
-      if(this.shootCoolDown-- < 0) {
-        super.shoot();
-        this.shootCoolDown = 120;
-      }
+  constructor(x, y) {
+      super(x, y);
+      this.health = 15;
+      this.sprite = 'turret_static';
     }
 
-    display() {
-      let img = SPRITE_ENEMIES[this.sprite];
-      canvasBuffer.image(img, this.x, this.y, this.width, this.height);
+  update() {
+    super.display(this.sprite);
+    if(this.shootCoolDown-- < 0) {
+      super.shoot();
+      this.shootCoolDown = 120;
     }
-
+  }
 }
