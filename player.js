@@ -7,44 +7,24 @@ class Player {
       this.width = 10;
       this.height = 10;
       this.room = currentRoom;
-      this.sprite = 'right'; //
+      this.sprite = 'right'; 
+      this.shooting = false;
+      this.shootingDirection = 'right';
+      this.shotCoolDown = 10;
       this.frame = 0;
     }
   
     update() {
       getKeyboardInput();
       this.move();
+      getMouseInput();
+      this.setSprite();
       this.display();
       this.dx = 0;
       this.dy = 0;
     }
   
     display() {
-      let sprite = '';
-      // direction moved
-      if(this.dy == 1) {
-        sprite = 'down';
-      } else if(this.dy == -1) {
-        sprite = 'up';
-      } else if(this.dx == 1) {
-        sprite = 'right';
-      } else if(this.dx == -1) {
-        sprite = 'left';
-      } else {
-        sprite = 'idle';
-      }
-
-      //setting sprite based on direction
-      if(sprite == 'idle') {
-        this.frame = 0;
-      } else if(this.sprite == sprite) {
-        this.sprite = sprite;
-        this.frame = this.frame + 1 >= 25? 5: this.frame+1;
-      } else {
-        this.sprite = sprite;
-        this.frame = 4;
-      }
-
       //getting sprite and draw
       let data = SPRITE_PLAYER[this.sprite];
       canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
@@ -93,7 +73,7 @@ class Player {
 
       //check if collided with a door
       for(const door of currentRoom.doors) {
-        if(door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
+        if(door.exists && door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
           moveRooms(door); //update canvas and new screen
         }
       }
@@ -111,8 +91,51 @@ class Player {
     shoot(){
       let mouseVector = createVector(mouseX/3 - this.x-this.width/2, mouseY/3 - this.y-this.height/2);
       mouseVector.normalize();
+      let dir = 180/PI * atan2(mouseVector.y, mouseVector.x);
+      if(dir < 0) {
+        dir = 360+dir;
+      }
 
+      if(dir < 45 || dir > 315) {
+        this.shootingDirection = "right";
+      } else if(dir > 45 && dir < 135) {
+        this.shootingDirection = "down";
+      } else if(dir > 135 && dir < 225) {
+        this.shootingDirection = "left";
+      } else {
+        this.shootingDirection = "up";
+      }
       let new_bullet = new Bullet(this.x + this.width/2, this.y + this.height/2, mouseVector.mult(4.5), 0);
       bullets.push(new_bullet);
+    }
+
+
+    setSprite() {
+      let sprite = '';
+      
+      if(this.shooting) {
+        sprite = this.shootingDirection;
+      } else if(this.dy == 1) {
+        sprite = 'down';
+      } else if(this.dy == -1) {
+        sprite = 'up';
+      } else if(this.dx == 1) {
+        sprite = 'right';
+      } else if(this.dx == -1) {
+        sprite = 'left';
+      } else {
+        sprite = 'idle';
+      }
+
+      //setting sprite based on direction
+      if(sprite == 'idle') {
+        this.frame = 0;
+      } else if(this.sprite == sprite) {
+        this.sprite = sprite;
+        this.frame = this.frame + 1 >= 25? 5: this.frame+1;
+      } else {
+        this.sprite = sprite;
+        this.frame = 4;
+      }
     }
   }

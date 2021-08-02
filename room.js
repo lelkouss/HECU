@@ -38,7 +38,6 @@ class Room {
       for(const door of this.doors) {
         door.update();
         let sprite = SPRITE_BORDERS[door.sprite];
-        console.log(sprite);
         canvasBuffer.image(sprite, 0, 0, 219, 184);
       }
       // display tiles
