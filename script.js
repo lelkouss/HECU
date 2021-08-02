@@ -11,7 +11,7 @@ let spriteBorderDownNone, spriteBorderDownBlocked, spriteBorderDownOpen;
 let spriteBorderLeftNone, spriteBorderLeftBlocked, spriteBorderLeftOpen;
 
 let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft;  //PLAYER ANIMATIONS
-let spriteTurretStatic, spriteTurretClosed //TURRET SPRITES
+let spriteTurretStatic, spriteTurretClosed, spriteRoomba; //ENEMY SPRITES
 let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 
 let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS; //SPRITE MAPS
@@ -44,8 +44,9 @@ function preload() {
   spritePlayerDown = loadImage("/assets/player_down_anim.png");
   spritePlayerLeft = loadImage("/assets/player_left_anim.png");
 
-  spriteTurretStatic = loadImage("/assets/turret_static.png"); //TURRET SPRITES
+  spriteTurretStatic = loadImage("/assets/turret_static.png"); //ENEMY SPRITES
   spriteTurretClosed = loadImage("/assets/turret_closed.png");
+  spriteRoomba = loadImage("/assets/roomba.png");
 
   spriteBulletPlayer = loadImage("/assets/bullet_player_anim.png");//BULLET ANIMATIONS
   spriteBulletEnemy = loadImage("/assets/bullet_enemy_anim.png");
@@ -57,7 +58,7 @@ function preload() {
                       "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
                       "left_NONE": spriteBorderLeftNone, "left_BLOCKED": spriteBorderLeftBlocked, "left_OPEN": spriteBorderLeftOpen };
   SPRITE_PLAYER = {   "up": [spritePlayerUp, 13, 22], "right": [spritePlayerRight, 18, 22], "down": [spritePlayerDown, 13, 22], "left": [spritePlayerLeft, 18, 22]};
-  SPRITE_ENEMIES = {  "turret_static": spriteTurretStatic};
+  SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14]};
   SPRITE_BULLETS = {   0: [spriteBulletPlayer, 8, 8], 1: [spriteBulletEnemy, 8, 8] };
 }
 

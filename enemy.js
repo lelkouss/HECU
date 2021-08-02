@@ -14,8 +14,8 @@ class Enemy {
     }
       
     display(sprite) {
-      let img = SPRITE_ENEMIES[sprite];
-      canvasBuffer.image(img, this.x, this.y, this.width, this.height);
+      let data = SPRITE_ENEMIES[sprite];
+      canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
     }
 
     shoot() {
@@ -40,11 +40,12 @@ class Roomba extends Enemy{
         this.health = 10;
         this.speedX = 1;
         this.speedY = 0;
+        this.sprite = 'roomba';
       }
 
     update() {
       this.move();
-      super.display("turret_static");
+      super.display(this.sprite);
       if(this.shootCoolDown-- < 0) {
         super.shoot();
         this.shootCoolDown = 120;
@@ -136,14 +137,32 @@ class Turret extends Enemy{
   constructor(x, y) {
       super(x, y);
       this.health = 15;
-      this.sprite = 'turret_static';
+      this.sprite = 'turret_closed';
     }
 
-  update() {
+  update() { //
     super.display(this.sprite);
-    if(this.shootCoolDown-- < 0) {
+    if(this.inLineOfSight()) {
+      if(this.shootCoolDown-- < 0) {
       super.shoot();
-      this.shootCoolDown = 120;
+      this.shootCoolDown = 30;
+      }
     }
+  }
+
+  //returns whether or not the player is in the line of sight
+  inLineOfSight() {
+    
+    for(let i=0; i<currentRoom.tiles.length; i++) {
+      for(let j=0; j<currentRoom.tiles[i].length; j++) {
+        if(currentRoom.tiles[i][j] == 1 && collideLineRect(this.x+this.width/2, this.y+this.height/2, player.x+player.width/2, player.y+player.height/2, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
+          this.sprite = "turret_closed";
+          return false;
+        }
+      }
+    }
+
+    this.sprite = "turret_static";
+    return true;
   }
 }

@@ -50,6 +50,7 @@ class Player {
       for(const enemy of enemies) {
         if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
           this.x = oldX;
+          //SHOULD GET HURT AND NOT MOVED BACK
         }
       }
 
@@ -68,6 +69,7 @@ class Player {
       for(const enemy of enemies) {
         if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
           this.y = oldY;
+          //SHOULD GET HURT AND NOT MOVED BACK
         }
       }
 
