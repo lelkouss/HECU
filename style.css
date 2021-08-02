@@ -106,7 +106,7 @@ html {
 
   #game-over .btn{
     margin-top: 5vh;
-        font-weight: bold;
+    font-weight: bold;
 
   }
 
@@ -118,15 +118,22 @@ html {
 
   #found_keys_container{
     width: 100%;
-    background: blue;
-    justify-content: center;
-    align-items: center;
+    display: flex;
+    justify-content: flex-start;
   }
 
   .heart{
     width: 30px;
-    height: 30px;
-    margin: 3px;
+    height: auto;
+    margin-right: -10px;
+    transform: none;
+    transition: all 1s ease-in;
+  }
+
+  .cores{
+    width: 30px;
+    height: auto;
+    margin: 5px;
     transform: none;
     transition: all 1s ease-in;
   }
