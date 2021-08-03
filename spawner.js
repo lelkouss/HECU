@@ -27,7 +27,7 @@ class Spawner {
   draw() {
     //draw hitmarker at each enemies location
     for (const enemy of this.enemyList) {
-      canvasBuffer.image(spriteCrosshair, enemy.x, enemy.y, 10, 10);
+      canvasBuffer.image(spriteCrosshair, enemy.x-currentRoom.tileWidth/2+enemy.width/2, enemy.y-currentRoom.tileHeight/2+enemy.height/2 , 25, 20);
     }
   }
   spawnEnemies() {
@@ -62,10 +62,10 @@ function initEnemies(enemies) {
         if (
           currentRoom.tiles[Math.floor((tile_index / 10) % 10)][
             tile_index % 10
-          ] != 0
+          ] == 1
         ) {
           console.log(
-            "YOU POSITIONED AN ENEMY ON A WALL IN initGAME() (spawn_info)"
+            `YOU POSITIONED AN ENEMY ON A WALL (Room: ${currentRoom.id}) IN initGAME() (spawn_info)`
           );
         } else {
           spawn_pos = indexToPosition(
@@ -92,7 +92,7 @@ function findOpenTiles() {
     j = 0;
   for (const [i, tile_row] of tiles.entries()) {
     tile_row.forEach((spot) => {
-      if (spot == 0) open_tiles.push(i * 10 + j);
+      if (spot != 1) open_tiles.push(i * 10 + j);
       j++;
     });
     j = 0;
@@ -102,8 +102,8 @@ function findOpenTiles() {
 
 function indexToPosition(row, col) {
   let pos = createVector(
-    col * currentRoom.tileWidth + currentRoom.borderOffset + 7.5,
-    row * currentRoom.tileHeight + currentRoom.borderOffset + 5
+    col * currentRoom.tileWidth + currentRoom.borderOffset + currentRoom.tileWidth/2, //
+    row * currentRoom.tileHeight + currentRoom.borderOffset + currentRoom.tileHeight/2
   );
   return pos;
 }
@@ -114,6 +114,8 @@ function stringToFunction(type) {
       return Roomba;
     case "Turret":
       return Turret;
+    case "Mantis":
+      return Mantis;
     default:
       console.log(`Add ${type} to stringToFunction()`);
   }

@@ -12,6 +12,7 @@ class Player {
       this.shootingDirection = 'right';
       this.shotCoolDown = 10;
       this.frame = 0;
+      this.health = 10;
     }
   
     update() {
@@ -49,6 +50,7 @@ class Player {
       for(const enemy of enemies) {
         if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
           this.x = oldX;
+          //SHOULD GET HURT AND NOT MOVED BACK
         }
       }
 
@@ -67,6 +69,7 @@ class Player {
       for(const enemy of enemies) {
         if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
           this.y = oldY;
+          //SHOULD GET HURT AND NOT MOVED BACK
         }
       }
 
@@ -109,6 +112,14 @@ class Player {
       bullets.push(new_bullet);
     }
 
+    //remove health if shot
+    shot(){
+      this.health--;
+      window.updatePlayerHearts();
+       //check if game ended
+       if(this.health < 1)
+          gameOver();
+    }
 
     setSprite() {
       let sprite = '';
