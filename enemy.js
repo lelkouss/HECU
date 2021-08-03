@@ -2,12 +2,12 @@
 
 class Enemy {
   constructor(x, y) {
-      this.x = x-5;
-      this.y = y-5;
-      this.width = 10;
-      this.height = 10;
-      this.health = 10; //needs to be dependent on type - inheritance
-      this.shootCoolDown = 120;
+    this.x = x-5;
+    this.y = y-5;
+    this.width = 10;
+    this.height = 10;
+    this.health = 10; //needs to be dependent on type - inheritance
+    this.shootCoolDown = 120;
   }
     
   display(sprite) {
@@ -16,18 +16,19 @@ class Enemy {
   }
 
   shoot() {
-      let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
-      playerVector.normalize();
+    let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
+    playerVector.normalize();
 
-      let new_bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, playerVector.mult(2), 1);
-      bullets.push(new_bullet);
+    let new_bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, playerVector.mult(2), 1);
+    bullets.push(new_bullet);
   }
 
   shot() {
-      this.health -= 5;
-      if(this.health <= 0) {
-          enemies.splice(enemies.indexOf(this), 1);
-      }
+    soundRoombaCollide.play();
+    this.health -= 5;
+    if(this.health <= 0) {
+        enemies.splice(enemies.indexOf(this), 1);
+    }
   }
 }
 
@@ -39,6 +40,7 @@ class Roomba extends Enemy{
       this.speedX = 1;
       this.speedY = 0;
       this.sprite = 'roomba';
+      this.stuck = false;
     }
 
   update() {
@@ -96,10 +98,15 @@ class Roomba extends Enemy{
       }
 
       if(collided) {
-        soundRoombaCollide.play();
+        this.stuck = true;
         this.speedX = 0;
         this.speedY = 0;
         floor(random(2)) > 0? (this.speedX = floor(random(2)) > 0? 1 : -1): this.speedY = floor(random(2)) > 0? 1 : -1;
+      } else if(this.stuck) {
+        soundRoombaCollide.play();
+        this.stuck = false;
+      } else {
+        this.stuck = false;
       }
       
     }

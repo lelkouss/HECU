@@ -18,7 +18,9 @@ let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS; //SPRITE MAPS
 
 //SOUNDS
-let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot; 
+let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot;
+let soundDoorOpen, soundDoorClose;
+let soundBANGER;
 
 
 // PRELOAD ALL SPRITES AND MUSIC
@@ -74,14 +76,17 @@ function preload() {
 
 
   // SOUNDS
+  soundBANGER = loadSound("/assets/HECU_stage.mp3");
   soundPlayerShoot = loadSound("/assets/player_shoot.mp3");
   soundPlayerFootstep = loadSound("/assets/footstep.mp3");
-  soundRoombaCollide = loadSound("/assets/roomba.mp3");
-  soundTurretShoot = loadSound("/assets/turret.mp3"); 
-
+  soundRoombaCollide = loadSound("/assets/enemy_hit.mp3");
+  soundTurretShoot = loadSound("/assets/turret.mp3");
+  soundDoorOpen = loadSound("/assets/door_open.mp3");
+  soundDoorClose = loadSound("/assets/door_close.mp3");
 }
 
 function setup() {
+  console.log("SETYP");
   displayScale = 3;
   width = 219 * displayScale;
   height = 184 * displayScale;
@@ -92,8 +97,10 @@ function setup() {
   frameRate(60);
   colorMode(HSB, 360, 100, 100);
 
-  // set up the arrays for the current state of the game
+  //ABSOLUTE BANGER
+  //soundBANGER.loop();
 
+  // set up the arrays for the current state of the game
   rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array
   initGame();
 
@@ -110,7 +117,8 @@ function setup() {
   window.updatePlayerHearts();
   window.updatePlayerCores();
 
-  //noLoop();
+  noLoop();
+  
 }
 
 function draw() {
@@ -133,6 +141,5 @@ function draw() {
   image(canvasBuffer,0,0);
 
   if(display_map)
-    //background(255);
-    drawMap();
+    drawMap(); 
 }

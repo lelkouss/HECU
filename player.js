@@ -90,6 +90,11 @@ class Player {
       for(const door of currentRoom.doors) {
         if(door.exists && door.available && collideRectRect(this.x, this.y, this.width, this.height, door.x, door.y, door.width, door.height) ) {
           moveRooms(door); //update canvas and new screen
+          for(const door of currentRoom.doors) {
+            if(door.exists && !door.available) {
+              soundDoorClose.play();
+            } 
+          }
         }
       }
 

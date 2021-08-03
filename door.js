@@ -60,6 +60,9 @@ class Door {
             this.available = false;
             return;
         }
+        if(!this.available) {
+            soundDoorOpen.play();
+        }
         this.available = true;
     }
 

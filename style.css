@@ -252,3 +252,7 @@ html {
     transform: translateX(-100vw);
     transition: all 0.1s ease-in;
   }
+
+  .pointer{
+    cursor: pointer !important;
+  }

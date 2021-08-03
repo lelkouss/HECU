@@ -53,6 +53,12 @@ $(document).ready(function(){
         loop();
     })
     $('#map-container').click(()=>{
-        display_map ? display_map = false : display_map = true;
+        $('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
+        display_map ? display_map = false : display_map = true; //show the map
     })
+
 })
+
+window.onload = function() {
+    document.getElementById("game_audio").play();
+}
