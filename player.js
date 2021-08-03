@@ -117,7 +117,7 @@ class Player {
       this.health--;
       window.updatePlayerHearts();
        //check if game ended
-       if(this.health < 0)
+       if(this.health < 1)
           gameOver();
     }
 

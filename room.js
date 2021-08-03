@@ -6,6 +6,7 @@ class Room {
       this.doors = createDoors(borders);
       this.spawners = [];
       this.spawner_info = spawner_info;
+      this.visited = false; //for map
 
       if(this.spawner_info != -1)
         this.spawners = initSpawners(this.spawner_info);

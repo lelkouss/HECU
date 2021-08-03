@@ -65,7 +65,7 @@ function initEnemies(enemies) {
           ] != 0
         ) {
           console.log(
-            "YOU POSITIONED AN ENEMY ON A WALL IN initGAME() (spawn_info)"
+            `YOU POSITIONED AN ENEMY ON A WALL (Room: ${currentRoom.id}) IN initGAME() (spawn_info)`
           );
         } else {
           spawn_pos = indexToPosition(

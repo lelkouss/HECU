@@ -1,5 +1,6 @@
 let currentRoom;
 let player, rooms, spawners, enemies, bullets;
+let display_map = false;
 
 //SPRITES
 let spriteCrosshair
@@ -10,7 +11,7 @@ let spriteBorderRightNone, spriteBorderRightBlocked, spriteBorderRightOpen;
 let spriteBorderDownNone, spriteBorderDownBlocked, spriteBorderDownOpen;
 let spriteBorderLeftNone, spriteBorderLeftBlocked, spriteBorderLeftOpen;
 
-let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft;  //PLAYER ANIMATIONS
+let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft, spritePlayerIcon;  //PLAYER ANIMATIONS
 let spriteTurretStatic, spriteTurretClosed, spriteRoomba; //ENEMY SPRITES
 let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 
@@ -43,6 +44,8 @@ function preload() {
   spritePlayerRight = loadImage("/assets/player_right_anim.png");
   spritePlayerDown = loadImage("/assets/player_down_anim.png");
   spritePlayerLeft = loadImage("/assets/player_left_anim.png");
+
+  spritePlayerIcon = loadImage("/assets/favicon.png");
 
   spriteTurretStatic = loadImage("/assets/turret_static.png"); //ENEMY SPRITES
   spriteTurretClosed = loadImage("/assets/turret_closed.png");
@@ -79,6 +82,7 @@ function setup() {
   initGame();
 
   currentRoom = rooms[0][0];
+  currentRoom.visited = true;
   enemies = [];
   spawners = []; //currentRoom.spawners; 
 
@@ -89,6 +93,8 @@ function setup() {
   //draw players initial hearts and cores
   window.updatePlayerHearts();
   window.updatePlayerCores();
+
+  noLoop();
 }
 
 function draw() {
@@ -109,4 +115,8 @@ function draw() {
   
   scale(displayScale);
   image(canvasBuffer,0,0);
+
+  if(display_map)
+    //background(255);
+    drawMap();
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <link rel="icon" href="assets/favicon.png" />
 
     <title>HECU</title>
 
@@ -26,6 +26,7 @@
     <script src="/enemy.js"></script>
     <script src="/playerbar.js"></script>
     <script src="/resetGame.js"></script>
+    <script src="/gameMap.js"></script>
     
     <!-- import p5 libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
@@ -38,20 +39,22 @@
     <div id="player_bar"> <!-- Player hp and cores-->
       <div id="player_health_container" onload='updatePlayerHearts()'></div>
       <div id="found_keys_container">Keys will go here</div>
+      <div id="map-container"></div>
     </div>
 
     <div id="canvas_div"></div> <!--Sketch-->
 
     <div id="start-game"> <!-- Starting screen -->
       <div id="start-img-container">
-        
+          <div id="start-btn"></div>
       </div>
     </div>
 
     <div id="game-over"> <!-- Game over screen-->
         <div id="over-image-container">
+          <div id="score"></div>
           <div class="btn-container">
-              <div class="btn" style="margin-top: 40vh !important">
+              <div class="btn" style="margin-top: 30vh !important">
                 <div id="btn-img-yes"></div>
               </div>
           </div>

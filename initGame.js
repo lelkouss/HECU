@@ -22,7 +22,7 @@ function initGame(){
     spawner_info = { //*undefined = random tile, position is by tile id, undefined as last = remaining enemies are given a random tile
         wave_1:{ 
             Roomba: { num: 0, positions: [] },
-            Turret: { num: 5, positions: [undefined] }
+            Turret: { num: 5, positions: [1, 2, undefined] }
         },
         wave_2:{
             Roomba: { num: 0, positions: [] },

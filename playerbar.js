@@ -31,15 +31,28 @@ $(document).ready(function(){
             for (let i = 0; i < unfound_cores; i++) { //add unfilled cores
                 $("#found_keys_container").append(empty_core);
             }
-            $("#found_keys_container").append('<img src="./assets/core_meter.png" alt="core meter"  style = "position: absolute; right: 15px; top: 35%; height: 50%; width: auto"></img>'); //show core meter
+            $("#found_keys_container").append('<img src="./assets/core_meter.png" alt="core meter"  style = "position: absolute; right: 200px; top: 35%; height: 45%; width: auto"></img>'); //show core meter
 
         }
     }
 
-    $('#btn-img-yes').click(function() {
+    $('#btn-img-yes').click(function() { //reset the game on yes
         resetGame();
     })
-    $('#btn-img-no').click(function() {
-        //go to start screen
+    $('#btn-img-no').click(function() { //move back to the title screen on no
+        console.log("object");
+        $('#start-game').css('display', 'flex');
+        $('#start-game').toggleClass('move-to-left');
+        $('#score').empty() //hide score
+        $('#game-over').hide();
+        noLoop();
+    })
+    $('#start-btn').click(function(){ //start the game on title screen btn
+        $('#start-game').toggleClass('move-to-left');
+        $('#game-over').hide();
+        loop();
+    })
+    $('#map-container').click(()=>{
+        display_map ? display_map = false : display_map = true;
     })
 })
