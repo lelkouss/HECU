@@ -52,82 +52,54 @@ class Roomba extends Enemy{
 }
 
     move() {
+      let collided = false;
       let oldX = this.x;
       let oldY = this.y;
       
-      if(this.speedX > 0){
-        this.speedY = 0;
-      }
-      if(this.speedY > 0){
-        this.speedX = 0;
-      }
-
-      //random movement for roomba
-      //
-      if(this.x < 400){
-        this.x = this.x + this.speedX;
-      }
-      if(this.y < 400){
-        this.y = this.y + this.speedY;
-      }
-
-      if(this.x > 400){
-        this.speedX = this.speedX * -1;
-      }
-      if(this.x < 0){
-        this.speedX = this.speedX * -1;
-      }
-      if(this.y < 50){
-        this.speedY = this.speedY * -1;
-      }
-      if(this.y > 400){
-        this.speedY = this.speedY * -1;
-      }
+      this.x += this.speedX;
       
-
-
-      /*// check if collided with a wall on the x axis
+      // check if collided with a wall on the x axis
       for(let i=0; i<currentRoom.tiles.length; i++) {
         for(let j=0; j<currentRoom.tiles[i].length; j++) {
-          if(currentRoom.tiles[i][j] == 1 && collideRectRect(this.x, this.y, this.width, this.height, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
+          if(currentRoom.tiles[i][j] == 1 && collideRectRect(this.x-(currentRoom.tileWidth-this.width)/2+1, this.y-(currentRoom.tileHeight-this.height)/2+1, currentRoom.tileWidth-2, currentRoom.tileHeight-2, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
             this.x = oldX;
+            collided = true;
             break;
           } 
         }
-      }*/
-      
-      //check if collidied with player on x axis
-        if(collideRectRect(this.x, this.y, this.width, this.height, player.x, player.y, player.width, player.height)) {
-          this.x = oldX;
-        }
+      }
+
+      // check if collided with a border on the x axis
+      if(this.x < currentRoom.borderOffset+(currentRoom.tileWidth-this.width)/2 || this.x > currentRoom.width-currentRoom.borderOffset-currentRoom.tileWidth+(currentRoom.tileWidth-this.width)/2) {
+        this.x = oldX;
+        collided = true;
+      }
+
+
+      this.y += this.speedY;
 
       // check if collided with a wall on the y axis
       for(let i=0; i<currentRoom.tiles.length; i++) {
         for(let j=0; j<currentRoom.tiles[i].length; j++) {
-          if(currentRoom.tiles[i][j] == 1 && collideRectRect(this.x, this.y, this.width, this.height, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
+          if(currentRoom.tiles[i][j] == 1 && collideRectRect(this.x-(currentRoom.tileWidth-this.width)/2+1, this.y-(currentRoom.tileHeight-this.height)/2+1, currentRoom.tileWidth-2, currentRoom.tileHeight-2, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
             this.y = oldY;
+            collided = true;
             break;
           }
         }
       }
-      /*
-      // check if colldied with player on y axis
-        if(collideRectRect(this.x, this.y, this.width, this.height, player.x, player.y, player.width, player.height)) {
-          this.y = oldY;
-        }
 
-
-      // check if collided with a border on the x axis
-      if(this.x < currentRoom.borderOffset || this.x + this.width > currentRoom.width-currentRoom.borderOffset) {
-        //this.x = oldX;
-        this.speedX = this.speedX * -1;
-      }
       //check if collided with a border on the y axis
-      if(this.y < currentRoom.borderOffset || this.y + this.height > currentRoom.height-currentRoom.borderOffset) {
-        //this.y = oldY;
-        this.speedY = this.speedY * -1;
+      if(this.y < currentRoom.borderOffset+(currentRoom.tileHeight-this.height)/2 || this.y > currentRoom.height-currentRoom.borderOffset-currentRoom.tileHeight+(currentRoom.tileHeight-this.height)/2) {
+        this.y = oldY;
+        collided = true;
+      }
 
-      }*/
+      if(collided) {
+        this.speedX = 0;
+        this.speedY = 0;
+        floor(random(2)) > 0? (this.speedX = floor(random(2)) > 0? 1 : -1): this.speedY = floor(random(2)) > 0? 1 : -1;
+      }
       
     }
 
@@ -185,8 +157,6 @@ update() {
     this.move();
     this.frame = 30;
   }
-  
-  console.log(this.path);
 }
 
 updatePath() {

@@ -32,7 +32,7 @@
     }
     rooms[0][1] = new Room(1, tiles, borders, spawner_info);
         
-    tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 3
+    tiles = [       [0, 0, 0, 0, 0, 0, 1], //room 3
                     [0, 1, 0, 1, 0, 1, 0],
                     [0, 1, 0, 0, 0, 0, 0],
                     [0, 0, 1, 1, 1, 0, 0],
@@ -42,7 +42,7 @@
     borders =      ["A_1", "B_1", "C_1", "D_1"];
     spawner_info = { 
         wave_1:{
-            Roomba: { num: 1, positions: [0, undefined] },
+            Roomba: { num: 5, positions: [0, undefined] },
             Turret: { num: 0, positions: [] } 
         },
         wave_2:{
