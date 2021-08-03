@@ -114,6 +114,8 @@ function stringToFunction(type) {
       return Roomba;
     case "Turret":
       return Turret;
+    case "Mantis":
+      return Mantis;
     default:
       console.log(`Add ${type} to stringToFunction()`);
   }

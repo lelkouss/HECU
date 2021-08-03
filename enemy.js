@@ -19,7 +19,7 @@ class Enemy {
         let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
         playerVector.normalize();
 
-        let new_bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, playerVector.mult(4.5), 1);
+        let new_bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, playerVector.mult(2), 1);
         bullets.push(new_bullet);
     }
 
@@ -163,5 +163,81 @@ class Turret extends Enemy{
 
     this.sprite = "turret_static";
     return true;
+  }
+}
+
+
+class Mantis extends Enemy{
+  constructor(x, y) {
+    super(x, y);
+    this.health = 10;
+    this.sprite = 'mantis';
+    this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
+    this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
+    this.path = [];
+    this.frame = 30;
+  }
+
+  update() {
+    super.display(this.sprite);
+    this.updatePath();
+    if(this.frame-- < 0) {
+      this.move();
+      this.frame = 30;
+    }
+    
+    console.log(this.path);
+  }
+
+  updatePath() {
+    let playerTileRow = floor((player.y-currentRoom.borderOffset) / currentRoom.tileHeight);
+    let playerTileCol = floor((player.x-currentRoom.borderOffset) / currentRoom.tileWidth);
+    this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
+    this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
+
+    let path = [this.currentTileRow * 7 + this.currentTileCol];
+    let toVisit = [[this.currentTileRow*7+this.currentTileCol, path]];
+    let visited = [];
+
+    while(toVisit.length != 0) {
+      let data = toVisit.shift();
+      let tile = data[0], path = data[1];
+      visited.push(tile);
+      let neighbors = [];
+
+      let diffs = [-7, 7, 1, -1];
+      if(tile%7 == 0) {
+        diffs = [-7, 7, 1];
+      } else if(tile%7 == 6) {
+        diffs = [-7, 7, -1];
+      }
+      for(const diff of diffs) {
+        neighbors.push(tile + diff);
+      }
+
+
+      for(const neighbor of neighbors) {
+        if(visited.indexOf(neighbor) == -1 && neighbor >= 0 && neighbor < 49 && currentRoom.tiles[floor(neighbor/7)][neighbor%7] != 1) {
+          if(floor(neighbor/7) == playerTileRow && neighbor%7 == playerTileCol) {
+            path.push(neighbor);
+            this.path = path;
+            return;
+          }
+          let newPath = [];
+          for(let i=0; i<path.length; i++)
+            newPath.push(path[i]);
+          newPath.push(neighbor);
+          toVisit.push([neighbor, newPath]);
+        }
+      }
+    }
+    return [];
+  }
+
+  move() {
+    if(this.path.length > 1) {
+      this.x = this.path[1]%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5;
+      this.y = floor(this.path[1]/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5;
+    }
   }
 }
