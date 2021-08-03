@@ -2,7 +2,7 @@
 class Room {
     constructor(id, tiles, borders, spawner_info = -1) {
       this.id = id;
-      this.tiles = tiles;
+      this.tiles = randomTiles(tiles);
       this.doors = createDoors(borders);
       this.spawners = [];
       this.spawner_info = spawner_info;
@@ -31,7 +31,7 @@ class Room {
       // display tiles
       for(let i=0; i<this.tiles.length; i++) {
         for(let j=0; j<this.tiles[i].length; j++) {
-          let sprite = SPRITE_TILES[this.tiles[i][j]];
+          let sprite = spriteTiles.get(this.tiles[i][j]*this.tileWidth, 0, this.tileWidth, this.tileHeight);
           canvasBuffer.image(sprite, j*this.tileWidth+this.borderOffset, i*this.tileHeight+this.borderOffset, this.tileWidth, this.tileHeight);
         }
       }
@@ -46,4 +46,13 @@ function initSpawners(spawner_info){
       obj_spawners.push(new_spawner);
     })
     return obj_spawners;
+}
+
+function randomTiles(tiles) {
+  for(let i=0; i<20; i++) {
+    let ranX = floor(random(tiles.length));
+    let ranY = floor(random(tiles[0].length));
+    tiles[ranX][ranY] = tiles[ranX][ranY] == 0 ? floor(random(2,6)) : tiles[ranX][ranY];
+  }
+  return tiles;
 }

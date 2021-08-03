@@ -62,7 +62,7 @@ function initEnemies(enemies) {
         if (
           currentRoom.tiles[Math.floor((tile_index / 10) % 10)][
             tile_index % 10
-          ] != 0
+          ] == 1
         ) {
           console.log(
             `YOU POSITIONED AN ENEMY ON A WALL (Room: ${currentRoom.id}) IN initGAME() (spawn_info)`
@@ -92,7 +92,7 @@ function findOpenTiles() {
     j = 0;
   for (const [i, tile_row] of tiles.entries()) {
     tile_row.forEach((spot) => {
-      if (spot == 0) open_tiles.push(i * 10 + j);
+      if (spot != 1) open_tiles.push(i * 10 + j);
       j++;
     });
     j = 0;

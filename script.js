@@ -3,8 +3,8 @@ let player, rooms, spawners, enemies, bullets;
 let display_map = false;
 
 //SPRITES
-let spriteCrosshair
-let spriteTile, spriteWall;
+let spriteCrosshair;
+let spriteTiles;
 
 let spriteBorderUpNone, spriteBorderUpBlocked, spriteBorderUpOpen;  //BORDER SPRITES
 let spriteBorderRightNone, spriteBorderRightBlocked, spriteBorderRightOpen;
@@ -21,8 +21,7 @@ let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS;
 function preload() {
 
   spriteCrosshair = loadImage("/assets/crosshair.png");
-  spriteFloor = loadImage("/assets/tiile.png");
-  spriteWall = loadImage("/assets/wall.png");
+  spriteTiles = loadImage("assets/tiles.png");
   
   spriteBorderUpNone = loadImage("/assets/border_top_none.png");    //BORDER IMAGES
   spriteBorderUpBlocked = loadImage("/assets/border_top_closed.png");
@@ -54,8 +53,6 @@ function preload() {
   spriteBulletPlayer = loadImage("/assets/bullet_player_anim.png");//BULLET ANIMATIONS
   spriteBulletEnemy = loadImage("/assets/bullet_enemy_anim.png");
 
-
-  SPRITE_TILES = {    0: spriteFloor, 1: spriteWall};
   SPRITE_BORDERS = {  "up_NONE": spriteBorderUpNone, "up_BLOCKED": spriteBorderUpBlocked, "up_OPEN": spriteBorderUpOpen,
                       "right_NONE": spriteBorderRightNone, "right_BLOCKED": spriteBorderRightBlocked, "right_OPEN": spriteBorderRightOpen, 
                       "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
