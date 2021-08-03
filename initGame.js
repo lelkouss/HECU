@@ -1,5 +1,5 @@
  //*rooms is a 4 by 7 array, init ID should mimic index
-function initGame(){
+ function initGame(){
     let tiles = [   [0, 0, 0, 0, 0, 0, 0], //room 1
                     [0, 1, 0, 0, 0, 1, 0],
                     [0, 0, 0, 1, 0, 0, 0],
