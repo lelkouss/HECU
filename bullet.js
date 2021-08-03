@@ -28,13 +28,6 @@ class Bullet {
                 bullets.splice(bullets.indexOf(this), 1);
             }
         }
-
-        //see if hit player
-        if(this.team == 1 && collideRectCircle(player.x, player.y, player.width, player.height, this.x, this.y, this.radius*2)) {
-            player.shot();
-            bullets.splice(bullets.indexOf(this), 1);
-        }
-
         //remove bullet if hits a border
         if(this.x-this.radius < currentRoom.borderOffset || this.x+this.radius > currentRoom.width-currentRoom.borderOffset ||
              this.y-this.radius < currentRoom.borderOffset || this.y+this.radius > currentRoom.height-currentRoom.borderOffset ) {

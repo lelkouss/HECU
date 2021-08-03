@@ -24,6 +24,6 @@ function getMouseInput() {
         
     } else {
         player.shooting = false;
-        player.shotCoolDown = 0;
+        player.shotCoolDown = 10;
     }
 }
