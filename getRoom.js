@@ -34,4 +34,5 @@ function moveRooms(door){
     for(let room_spawner of currentRoom.spawners) //initialize the rooms enemies
         room_spawner.enemyList = initEnemies(room_spawner.enemies);
     spawners = currentRoom.spawners; //change spawners to the current rooms (deep clone)
+    currentRoom.visited = true;
 }

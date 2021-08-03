@@ -14,7 +14,10 @@ html {
   body {
     margin: 0;
     display: flex;
-    background: rgb(1, 102, 105);
+    background-image: url('https://images.pond5.com/planet-cartoon-space-animation-background-footage-090107011_prevstill.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 
 
   /* This centers our sketch horizontally. */
@@ -26,6 +29,10 @@ html {
     line-height: 1.5;
   }
 
+  *{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
   /* images and videos max out at full width */
   img,
   video {
@@ -35,9 +42,212 @@ html {
 
   #canvas_div{
     position: absolute;
-    top: 12.5%;
+    top: 14.5vh;
   }
 
   #canvas_div:hover{
     cursor: crosshair;
+  }
+
+  .btn-container{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .btn{
+    padding: 5px 7px 5px 7px;
+    font-weight: bold;
+    width: auto;
+    height: auto;
+    transition: all 0.1s ease-in;
+  }
+
+  .btn:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.1s ease-in;
+  }
+
+  #player_bar{
+    position: absolute;
+    top: 5vh;
+    height: 68px;
+    width: 657px;
+    background: rgb(51, 0, 51);
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 170px 100px;
+    grid-template-rows: auto;
+    align-items: center;
+  }
+
+  #start-game{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    cursor: unset;
+    z-index: 3;
+    transition: all 0.5s ease-out;
+  }
+
+  #start-img-container{
+    position: absolute;
+    top: 5vh;
+    bottom: 8vh;
+    left: 0;
+    right: 0;
+    background-image: url('./assets/title_screen.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  #start-btn{
+    position: absolute;
+    bottom: 20vh;
+    left: 35vw;
+    width: 110px;
+    height: 47px;
+    background-image: url('./assets/play_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all 0.15s ease-in;
+  }
+
+  #start-btn:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.15s ease-in;
+  }
+
+  #game-over{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    cursor: unset;
+    text-align: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  #over-image-container{
+    width: 380px;
+    height: 305px;
+    margin-top: 16%;
+    background-image: url('assets/gameover_template.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  #score{
+    position: absolute;
+    width: 100px;
+    height: auto;
+    display: flex;
+    align-content: flex-start;
+    right: 43%;
+    top: 43%;
+    color: white;
+  }
+
+  #game-over .btn{
+    font-weight: bold;
+    width: 88px;
+    height: 38px;
+  }
+
+  #game-over #btn-img-yes{
+    width: 100%;
+    height: 100%;
+    background-image: url('./assets/gameover_yes_unlit.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: all 0.05s ease-in;
+  }
+
+  #btn-img-yes:hover{
+    background-image: url('./assets/gameover_yes_lit.png') !important;
+    transition: all 0.05s ease-in;
+  }
+
+  #game-over #btn-img-no{
+    width: 55px;
+    height: 36px;
+
+    margin-left: 10px;
+    background-image: url('./assets/gameover_no_unlit.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: all 0.05s ease-in;
+  }
+
+  #btn-img-no:hover{
+    background-image: url('./assets/gameover_no_lit.png') !important;
+    transition: all 0.05s ease-in;
+  }
+
+  #map-container{
+    position: absolute; right: 40px;
+    width: 45px;
+    height: 45px;
+    background: green;
+    border-radius: 50%;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXrBJcIMCeB2YEgYLg_iqUcoUG-A0QiCXgaA&usqp=CAU');
+    background-position: center;
+    background-size: cover;
+    transition: all 0.1s ease;
+  }
+
+#map-container:hover{
+  cursor:pointer;
+  transform: scale(1.05);
+  transition: all 0.1s ease;
+}
+
+  #player_health_container{
+    width: 100%;
+    margin-left: 70px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  #found_keys_container{
+    width: 100%;
+    margin-left: 50px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .heart{
+    width: 25px;
+    height: auto;
+    margin-right: -15px;
+    transform: none;
+    transition: all 1s ease-in;
+  }
+
+  .cores{
+    width: 30px;
+    height: auto;
+    margin: 2.5px;
+    transform: none;
+    transition: all 1s ease-in;
+  }
+
+  .pop-out{
+    transform: scale(1);
+    transition: all 1s ease-in;
+  }
+
+  .move-to-left{
+    transform: translateX(-100vw);
+    transition: all 0.1s ease-in;
   }
