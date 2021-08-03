@@ -13,6 +13,9 @@ class Player {
       this.shotCoolDown = 10;
       this.frame = 0;
       this.health = 10;
+
+      this.moving = false;
+      this.movingFrame = 10;
     }
   
     update() {
@@ -21,8 +24,17 @@ class Player {
       getMouseInput();
       this.setSprite();
       this.display();
+      this.moving = this.dx == 0 && this.dy == 0? false: true;
       this.dx = 0;
       this.dy = 0;
+      if(this.moving || this.shooting) {
+        if(this.movingFrame++ > 10) {
+          soundPlayerFootstep.play();
+          this.movingFrame = 0;
+        }
+      } else {
+        this.movingFrame = 10;
+      }
     }
   
     display() {
@@ -92,6 +104,7 @@ class Player {
     }
 
     shoot(){
+      soundPlayerShoot.play();
       let mouseVector = createVector(mouseX/3 - this.x-this.width/2, mouseY/3 - this.y-this.height/2);
       mouseVector.normalize();
       let dir = 180/PI * atan2(mouseVector.y, mouseVector.x);

@@ -96,6 +96,7 @@ class Roomba extends Enemy{
       }
 
       if(collided) {
+        soundRoombaCollide.play();
         this.speedX = 0;
         this.speedY = 0;
         floor(random(2)) > 0? (this.speedX = floor(random(2)) > 0? 1 : -1): this.speedY = floor(random(2)) > 0? 1 : -1;
@@ -115,8 +116,9 @@ update() { //
   super.display(this.sprite);
   if(this.inLineOfSight()) {
     if(this.shootCoolDown-- < 0) {
-    super.shoot();
-    this.shootCoolDown = 30;
+      soundTurretShoot.play();
+      super.shoot();
+      this.shootCoolDown = 30;
     }
   }
 }

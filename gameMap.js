@@ -13,7 +13,20 @@ function drawMap(){
                 if(room == currentRoom){
                     canvasBuffer.image(spritePlayerIcon, j * 219/max_col + 6, i * 184/max_row + 12.5, 20, 20)
                 }
+
+                mouseToMapTile(j * 219/max_col, i * 184/max_row, 219/max_col, 184/max_row);
+
         }
     }
+
+    //mouseToMap(); //let user click on the map
+
     image(canvasBuffer,0,0);
+}
+
+function mouseToMapTile(x, y, w, h){
+    if(mouseX*3 > x && mouseX*3 < x+w && mouseY*3 > y && mouseY*3 < y+h){
+        canvasBuffer.fill(0);
+        canvasBuffer.rect(x, y, w, h); //redraw rect w/ new fill   
+    }
 }

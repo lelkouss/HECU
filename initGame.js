@@ -23,7 +23,7 @@
         wave_1:{ 
             Roomba: { num: 0, positions: [] },
             Turret: { num: 0, positions: [] },
-            Mantis: { num: 3, positions: [] }
+            Mantis: { num: 6, positions: [] }
         },
         wave_2:{
             Roomba: { num: 0, positions: [] },

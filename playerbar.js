@@ -31,7 +31,7 @@ $(document).ready(function(){
             for (let i = 0; i < unfound_cores; i++) { //add unfilled cores
                 $("#found_keys_container").append(empty_core);
             }
-            $("#found_keys_container").append('<img src="./assets/core_meter.png" alt="core meter"  style = "position: absolute; right: 200px; top: 35%; height: 45%; width: auto"></img>'); //show core meter
+            $("#found_keys_container").append('<img src="./assets/core_meter.png" alt="core meter"  style = "position: absolute; right: 0px; top: 35%; height: 45%; width: auto"></img>'); //show core meter
 
         }
     }

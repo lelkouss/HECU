@@ -4,7 +4,7 @@ let display_map = false;
 
 //SPRITES
 let spriteCrosshair;
-let spriteTiles;
+let spriteTile0, spriteTile1, spriteTile2, spriteTile3, spriteTile4, spriteTile5;
 
 let spriteBorderUpNone, spriteBorderUpBlocked, spriteBorderUpOpen;  //BORDER SPRITES
 let spriteBorderRightNone, spriteBorderRightBlocked, spriteBorderRightOpen;
@@ -17,11 +17,20 @@ let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 
 let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS; //SPRITE MAPS
 
+//SOUNDS
+let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot; 
+
+
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
 
   spriteCrosshair = loadImage("/assets/crosshair.png");
-  spriteTiles = loadImage("assets/tiles.png");
+  spriteTile0 = loadImage("assets/tiles0.png");
+  spriteTile1 = loadImage("assets/tiles1.png");
+  spriteTile2 = loadImage("assets/tiles2.png");
+  spriteTile3 = loadImage("assets/tiles3.png");
+  spriteTile4 = loadImage("assets/tiles4.png");
+  spriteTile5 = loadImage("assets/tiles5.png");
   
   spriteBorderUpNone = loadImage("/assets/border_top_none.png");    //BORDER IMAGES
   spriteBorderUpBlocked = loadImage("/assets/border_top_closed.png");
@@ -60,7 +69,16 @@ function preload() {
                       "left_NONE": spriteBorderLeftNone, "left_BLOCKED": spriteBorderLeftBlocked, "left_OPEN": spriteBorderLeftOpen };
   SPRITE_PLAYER = {   "up": [spritePlayerUp, 13, 22], "right": [spritePlayerRight, 18, 22], "down": [spritePlayerDown, 13, 22], "left": [spritePlayerLeft, 18, 22]};
   SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14], 'mantis':[spriteMantis, 23, 24]};
+  SPRITE_TILES = {0: spriteTile0, 1: spriteTile1, 2: spriteTile2, 3: spriteTile3, 4: spriteTile4, 5: spriteTile5};
   SPRITE_BULLETS = {   0: [spriteBulletPlayer, 8, 8], 1: [spriteBulletEnemy, 8, 8] };
+
+
+  // SOUNDS
+  soundPlayerShoot = loadSound("/assets/player_shoot.mp3");
+  soundPlayerFootstep = loadSound("/assets/footstep.mp3");
+  soundRoombaCollide = loadSound("/assets/roomba.mp3");
+  soundTurretShoot = loadSound("/assets/turret.mp3"); 
+
 }
 
 function setup() {
@@ -92,7 +110,7 @@ function setup() {
   window.updatePlayerHearts();
   window.updatePlayerCores();
 
-  noLoop();
+  //noLoop();
 }
 
 function draw() {

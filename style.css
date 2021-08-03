@@ -79,7 +79,7 @@ html {
     background: rgb(51, 0, 51);
     border: 1px solid black;
     display: grid;
-    grid-template-columns: 170px 100px;
+    grid-template-columns: 170px 300px;
     grid-template-rows: auto;
     align-items: center;
   }
@@ -88,6 +88,8 @@ html {
     width: 100vw;
     height: 100vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: unset;
     z-index: 3;
     transition: all 0.5s ease-out;
@@ -95,10 +97,8 @@ html {
 
   #start-img-container{
     position: absolute;
-    top: 5vh;
-    bottom: 8vh;
-    left: 0;
-    right: 0;
+    width: 711px;
+    height: 650px;
     background-image: url('./assets/title_screen.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -195,7 +195,8 @@ html {
   }
 
   #map-container{
-    position: absolute; right: 40px;
+    position: absolute; 
+    right: 47%;
     width: 45px;
     height: 45px;
     background: green;
@@ -223,7 +224,7 @@ html {
     width: 100%;
     margin-left: 50px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .heart{
@@ -235,7 +236,7 @@ html {
   }
 
   .cores{
-    width: 30px;
+    width: 20px;
     height: auto;
     margin: 2.5px;
     transform: none;
