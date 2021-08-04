@@ -134,18 +134,30 @@ function stringToFunction(type) {
 function manageDrops(room_drops, enemy_list){ //give the drops to random enemies
 
   for(const drop in room_drops){
-    let enemy_arr = [...enemy_list];
-    let num_drops = room_drops[drop];
 
-    while(num_drops > 0){
-      let random_enemy = enemy_list[Math.floor(random(0, enemy_arr.length))];
-      if(random_enemy == undefined)
-        return;
-      console.log(drop);
-      random_enemy.drops[drop] = true;
-      enemy_arr.splice(enemy_arr.indexOf(random_enemy), 1);
-      num_drops--;
-    }
+    if(room_drops[`${drop}`] && drop == "core_drop"){ // cores are not dropped by enemies
+      console.log(spawners.length);
+      console.log(currentRoom.spawners.length);
+      if(spawners.length == 1){
+        console.log("new core");
+        let new_drop =  new Core(currentRoom.doors[0].spawn_x+5, currentRoom.doors[0].spawn_y);
+        currentRoom.drops.push(new_drop);
+      }
+      
+    } else{
+      let enemy_arr = [...enemy_list];
+      let num_drops = room_drops[drop];
+
+      while(num_drops > 0){
+        let random_enemy = enemy_list[Math.floor(random(0, enemy_arr.length))];
+        if(random_enemy == undefined)
+          return;
+        console.log(drop);
+        random_enemy.drops[drop] = true;
+        enemy_arr.splice(enemy_arr.indexOf(random_enemy), 1);
+        num_drops--;
+      }
+  }
   
   }
 

@@ -24,7 +24,7 @@
             Roomba: { num: 0, positions: [] },
             Turret: { num: 0, positions: [] },
             Mantis: { num: 2, positions: [] },
-            Drops: {hp_drop: 6, core_drop: 1}, //*drops must be listed last
+            Drops: {hp_drop: 6, core_drop: 0}, //*drops must be listed last
         },
         wave_2:{
             Roomba: { num: 0, positions: [] },
