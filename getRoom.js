@@ -30,7 +30,6 @@ function moveRooms(door){
     player.y = door.spawn_y;
     bullets = [] //clear all bullets
     player.room = currentRoom; // update player view of the room
-    //doors = currentRoom.doors; //update the doors in the new room
     for(let room_spawner of currentRoom.spawners) //initialize the rooms enemies
         room_spawner.enemyList = initEnemies(room_spawner.enemies);
     spawners = currentRoom.spawners; //change spawners to the current rooms (deep clone)

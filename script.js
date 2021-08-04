@@ -1,6 +1,9 @@
 let currentRoom;
 let player, rooms, spawners, enemies, bullets;
-let display_map = false, game_over = false;
+let display_map = false, game_over = false, run_game = false;
+let boss = null;
+
+const volume_ = 0.03;
 
 //SPRITES
 let spriteCrosshair;
@@ -81,12 +84,19 @@ function preload() {
   // SOUNDS
   soundFormats('mp3');
   soundBANGER = loadSound("/assets/HECU_stage.mp3");
+  soundBANGER.setVolume(volume_);
   soundPlayerShoot = loadSound("/assets/player_shoot.mp3");
+  soundPlayerShoot.setVolume(volume_);
   soundPlayerFootstep = loadSound("/assets/footstep.mp3");
+  soundPlayerFootstep.setVolume(3*volume_);
   soundRoombaCollide = loadSound("/assets/enemy_hit.mp3");
+  soundRoombaCollide.setVolume(volume_);
   soundTurretShoot = loadSound("/assets/turret.mp3");
+  soundTurretShoot.setVolume(volume_);
   soundDoorOpen = loadSound("/assets/door_open.mp3");
+  soundDoorOpen.setVolume(volume_);
   soundDoorClose = loadSound("/assets/door_close.mp3");
+  soundDoorClose.setVolume(volume_);
 }
 
 function setup() {
@@ -101,16 +111,19 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
 
   //ABSOLUTE BANGER
+  soundBANGER.setVolume(volume_);
   soundBANGER.loop();
 
   // set up the arrays for the current state of the game
   rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array
   initGame();
 
-  currentRoom = rooms[0][0];
+  currentRoom = rooms[0][2];
   currentRoom.visited = true;
   enemies = [];
   spawners = []; //currentRoom.spawners; 
+
+  //startBossFight();
 
    // currentSpawner.enemies; 
   player = new Player(3*currentRoom.tileWidth + currentRoom.tileWidth/2, 6*currentRoom.tileHeight + currentRoom.tileHeight/2, currentRoom);
@@ -119,21 +132,30 @@ function setup() {
   //draw players initial hearts and cores
   window.updatePlayerHearts();
   window.updatePlayerCores();
-    //ABSOLUTE BANGER
+
+  //ABSOLUTE BANGER
   soundBANGER.loop();
   
-  noLoop();
-  
+  //noLoop();
 }
 
 function draw() {
+  if(!run_game)
+    return;
 
   background(0);
   currentRoom.display();
+
+  for(const drop of currentRoom.drops) 
+    drop.update();
+
   player.update();
   if(spawners.length > 0){
     spawners[0].tick();
   }
+
+  if(boss != null)
+    boss.update();
 
   for(const bullet of bullets){
     bullet.update();
@@ -142,9 +164,7 @@ function draw() {
   for(const enemy of enemies) {
     enemy.update();
   }
-  
-  for(const drop of currentRoom.drops) 
-    drop.update();
+
   
   scale(displayScale);
   image(canvasBuffer,0,0);

@@ -43,7 +43,7 @@ function collectDrop(drop_type){ //Needs to be scaled for more drops
         player.health++;
         window.updatePlayerHearts();
         return true;
-    } else{
+    } else if(drop_type instanceof Core){
         if(player.cores < 4){
             player.health = 10;
             player.cores++;

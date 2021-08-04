@@ -53,6 +53,7 @@ $(document).ready(function(){
         $('#start-game').toggleClass('move-to-left');
         $('#game-over').hide();
         if(!game_over){
+            run_game = true;
             loop();
         } else{
             $('#game-over').css('display', 'flex');
@@ -60,7 +61,7 @@ $(document).ready(function(){
         }
     })
     $('#map-container').click(()=>{
-        $('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
+        //$('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
         display_map ? display_map = false : display_map = true; //show the map
     })
 })

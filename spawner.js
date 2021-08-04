@@ -139,6 +139,9 @@ function manageDrops(room_drops, enemy_list){ //give the drops to random enemies
 
     while(num_drops > 0){
       let random_enemy = enemy_list[Math.floor(random(0, enemy_arr.length))];
+      if(random_enemy == undefined)
+        return;
+      console.log(drop);
       random_enemy.drops[drop] = true;
       enemy_arr.splice(enemy_arr.indexOf(random_enemy), 1);
       num_drops--;
