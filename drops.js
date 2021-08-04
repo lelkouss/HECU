@@ -30,17 +30,22 @@ class Core extends Drop{
         super(x, y);
     }
     update(){
-        this.display();
-        super.checkCollision();
+        this.waitForSpawn();
     }
     display(){
         canvasBuffer.image(spriteCoreDrop, this.x, this.y, 12, 13);
+    }
+    waitForSpawn(){
+        if(currentRoom.spawners <= 1){
+            this.display();
+            super.checkCollision();
+        }
     }
 }
 
 function collectDrop(drop_type){ //Needs to be scaled for more drops
     if(drop_type instanceof Syringe && player.health < 10){ //collect drop and then delete it
-        player.health++;
+        player.health+=3;
         window.updatePlayerHearts();
         return true;
     } else if(drop_type instanceof Core){
