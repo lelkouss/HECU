@@ -30,7 +30,7 @@ function drawMap(){
                             canvasBuffer.rect(j * 175/max_col + center_x + 175/max_col - 3, i * 175/max_col + center_y + 175/(2*max_col) - 5, 3, 10);   
                         } else if(ii == 2){
                             canvasBuffer.fill(100, 0, 0);
-                            canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y + 175/(max_col) -1.53, 10, 3);   
+                            canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y + 175/(max_col) - 3, 10, 3);   
                         } else{
                             canvasBuffer.fill(0, 0, 100);
                             canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y + 175/(2*max_col) - 5, 3, 10);   

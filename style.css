@@ -14,7 +14,7 @@ html {
   body {
     margin: 0;
     display: flex;
-    background-image: url('https://images.pond5.com/planet-cartoon-space-animation-background-footage-090107011_prevstill.jpeg');
+    background-image: url('./assets/browser.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -180,7 +180,6 @@ html {
   #game-over #btn-img-no{
     width: 55px;
     height: 36px;
-
     margin-left: 10px;
     background-image: url('./assets/gameover_no_unlit.png');
     background-repeat: no-repeat;
@@ -197,21 +196,54 @@ html {
   #map-container{
     position: absolute; 
     right: 47%;
-    width: 45px;
-    height: 45px;
-    background: green;
-    border-radius: 50%;
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXrBJcIMCeB2YEgYLg_iqUcoUG-A0QiCXgaA&usqp=CAU');
+    width: 25px;
+    height: 25px;
+    background-image: url('assets/pin.png');
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     transition: all 0.1s ease;
   }
 
-#map-container:hover{
-  cursor:pointer;
-  transform: scale(1.05);
-  transition: all 0.1s ease;
-}
+  #map-container:hover{
+    cursor:pointer;
+    transform: scale(1.05);
+    transition: all 0.1s ease;
+  }
+
+  #game-won{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    cursor: unset;
+    text-align: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  #won-image-container{
+    width: 100vw;
+    height: auto;
+    background-image: url('assets/endscreen.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
+  }
+
+  #last-names{
+    position: relative;
+    margin-right: 10%;
+    margin-top: -10%;
+    width: 500px;
+  }
+
+  #credits{
+    transform: translateY(70vh);
+    font-size: 2rem;
+    font-weight: 600;
+    color: whitesmoke;
+  }
 
   #player_health_container{
     width: 100%;
@@ -246,6 +278,11 @@ html {
   .pop-out{
     transform: scale(1);
     transition: all 1s ease-in;
+  }
+
+  .move-up{ /*Move the credits up*/
+    transform: translateY(-100vw) !important;
+    transition: all 20s ease-in;
   }
 
   .move-to-left{

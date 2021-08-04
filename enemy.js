@@ -42,7 +42,6 @@ class Enemy {
       for(const drop in this.drops){ 
         if(this.drops[`${drop}`]){
           let new_drop = Reflect.construct(stringToFunction(drop), [this.x + random(-10, 10), this.y]);
-          console.log(`dropped a ${drop}`);
           currentRoom.drops.push(new_drop);
         }
         
