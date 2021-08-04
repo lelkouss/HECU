@@ -15,12 +15,14 @@ let spriteBorderDownNone, spriteBorderDownBlocked, spriteBorderDownOpen;
 let spriteBorderLeftNone, spriteBorderLeftBlocked, spriteBorderLeftOpen;
 
 let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft, spritePlayerIcon;  //PLAYER ANIMATIONS
-let spriteTurretStatic, spriteTurretClosed, spriteRoomba, spriteMantis; //ENEMY SPRITES
+let spriteTurretStatic, spriteTurretClosed, spriteRoomba, spriteMantis, spriteDrone; //ENEMY SPRITES
 let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
+let spriteBoss0, spriteBoss1, spriteBoss2, spriteBoss3; //BOSS ANIMATIONS
 
 let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS; //SPRITE MAPS
 
 let spriteBossIcon; //boss map icon
+let spriteEscapePod; //escape pod
 
 //SOUNDS
 let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot;
@@ -64,25 +66,41 @@ function preload() {
 
   spriteBossIcon = loadImage("/assets/boss_icon.png");
 
+  spriteEscapePod = loadImage("/assets/escape_pod.png");
+
   spriteTurretStatic = loadImage("/assets/turret_static.png"); //ENEMY SPRITES
   spriteTurretClosed = loadImage("/assets/turret_closed.png");
   spriteRoomba = loadImage("/assets/roomba.png");
   spriteMantis = loadImage("/assets/mantis.png");
+  spriteDrone = loadImage("/assets/drone.png");
 
-  spriteBulletPlayer = loadImage("/assets/bullet_player_anim.png");//BULLET ANIMATIONS
-  spriteBulletEnemy = loadImage("/assets/bullet_enemy_anim.png");
+  spriteBulletPlayer0 = loadImage("/assets/bullet_player_1.png"); //BULLET ANIMATIONS
+  spriteBulletPlayer1 = loadImage("/assets/bullet_player_2.png");
+  spriteBulletPlayer2 = loadImage("/assets/bullet_player_3.png");
+  spriteBulletPlayer3 = loadImage("/assets/bullet_player_4.png");
+  spriteBulletEnemy0 = loadImage("/assets/bullet_enemy_1.png");
+  spriteBulletEnemy1 = loadImage("/assets/bullet_enemy_2.png");
+  spriteBulletEnemy2 = loadImage("/assets/bullet_enemy_3.png");
+  spriteBulletEnemy3 = loadImage("/assets/bullet_enemy_4.png");
 
   spriteSyringeDrop = loadImage("/assets/syringe.png"); //DROPS
   spriteCoreDrop = loadImage("/assets/power_core.png");
+
+  spriteBoss0 = loadImage("/assets/boss_1.png");
+  spriteBoss1 = loadImage("/assets/boss_2.png");
+  spriteBoss2 = loadImage("/assets/boss_3.png");
+  spriteBoss3 = loadImage("/assets/boss_4.png");
 
   SPRITE_BORDERS = {  "up_NONE": spriteBorderUpNone, "up_BLOCKED": spriteBorderUpBlocked, "up_OPEN": spriteBorderUpOpen,
                       "right_NONE": spriteBorderRightNone, "right_BLOCKED": spriteBorderRightBlocked, "right_OPEN": spriteBorderRightOpen, 
                       "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
                       "left_NONE": spriteBorderLeftNone, "left_BLOCKED": spriteBorderLeftBlocked, "left_OPEN": spriteBorderLeftOpen };
   SPRITE_PLAYER = {   "up": [spritePlayerUp, 13, 22], "right": [spritePlayerRight, 18, 22], "down": [spritePlayerDown, 13, 22], "left": [spritePlayerLeft, 18, 22]};
-  SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14], 'mantis':[spriteMantis, 23, 24]};
+  SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14], 'mantis':[spriteMantis, 23, 24], 'drone':[spriteDrone, 14, 18]};
   SPRITE_TILES = {0: spriteTile0, 1: spriteTile1, 2: spriteTile2, 3: spriteTile3, 4: spriteTile4, 5: spriteTile5};
-  SPRITE_BULLETS = {   0: [spriteBulletPlayer, 8, 8], 1: [spriteBulletEnemy, 8, 8] };
+  SPRITE_BULLETS = {  "00": [spriteBulletPlayer0, 8, 8], "01": [spriteBulletPlayer1, 8, 8], "02": [spriteBulletPlayer2, 8, 8], "03": [spriteBulletPlayer3, 8, 8],
+                      "10": [spriteBulletEnemy0, 8, 8], "11": [spriteBulletEnemy1, 8, 8], "12": [spriteBulletEnemy2, 8, 8], "13": [spriteBulletEnemy3, 8, 8] };
+  SPRITE_BOSS = {0: [spriteBoss0, 25, 35], 1:[spriteBoss1, 25, 35], 2:[spriteBoss2, 25, 35], 3:[spriteBoss3, 25, 35]};
 
 
   // SOUNDS

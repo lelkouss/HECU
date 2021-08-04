@@ -21,7 +21,6 @@ class Syringe extends Drop{
         super.checkCollision();
     }
     display(){
-        console.log(this.x + " "+this.y);
         canvasBuffer.image(spriteSyringeDrop, this.x-(17-10)/2, this.y-(17-10)/2, 17, 17);
     }
 }
@@ -53,7 +52,7 @@ class Ship extends Drop{
         super.checkCollision();
     }   
     display(){
-        canvasBuffer.image(spriteCoreDrop, this.x-(12-10)/2, this.y-(13-10)/2, 12, 13);
+        canvasBuffer.image(spriteEscapePod, this.x-(12-10)/2, this.y-(13-10)/2, 27, 18);
     }
 }
 

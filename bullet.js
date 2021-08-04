@@ -35,6 +35,12 @@ class Bullet {
             bullets.splice(bullets.indexOf(this), 1);
         }
 
+        //if boss fit is active, check collision
+        if(boss != null && this.team == 0 && collideRectCircle(boss.x, boss.y, boss.width, boss.height, this.x, this.y, this.radius*2)){
+            boss.shot();
+            bullets.splice(bullets.indexOf(this), 1);
+        }
+
         //remove bullet if hits a border
         if(this.x-this.radius < currentRoom.borderOffset || this.x+this.radius > currentRoom.width-currentRoom.borderOffset ||
              this.y-this.radius < currentRoom.borderOffset || this.y+this.radius > currentRoom.height-currentRoom.borderOffset ) {
@@ -51,7 +57,7 @@ class Bullet {
     }
 
     display() {
-        let data = SPRITE_BULLETS[this.team];
-        canvasBuffer.image(data[0].get(floor(this.frame/2)*data[1], 0, data[1], data[2]), this.x-data[1]/2, this.y-data[2]/2);
+        let data = SPRITE_BULLETS[this.team + "" + floor(this.frame/2)];
+        canvasBuffer.image(data[0], this.x-data[1]/2, this.y-data[2]/2, data[1], data[2]);
     }
 }

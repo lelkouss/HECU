@@ -122,6 +122,8 @@ function stringToFunction(type) {
       return Turret;
     case "Mantis":
       return Mantis;
+    case "Drone":
+      return Drone;
     case"hp_drop":
       return Syringe;
     case "core_drop":

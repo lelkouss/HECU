@@ -239,7 +239,7 @@ html {
   }
 
   #credits{
-    transform: translateY(70vh);
+    transform: translateY(30vh);
     font-size: 2rem;
     font-weight: 600;
     color: whitesmoke;

@@ -265,3 +265,61 @@ class Mantis extends Enemy{
     }
   }
 }
+
+class Drone extends Enemy{
+  constructor(x, y) {
+    super(x, y);
+    this.health = 30;
+    this.sprite = 'drone';
+  }
+
+
+  update() {
+    super.display(this.sprite);
+    this.move();
+
+    if(this.shootCoolDown++ > 30) {
+      this.shoot_drone();
+      this.shootCoolDown = 0;
+    }
+
+  }
+
+  move() {
+
+    let to_player = createVector(player.x - this.x, player.y-this.y).mult(0.03);
+
+    if(dist(this.x, this.y, player.x, player.y) > 25){
+      this.x += to_player.x;
+      this.y += to_player.y;
+    }
+  }
+
+  shoot_drone() {
+    let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2));
+    playerVector.normalize();
+    
+    let sideVector = createVector(-playerVector.y, playerVector.x);
+    sideVector.normalize();
+
+    playerVector.mult(3);
+    sideVector.mult(3**.5);
+
+    let vectorMiddle = createVector(playerVector.x, playerVector.y);
+    vectorMiddle.normalize();
+    let vectorSide1 = createVector(playerVector.x + sideVector.x, playerVector.y + sideVector.y);
+    vectorSide1.normalize();
+    let vectorSide2 = createVector(playerVector.x - sideVector.x, playerVector.y - sideVector.y);
+    vectorSide2.normalize();
+    
+
+    let middleBullet = new Bullet(this.x+this.width/2, this.y+this.height/2, vectorMiddle.mult(2), 1);
+    let side1Bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, vectorSide1.mult(2), 1);
+    let side2Bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, vectorSide2.mult(2), 1);
+    
+    bullets.push(side1Bullet);
+    bullets.push(side2Bullet);
+    bullets.push(middleBullet);
+  }
+
+}

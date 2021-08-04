@@ -4,8 +4,10 @@ class Boss{
     constructor(x, y){
         this.x = x;
         this.y = y;
-        this.width = 10;
-        this.height = 10;
+        this.width = 25;
+        this.height = 20;
+
+        this.spriteFrame = 0;
         
         this.spawner_wave = [];
         this.spawn_timer = 100;
@@ -16,11 +18,14 @@ class Boss{
         this.beamRound = 0;
         this.max_minions = 2;
         this.attack_types = ["createMissiles", "beam", "spray"],
+        this.missiles = [];
 
+        this.show_health_bar = false;
+        
         this.frame = 0;
         this.attackType = 0;
 
-        this.missiles = [];
+        this.health = 100;
     }
 
     update(){
@@ -45,17 +50,23 @@ class Boss{
     }
 
     display(){
-        canvasBuffer.fill(0, 0, 100);
-        canvasBuffer.rect(this.x, this.y, this.width, this.height);
+        canvasBuffer.fill(32, 250, 163);
+        if(this.show_health_bar)
+            canvasBuffer.rect(this.x - 50 + this.width/2, this.y - 15, this.health, 3);
+
+        this.spriteFrame = (this.spriteFrame + 1) % 60
+        let data = SPRITE_BOSS[floor(this.spriteFrame/15)];
+        canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
     }
 
     createMinions(){ //create boss wave
        let num_roombas = Math.floor(random(0, this.max_minions));
         let num_turrets = Math.floor(random(0, this.max_minions));
         let num_mantis = Math.floor(random(0, this.max_minions));
+
         this.spawner_wave = {
             wave_1:{
-                Roomba: { num: num_roombas, positions: [undefined] },
+                Roomba: { num: num_roombas, positions: [] },
                 Turret: { num: num_turrets, positions: [] },
                 Mantis: { num: num_mantis, positions: [] },
                 Drops: {hp_drop: Math.floor(random(5, 10)), core_drop: 0}
@@ -101,7 +112,7 @@ class Boss{
                 }
                 let to_player = createVector( (player.x+player.width/2) - (missile.x), (player.y+player.height/2) - (missile.y) ); //track the player
                 to_player.mult(random(0.01, 0.02));
-                if(dist(missile.x, missile.y, player.x, player.y) < 45 || missile.tracking){
+                if(dist(missile.x, missile.y, player.x, player.y) < 20 || missile.tracking){
                     missile.velX = to_player.x;
                     missile.velY = to_player.y;  
                     missile.tracking = false;
@@ -138,16 +149,35 @@ class Boss{
             bullets.push(bullet);
         }
     }
+
+    shot(){
+    
+        this.show_health_bar = true;
+        this.health -= 5;
+        if(this.health <= 0) { //create drops and kill on death
+            this.triggerDeath();
+        }
+    }
+
     triggerDeath(){ //call this when the boss dies
-        let new_ship = new Ship(this.x, this.y);
-        drops.push(new_ship);
+        console.log("I died");
+        enemies = [];
+        let new_ship = new Ship(this.x + 12.5 - 13.5, this.y + 12.5 - 9);
+        currentRoom.drops.push(new_ship);
+        boss = null;
     }
 }
 
-function startBossFight(){ //add the boss to the room and begin the physics fight
-    boss = new Boss(currentRoom.width/2-5, currentRoom.height/2-5);
+function startBossFight(){ //add the boss to the room and begin the physics fight, called at getRoom
+    boss = new Boss(currentRoom.width/2-12.5, currentRoom.height/2-10); //-width/2, -height/2 of boss
 }
 
-function startBoss(){ //show the boss on the map
+function startBoss(){ //show the boss on the map, getMap
     show_boss_room = true;
+}
+
+class Waller{
+    constructor(){
+        
+    }
 }

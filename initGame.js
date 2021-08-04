@@ -15,6 +15,14 @@
             Mantis: { num: 0, positions: [] },
             Drops: {hp_drop: 1, core_drop: 0},
         },
+        
+        wave_2:{ 
+            Roomba: { num: 0, positions: [] },
+            Turret: { num: 0, positions: [] },
+            Mantis: { num: 0, positions: [] },
+            Drone: { num: 1, positions: [] },
+            Drops: {hp_drop: 1, core_drop: 0}, //*drops must be listed last
+        },
     }
     rooms[0][0] = new Room(0, tiles, borders, spawner_info); //!DO NOT GIVE THE FIRST ROOM A SPAWNER (CURRENT ROOM MUST BE INITIALIZED)
     currentRoom = rooms[0][0];

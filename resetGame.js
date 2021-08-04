@@ -16,5 +16,4 @@ let gameOver = () => { //show game over screen and compute score
 function beatGame(){
     $('#game-won').css('display', 'flex');
     $('#credits').addClass('move-up'); //roll credits
-    noLoop();
 }
