@@ -98,7 +98,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
 
   //ABSOLUTE BANGER
-  //soundBANGER.loop();
+  soundBANGER.loop();
 
   // set up the arrays for the current state of the game
   rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array

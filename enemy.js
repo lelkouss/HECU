@@ -7,7 +7,7 @@ class Enemy {
     this.width = 10;
     this.height = 10;
     this.health = 10; //needs to be dependent on type - inheritance
-    this.shootCoolDown = 120;
+    this.shootCoolDown = 0;
   }
     
   display(sprite) {
@@ -46,9 +46,9 @@ class Roomba extends Enemy{
   update() {
     this.move();
     super.display(this.sprite);
-    if(this.shootCoolDown-- < 0) {
+    if(this.shootCoolDown++ > 120) {
       super.shoot();
-      this.shootCoolDown = 120;
+      this.shootCoolDown = 0;
     }
 
 }
@@ -113,110 +113,129 @@ class Roomba extends Enemy{
 
 }
 class Turret extends Enemy{
-constructor(x, y) {
+  constructor(x, y) {
     super(x, y);
     this.health = 15;
     this.sprite = 'turret_closed';
   }
 
-update() { //
-  super.display(this.sprite);
-  if(this.inLineOfSight()) {
-    if(this.shootCoolDown-- < 0) {
-      soundTurretShoot.play();
-      super.shoot();
-      this.shootCoolDown = 30;
-    }
-  }
-}
-
-//returns whether or not the player is in the line of sight
-inLineOfSight() {
-  
-  for(let i=0; i<currentRoom.tiles.length; i++) {
-    for(let j=0; j<currentRoom.tiles[i].length; j++) {
-      if(currentRoom.tiles[i][j] == 1 && collideLineRect(this.x+this.width/2, this.y+this.height/2, player.x+player.width/2, player.y+player.height/2, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
-        this.sprite = "turret_closed";
-        return false;
+  update() { //
+    super.display(this.sprite);
+    if(this.inLineOfSight()) {
+      if(this.shootCoolDown++ > 30) {
+        soundTurretShoot.play();
+        super.shoot();
+        this.shootCoolDown = 0;
       }
     }
   }
 
-  this.sprite = "turret_static";
-  return true;
-}
+  //returns whether or not the player is in the line of sight
+  inLineOfSight() {
+    
+    for(let i=0; i<currentRoom.tiles.length; i++) {
+      for(let j=0; j<currentRoom.tiles[i].length; j++) {
+        if(currentRoom.tiles[i][j] == 1 && collideLineRect(this.x+this.width/2, this.y+this.height/2, player.x+player.width/2, player.y+player.height/2, j*currentRoom.tileWidth+currentRoom.borderOffset, i*currentRoom.tileHeight+currentRoom.borderOffset, currentRoom.tileWidth, currentRoom.tileHeight)) {
+          this.sprite = "turret_closed";
+          return false;
+        }
+      }
+    }
+
+    this.sprite = "turret_static";
+    return true;
+  }
 }
 
 
 class Mantis extends Enemy{
-constructor(x, y) {
-  super(x, y);
-  this.health = 10;
-  this.sprite = 'mantis';
-  this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
-  this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
-  this.path = [];
-  this.frame = 30;
-}
-
-update() {
-  super.display(this.sprite);
-  this.updatePath();
-  if(this.frame-- < 0) {
-    this.move();
-    this.frame = 30;
+  constructor(x, y) {
+    super(x, y);
+    this.health = 10;
+    this.sprite = 'mantis';
+    this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
+    this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
+    this.path = [];
+    this.arrived = true;
   }
-}
 
-updatePath() {
-  let playerTileRow = floor((player.y-currentRoom.borderOffset) / currentRoom.tileHeight);
-  let playerTileCol = floor((player.x-currentRoom.borderOffset) / currentRoom.tileWidth);
-  this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
-  this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
-
-  let path = [this.currentTileRow * 7 + this.currentTileCol];
-  let toVisit = [[this.currentTileRow*7+this.currentTileCol, path]];
-  let visited = [];
-
-  while(toVisit.length != 0) {
-    let data = toVisit.shift();
-    let tile = data[0], path = data[1];
-    visited.push(tile);
-    let neighbors = [];
-
-    let diffs = [-7, 7, 1, -1];
-    if(tile%7 == 0) {
-      diffs = [-7, 7, 1];
-    } else if(tile%7 == 6) {
-      diffs = [-7, 7, -1];
+  update() {
+    super.display(this.sprite);
+    if(this.arrived) {
+      this.updatePath();
+      this.destination = this.path[1];
+      this.arrived = false;
     }
-    for(const diff of diffs) {
-      neighbors.push(tile + diff);
+    this.move();
+
+    if(this.shootCoolDown++ > 30) {
+      super.shoot();
+      this.shootCoolDown = 0;
     }
 
+  }
 
-    for(const neighbor of neighbors) {
-      if(visited.indexOf(neighbor) == -1 && neighbor >= 0 && neighbor < 49 && currentRoom.tiles[floor(neighbor/7)][neighbor%7] != 1) {
-        if(floor(neighbor/7) == playerTileRow && neighbor%7 == playerTileCol) {
-          path.push(neighbor);
-          this.path = path;
-          return;
+  updatePath() {
+    let playerTileRow = floor((player.y-currentRoom.borderOffset) / currentRoom.tileHeight);
+    let playerTileCol = floor((player.x-currentRoom.borderOffset) / currentRoom.tileWidth);
+    this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
+    this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
+
+    let path = [this.currentTileRow * 7 + this.currentTileCol];
+    let toVisit = [[this.currentTileRow*7+this.currentTileCol, path]];
+    let visited = [];
+
+    while(toVisit.length != 0) {
+      let data = toVisit.shift();
+      let tile = data[0], path = data[1];
+      visited.push(tile);
+      let neighbors = [];
+
+      let diffs = [-7, 7, 1, -1];
+      if(tile%7 == 0) {
+        diffs = [-7, 7, 1];
+      } else if(tile%7 == 6) {
+        diffs = [-7, 7, -1];
+      }
+      for(const diff of diffs) {
+        neighbors.push(tile + diff);
+      }
+
+
+      for(const neighbor of neighbors) {
+        if(visited.indexOf(neighbor) == -1 && neighbor >= 0 && neighbor < 49 && currentRoom.tiles[floor(neighbor/7)][neighbor%7] != 1) {
+          if(floor(neighbor/7) == playerTileRow && neighbor%7 == playerTileCol) {
+            path.push(neighbor);
+            this.path = path;
+            return;
+          }
+          let newPath = [];
+          for(let i=0; i<path.length; i++)
+            newPath.push(path[i]);
+          newPath.push(neighbor);
+          toVisit.push([neighbor, newPath]);
         }
-        let newPath = [];
-        for(let i=0; i<path.length; i++)
-          newPath.push(path[i]);
-        newPath.push(neighbor);
-        toVisit.push([neighbor, newPath]);
       }
     }
+    return [];
   }
-  return [];
-}
 
-move() {
-  if(this.path.length > 1) {
-    this.x = this.path[1]%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5;
-    this.y = floor(this.path[1]/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5;
+  move() {
+    if(this.x == this.destination%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5 && this.y == floor(this.destination/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5) {
+      this.arrived = true;
+      return;
+    }
+    
+    if(this.x > this.destination%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5) {
+      this.x--;
+    } else if(this.x < this.destination%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5) {
+      this.x++;
+    }
+
+    if(this.y > floor(this.destination/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5) {
+      this.y--;
+    } else if(this.y < floor(this.destination/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5) {
+      this.y++;
+    }
   }
-}
 }
