@@ -39,7 +39,7 @@ class Player {
       }
 
       if(this.invincible) {
-        if(this.invincibleFrames++ > 20) {
+        if(this.invincibleFrames++ > 60) {
           this.invincible = false;
           this.invincibleFrames = 0;
         }
