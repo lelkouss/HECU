@@ -136,12 +136,19 @@ class Turret extends Enemy{
     super(x, y);
     this.health = 15;
     this.sprite = 'turret_closed';
+    this.aimFrames = 0;
   }
 
   update() { //
     super.display(this.sprite);
     if(this.inLineOfSight()) {
-      if(this.shootCoolDown++ > 30) {
+      this.aimFrames++;
+    } else {
+      this.aimFrames = 0;
+    }
+
+    if(this.aimFrames > 15) {
+      if(this.shootCoolDown++ > 40) {
         soundTurretShoot.play();
         super.shoot();
         this.shootCoolDown = 0;
