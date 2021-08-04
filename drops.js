@@ -43,6 +43,19 @@ class Core extends Drop{
     }
 }
 
+class Ship extends Drop{
+    constructor(x, y){
+        super(x, y);
+    }
+    update(){
+        this.display();
+        super.checkCollision();
+    }   
+    display(){
+        canvasBuffer.image(spriteCoreDrop, this.x, this.y, 12, 13);
+    }
+}
+
 function collectDrop(drop_type){ //Needs to be scaled for more drops
     if(drop_type instanceof Syringe && player.health < 10){ //collect drop and then delete it
         player.health+=3;
@@ -54,8 +67,14 @@ function collectDrop(drop_type){ //Needs to be scaled for more drops
             player.cores++;
             window.updatePlayerHearts();
             window.updatePlayerCores();
+            if(player.cores == 4){
+                startBoss();
+            }
             return true;
         }
+    } else if(drop_type instanceof Ship){ //beat game after picking up the ship
+        beatGame();
     }
     return false;
 }
+

@@ -24,8 +24,6 @@ class Boss{
     }
 
     update(){
-
-
         if(this.frame++ > 300) {
             this.attackType++;
             this.createMinions();
@@ -41,8 +39,6 @@ class Boss{
                 this.beamRound = 0;
             }
         }
-        
-
 
         this.display();
         this.updateMissiles();
@@ -105,10 +101,9 @@ class Boss{
                 }
                 let to_player = createVector( (player.x+player.width/2) - (missile.x), (player.y+player.height/2) - (missile.y) ); //track the player
                 to_player.mult(random(0.01, 0.02));
-                if(dist(missile.x, missile.y, player.x, player.y) > 45){
+                if(dist(missile.x, missile.y, player.x, player.y) < 45 || missile.tracking){
                     missile.velX = to_player.x;
                     missile.velY = to_player.y;  
-                } else{
                     missile.tracking = false;
                 }
             }
@@ -143,9 +138,16 @@ class Boss{
             bullets.push(bullet);
         }
     }
+    triggerDeath(){ //call this when the boss dies
+        let new_ship = new Ship(this.x, this.y);
+        drops.push(new_ship);
+    }
 }
 
-function startBossFight(){
+function startBossFight(){ //add the boss to the room and begin the physics fight
     boss = new Boss(currentRoom.width/2-5, currentRoom.height/2-5);
+}
 
+function startBoss(){ //show the boss on the map
+    show_boss_room = true;
 }

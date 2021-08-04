@@ -26,6 +26,9 @@ function getRoom(room_ID, direction){
 
 function moveRooms(door){
     currentRoom = getRoom(currentRoom.id, door.direction); //change current room
+    if(show_boss_room && currentRoom == rooms[0][2]){ //if all cores are collected and entering the boss room
+        startBossFight();
+    }
     player.x = door.spawn_x;
     player.y = door.spawn_y;
     bullets = [] //clear all bullets

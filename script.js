@@ -20,6 +20,8 @@ let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 
 let SPRITE_TILES, SPRITE_BORDERS, SPRITE_PLAYER, SPRITE_ENEMIES, SPRITE_BULLETS; //SPRITE MAPS
 
+let spriteBossIcon; //boss map icon
+
 //SOUNDS
 let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot;
 let soundDoorOpen, soundDoorClose;
@@ -59,6 +61,8 @@ function preload() {
   spritePlayerLeft = loadImage("/assets/player_left_anim.png");
 
   spritePlayerIcon = loadImage("/assets/favicon.png");
+
+  spriteBossIcon = loadImage("/assets/boss_icon.png");
 
   spriteTurretStatic = loadImage("/assets/turret_static.png"); //ENEMY SPRITES
   spriteTurretClosed = loadImage("/assets/turret_closed.png");

@@ -64,7 +64,4 @@ $(document).ready(function(){
         //$('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
         display_map ? display_map = false : display_map = true; //show the map
     })
-    $('#credits').ready( () => {
-        $('#credits').addClass('move-up');
-    })//roll credits
 })

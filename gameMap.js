@@ -1,3 +1,5 @@
+let show_boss_room = false;
+
 function drawMap(){
 
     let max_col = rooms[0].length;
@@ -42,7 +44,7 @@ function drawMap(){
             }
 
             //teleport to a previously visited room
-            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined){
+            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined && room.visited){
                 if(enemies.length == 0 && spawners.length == 0){
                     currentRoom = room;
                     bullets = [] //clear all bullets
@@ -57,11 +59,15 @@ function drawMap(){
         }
     }
 
+    if(show_boss_room){ //show the boss on the map
+        canvasBuffer.image(spriteBossIcon, 2 * 175/max_col + 6 + center_x, 6 + center_y, 13, 13);
+    }
+
     image(canvasBuffer,0,0);
 }
 
 function mouseToMapTile(x, y, w, h, room){
-    if(mouseX/3 > x && mouseX/3 < x+w && mouseY/3 > y && mouseY/3 < y+h){
+    if(mouseX/3 > x && mouseX/3 < x+w && mouseY/3 > y && mouseY/3 < y+h && !show_boss_room){ //don't allow teleport after collecting all cores
         //draw spaceguy icon over the room
         if(room != undefined && room.visited && enemies.length == 0 && spawners.length == 0){
             canvasBuffer.tint(255, 127);
