@@ -271,23 +271,41 @@ class Drone extends Enemy{
     super(x, y);
     this.health = 30;
     this.sprite = 'drone';
+    this.destinationX = player.x;
+    this.destinationY = player.y;
+    this.arrived = true;
+    this.waitFrames = 0;
   }
 
 
   update() {
     super.display(this.sprite);
-    this.move();
-
-    if(this.shootCoolDown++ > 30) {
-      this.shoot_drone();
-      this.shootCoolDown = 0;
+    if(this.arrived == true) {
+      if(this.waitFrames % 20 == 0)
+        this.shoot_drone();
+      if(this.waitFrames++ > 20) {
+        
+        this.updatePath();
+        this.arrived = false;
+        this.waitFrames = 0;
+      }
+      
     }
+    this.move();
+  }
 
+  updatePath() {
+    this.destinationX = player.x;
+    this.destinationY = player.y;
   }
 
   move() {
+    if( abs(this.x-this.destinationX) < 5 && abs(this.y-this.destinationY) < 5) {
+      this.arrived = true;
+      return;
+    }
 
-    let to_player = createVector(player.x - this.x, player.y-this.y).mult(0.03);
+    let to_player = createVector(this.destinationX - this.x, this.destinationY-this.y).mult(0.055);
 
     if(dist(this.x, this.y, player.x, player.y) > 25){
       this.x += to_player.x;

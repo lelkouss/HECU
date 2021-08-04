@@ -66,4 +66,12 @@ $(document).ready(function(){
         //$('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
         display_map ? display_map = false : display_map = true; //show the map
     })
+    $('#help-btn').click(()=>{
+        $('#help-container').css('display', 'flex');
+       // $('#start-game').hide();
+    })
+    $('#close-help').click(()=>{
+        $('#help-container').hide();
+       // $('#start-game').hide();
+    })
 })

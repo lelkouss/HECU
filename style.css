@@ -114,7 +114,7 @@ html {
   #start-btn{
     position: absolute;
     bottom: 20vh;
-    left: 35vw;
+    right: 35vw;
     width: 110px;
     height: 47px;
     background-image: url('./assets/play_button.png');
@@ -128,6 +128,64 @@ html {
     transform: scale(1.05);
     transition: all 0.15s ease-in;
   }
+
+  #help-btn{
+    position: absolute;
+    bottom: 10vh;
+    right: 35vw;
+    width: 110px;
+    height: 47px;
+    background-image: url('./assets/help_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all 0.15s ease-in;
+  }
+
+  #help-btn:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.15s ease-in;
+  }
+
+  #help-container{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  #instructions{
+    position: absolute;
+    width: 711px;
+    height: 650px;
+    display: flex;
+    align-items: center;
+    background: tomato;
+  }
+
+  #instructions img{
+    position: absolute;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    float: right;
+    transition: all 0.15s ease-in;
+  }
+
+  #instructions img:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all 0.15s ease-in;
+  }
+
+
+  #instruction p{
+
+  } 
 
   #game-over{
     position: absolute;
