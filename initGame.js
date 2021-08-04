@@ -32,7 +32,7 @@
             Roomba: { num: 0, positions: [] },
             Turret: { num: 4, positions: [23, 32, 34, 43] },
             Mantis: { num: 0, positions: [] },
-            Drops: {hp_drop: 2, core_drop: 0}, //*drops must be listed last
+            Drops: {hp_drop: 2, core_drop: 1}, //*drops must be listed last
         },
     }
     rooms[0][1] = new Room(1, tiles, borders, spawner_info);
