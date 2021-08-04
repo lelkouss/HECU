@@ -24,7 +24,6 @@ class Room {
     display() {
       // display borders
       for(const door of this.doors) {
-
         door.update();
         let sprite = SPRITE_BORDERS[door.sprite];
         canvasBuffer.image(sprite, 0, 0, 219, 184);

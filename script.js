@@ -1,6 +1,7 @@
 let currentRoom;
 let player, rooms, spawners, enemies, bullets;
 let display_map = false;
+let drops = [];
 
 //SPRITES
 let spriteCrosshair;
@@ -65,6 +66,9 @@ function preload() {
   spriteBulletPlayer = loadImage("/assets/bullet_player_anim.png");//BULLET ANIMATIONS
   spriteBulletEnemy = loadImage("/assets/bullet_enemy_anim.png");
 
+  spriteSyringeDrop = loadImage("/assets/syringe.png"); //DROPS
+  spriteCoreDrop = loadImage("/assets/power_core.png");
+
   SPRITE_BORDERS = {  "up_NONE": spriteBorderUpNone, "up_BLOCKED": spriteBorderUpBlocked, "up_OPEN": spriteBorderUpOpen,
                       "right_NONE": spriteBorderRightNone, "right_BLOCKED": spriteBorderRightBlocked, "right_OPEN": spriteBorderRightOpen, 
                       "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
@@ -76,6 +80,7 @@ function preload() {
 
 
   // SOUNDS
+  soundFormats('mp3');
   soundBANGER = loadSound("/assets/HECU_stage.mp3");
   soundPlayerShoot = loadSound("/assets/player_shoot.mp3");
   soundPlayerFootstep = loadSound("/assets/footstep.mp3");
@@ -86,7 +91,6 @@ function preload() {
 }
 
 function setup() {
-  console.log("SETYP");
   displayScale = 3;
   width = 219 * displayScale;
   height = 184 * displayScale;
@@ -96,9 +100,6 @@ function setup() {
   canvasBuffer.noSmooth();
   frameRate(60);
   colorMode(HSB, 360, 100, 100);
-
-  //ABSOLUTE BANGER
-  //soundBANGER.loop();
 
   // set up the arrays for the current state of the game
   rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array
@@ -116,23 +117,29 @@ function setup() {
   //draw players initial hearts and cores
   window.updatePlayerHearts();
   window.updatePlayerCores();
-
+    //ABSOLUTE BANGER
+  soundBANGER.loop();
+  
   noLoop();
   
 }
 
 function draw() {
+
   background(0);
   currentRoom.display();
   player.update();
   if(spawners.length > 0){
     spawners[0].tick();
   }
-  //update enemies
-  //update bullets
+
+  for(const drop of drops) 
+    drop.update();
+
   for(const bullet of bullets){
     bullet.update();
   }
+
   for(const enemy of enemies) {
     enemy.update();
   }

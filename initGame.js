@@ -23,7 +23,8 @@
         wave_1:{ 
             Roomba: { num: 0, positions: [] },
             Turret: { num: 0, positions: [] },
-            Mantis: { num: 6, positions: [] }
+            Mantis: { num: 6, positions: [] },
+            Drops: {hp_drop: 1, core_drop: 1}, //drops must be listed last
         },
         wave_2:{
             Roomba: { num: 0, positions: [] },
@@ -43,7 +44,7 @@
     spawner_info = { 
         wave_1:{
             Roomba: { num: 5, positions: [0, undefined] },
-            Turret: { num: 0, positions: [] } 
+            Turret: { num: 0, positions: [] },
         },
         wave_2:{
             Roomba: { num: 6, positions: [undefined] },

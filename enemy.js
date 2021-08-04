@@ -8,11 +8,20 @@ class Enemy {
     this.height = 10;
     this.health = 10; //needs to be dependent on type - inheritance
     this.shootCoolDown = 120;
+    this.show_health_bar = false;
+    this.drops = {
+      hp_drop: false,
+      core_drop: false,
+    }
   }
     
   display(sprite) {
     let data = SPRITE_ENEMIES[sprite];
     canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
+    if(this.show_health_bar){
+      canvasBuffer.fill(255, 0, 0);
+      canvasBuffer.rect(this.x, this.y-10, this.health, 3);
+    }
   }
 
   shoot() {
@@ -25,8 +34,17 @@ class Enemy {
 
   shot() {
     soundRoombaCollide.play();
+    this.show_health_bar = true;
     this.health -= 5;
-    if(this.health <= 0) {
+    if(this.health <= 0) { //create drops and kill on death
+        
+      for(const drop in this.drops){ 
+        if(this.drops[`${drop}`]){
+          let new_drop = Reflect.construct(stringToFunction(drop), [this.x, this.y]);
+          drops.push(new_drop);
+        }
+        
+      }
         enemies.splice(enemies.indexOf(this), 1);
     }
   }

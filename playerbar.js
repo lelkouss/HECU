@@ -24,10 +24,10 @@ $(document).ready(function(){
     window.updatePlayerCores = () => { //display cores, call window.updatePlayerCores() to refresh colleted cores
         if(typeof player !== "undefined"){
             $("#found_keys_container").empty();
-            for (let i = 0; i < 0; i++) { //add filled cores
+            for (let i = 0; i < player.cores; i++) { //add filled cores
                 $("#found_keys_container").append(filled_core);
             }
-            let unfound_cores = 4 - 0;
+            let unfound_cores = 4 - player.cores;
             for (let i = 0; i < unfound_cores; i++) { //add unfilled cores
                 $("#found_keys_container").append(empty_core);
             }
@@ -56,9 +56,4 @@ $(document).ready(function(){
         $('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
         display_map ? display_map = false : display_map = true; //show the map
     })
-
 })
-
-window.onload = function() {
-    document.getElementById("game_audio").play();
-}

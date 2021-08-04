@@ -13,7 +13,7 @@ class Player {
       this.shotCoolDown = 10;
       this.frame = 0;
       this.health = 10;
-
+      this.cores = 0;
       this.moving = false;
       this.movingFrame = 10;
     }

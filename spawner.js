@@ -44,6 +44,12 @@ function initEnemies(enemies) {
     spawn_pos;
   let options = findOpenTiles();
   Object.keys(enemies).forEach((enemy) => {
+
+    if(enemy.toLowerCase() == "drops"){
+      manageDrops(enemies[`${enemy}`], enemy_list);
+      return;
+    }
+
     for (let i = 0; i < enemies[`${enemy}`].num; i++) {
       let pos =
         enemies[`${enemy}`].positions[
@@ -102,7 +108,7 @@ function findOpenTiles() {
 
 function indexToPosition(row, col) {
   let pos = createVector(
-    col * currentRoom.tileWidth + currentRoom.borderOffset + currentRoom.tileWidth/2, //
+    col * currentRoom.tileWidth + currentRoom.borderOffset + currentRoom.tileWidth/2,
     row * currentRoom.tileHeight + currentRoom.borderOffset + currentRoom.tileHeight/2
   );
   return pos;
@@ -116,7 +122,28 @@ function stringToFunction(type) {
       return Turret;
     case "Mantis":
       return Mantis;
+    case"hp_drop":
+      return Syringe;
+    case "core_drop":
+      return Core;
     default:
       console.log(`Add ${type} to stringToFunction()`);
   }
+}
+
+function manageDrops(room_drops, enemy_list){ //give the drops to random enemies
+
+  for(const drop in room_drops){
+    let enemy_arr = [...enemy_list];
+    let num_drops = room_drops[drop];
+
+    while(num_drops > 0){
+      let random_enemy = enemy_list[Math.floor(random(0, enemy_arr.length))];
+      random_enemy.drops[drop] = true;
+      enemy_arr.splice(enemy_arr.indexOf(random_enemy), 1);
+      num_drops--;
+    }
+  
+  }
+
 }
