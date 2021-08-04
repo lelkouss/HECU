@@ -54,7 +54,7 @@ class Enemy {
 class Roomba extends Enemy{
   constructor(x, y) {
       super(x, y);
-      this.health = 10;
+      this.health = 20;
       
       this.speedX = 1;
       this.speedY = 0;
@@ -134,7 +134,7 @@ class Roomba extends Enemy{
 class Turret extends Enemy{
   constructor(x, y) {
     super(x, y);
-    this.health = 15;
+    this.health = 30;
     this.sprite = 'turret_closed';
     this.aimFrames = 0;
   }
@@ -177,7 +177,7 @@ class Turret extends Enemy{
 class Mantis extends Enemy{
   constructor(x, y) {
     super(x, y);
-    this.health = 10;
+    this.health = 25;
     this.sprite = 'mantis';
     this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
     this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
@@ -269,7 +269,7 @@ class Mantis extends Enemy{
 class Drone extends Enemy{
   constructor(x, y) {
     super(x, y);
-    this.health = 30;
+    this.health = 50;
     this.sprite = 'drone';
     this.destinationX = player.x;
     this.destinationY = player.y;
