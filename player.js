@@ -14,6 +14,8 @@ class Player {
       this.frame = 0;
       this.health = 10;
       this.cores = 0;
+      this.invincible = false;
+      this.invincibleFrames = 0;
       this.moving = false;
       this.movingFrame = 10;
     }
@@ -35,6 +37,14 @@ class Player {
       } else {
         this.movingFrame = 10;
       }
+
+      if(this.invincible) {
+        if(this.invincibleFrames++ > 20) {
+          this.invincible = false;
+          this.invincibleFrames = 0;
+        }
+      }
+
     }
   
     display() {
@@ -58,14 +68,6 @@ class Player {
         }
       }
 
-      // check if colldied with an enemy on x axis
-      for(const enemy of enemies) {
-        if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
-          this.x = oldX;
-          //SHOULD GET HURT AND NOT MOVED BACK
-        }
-      }
-
       this.y += this.dy;
       // check if collided with a wall on the y axis
       for(let i=0; i<this.room.tiles.length; i++) {
@@ -77,11 +79,12 @@ class Player {
         }
       } 
       
-      // check if colldied with an enemy on y axis
+      // check if colldied with an enemy 
       for(const enemy of enemies) {
-        if(collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
-          this.y = oldY;
-          //SHOULD GET HURT AND NOT MOVED BACK
+        if(!this.invincible && collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
+          console.log(this.health);
+          this.shot();
+          this.invincible = true;
         }
       }
 
