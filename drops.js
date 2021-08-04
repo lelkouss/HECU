@@ -4,7 +4,7 @@ class Drop{
         this.y = y;
     }
     checkCollision(){
-        if(collideRectRect(player.x, player.y, player.width, player.height, this.x, this.y, 12, 12)){
+        if(collideRectRect(player.x, player.y, player.width, player.height, this.x, this.y, 10, 10)){
             if(collectDrop(this)){
                 currentRoom.drops.splice(currentRoom.drops.indexOf(this), 1);
             }
@@ -21,7 +21,8 @@ class Syringe extends Drop{
         super.checkCollision();
     }
     display(){
-        canvasBuffer.image(spriteSyringeDrop, this.x, this.y, 12, 12);
+        console.log(this.x + " "+this.y);
+        canvasBuffer.image(spriteSyringeDrop, this.x-(17-10)/2, this.y-(17-10)/2, 17, 17);
     }
 }
 
@@ -33,7 +34,7 @@ class Core extends Drop{
         this.waitForSpawn();
     }
     display(){
-        canvasBuffer.image(spriteCoreDrop, this.x, this.y, 12, 13);
+        canvasBuffer.image(spriteCoreDrop, this.x-(15-10)/2, this.y-(16-10)/2, 15, 16);
     }
     waitForSpawn(){
         if(currentRoom.spawners <= 1){
@@ -52,7 +53,7 @@ class Ship extends Drop{
         super.checkCollision();
     }   
     display(){
-        canvasBuffer.image(spriteCoreDrop, this.x, this.y, 12, 13);
+        canvasBuffer.image(spriteCoreDrop, this.x-(12-10)/2, this.y-(13-10)/2, 12, 13);
     }
 }
 
