@@ -58,7 +58,7 @@ class Ship extends Drop{
 
 function collectDrop(drop_type){ //Needs to be scaled for more drops
     if(drop_type instanceof Syringe && player.health < 10){ //collect drop and then delete it
-        player.health+=3;
+        player.health += Math.min(10 - player.health, 3);
         window.updatePlayerHearts();
         return true;
     } else if(drop_type instanceof Core){

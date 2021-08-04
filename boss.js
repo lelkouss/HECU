@@ -161,7 +161,7 @@ class Boss{
 
     triggerDeath(){ //call this when the boss dies
         console.log("I died");
-        enemies = [];
+        enemies = [], spawners = [];
         let new_ship = new Ship(this.x + 12.5 - 13.5, this.y + 12.5 - 9);
         currentRoom.drops.push(new_ship);
         boss = null;
@@ -176,8 +176,8 @@ function startBoss(){ //show the boss on the map, getMap
     show_boss_room = true;
 }
 
-class Waller{
+class Walker{
     constructor(){
-        
+
     }
 }

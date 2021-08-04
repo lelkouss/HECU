@@ -56,7 +56,7 @@ class Door {
     }
 
     checkAvailability(){ //add key's to this down the line
-        if(enemies.length == 0 && spawners.length == 0 && this.exists){ //door is closed if enemies or spawners exist
+        if(enemies.length == 0 && spawners.length == 0 && this.exists && boss == null){ //door is closed if enemies or spawners exist
             if(!this.available) {
                 soundDoorOpen.play();
             }

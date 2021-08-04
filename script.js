@@ -157,8 +157,6 @@ function setup() {
 
   //ABSOLUTE BANGER
   soundBANGER.loop();
-  
-  //noLoop();
 }
 
 function draw() {
@@ -171,23 +169,21 @@ function draw() {
   for(const drop of currentRoom.drops) 
     drop.update();
 
-  player.update();
+  
   if(spawners.length > 0){
     spawners[0].tick();
   }
 
-  if(boss != null)
-    boss.update();
-
   for(const bullet of bullets){
     bullet.update();
   }
-
   for(const enemy of enemies) {
     enemy.update();
   }
+  if(boss != null)
+      boss.update();
+  player.update();
 
-  
   scale(displayScale);
   image(canvasBuffer,0,0);
 
