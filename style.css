@@ -138,7 +138,7 @@ html {
   #over-image-container{
     width: 380px;
     height: 305px;
-    margin-top: 16%;
+    margin-top: 200px;
     background-image: url('assets/gameover_template.png');
     background-position: center;
     background-repeat: no-repeat;
@@ -151,8 +151,8 @@ html {
     height: auto;
     display: flex;
     align-content: flex-start;
-    right: 43%;
-    top: 43%;
+    right: 40%;
+    top: 275px;
     color: white;
   }
 

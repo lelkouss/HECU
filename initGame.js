@@ -23,12 +23,13 @@
         wave_1:{ 
             Roomba: { num: 0, positions: [] },
             Turret: { num: 0, positions: [] },
-            Mantis: { num: 6, positions: [] },
-            Drops: {hp_drop: 1, core_drop: 1}, //drops must be listed last
+            Mantis: { num: 2, positions: [] },
+            Drops: {hp_drop: 6, core_drop: 1}, //*drops must be listed last
         },
         wave_2:{
             Roomba: { num: 0, positions: [] },
-            Turret: { num: 2, positions: [undefined] }
+            Turret: { num: 1, positions: [undefined] },
+            Drops: {hp_drop: 4, core_drop: 1},
         },
     }
     rooms[0][1] = new Room(1, tiles, borders, spawner_info);
@@ -45,14 +46,17 @@
         wave_1:{
             Roomba: { num: 5, positions: [0, undefined] },
             Turret: { num: 0, positions: [] },
+            Drops: {hp_drop: 2, core_drop: 4},
         },
         wave_2:{
             Roomba: { num: 6, positions: [undefined] },
-            Turret: { num: 0, positions: [undefined] }
+            Turret: { num: 0, positions: [undefined] }, 
+            Drops: {hp_drop: 1, core_drop: 1},
         },
         wave_3:{
             Roomba: { num: 5, positions: [0, 1, 2, 3, 4] },
-            Turret: { num: 7, positions: [undefined] }
+            Turret: { num: 7, positions: [undefined] }, 
+            Drops: {hp_drop: 7, core_drop: 0},
         },
     }
     rooms[0][2] = new Room(2, tiles, borders, spawner_info);

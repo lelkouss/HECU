@@ -5,8 +5,9 @@ class Drop{
     }
     checkCollision(){
         if(collideRectRect(player.x, player.y, player.width, player.height, this.x, this.y, 12, 12)){
-            collectDrop(this);
-            drops.splice(drops.indexOf(this), 1);
+            if(collectDrop(this)){
+                currentRoom.drops.splice(currentRoom.drops.indexOf(this), 1);
+            }
         }
     }
 }
@@ -38,15 +39,18 @@ class Core extends Drop{
 }
 
 function collectDrop(drop_type){ //Needs to be scaled for more drops
-    if(drop_type instanceof Syringe){
-        if(player.health < 10){
-            player.health++;
-            window.updatePlayerHearts();
-        }
+    if(drop_type instanceof Syringe && player.health < 10){ //collect drop and then delete it
+        player.health++;
+        window.updatePlayerHearts();
+        return true;
     } else{
         if(player.cores < 4){
+            player.health = 10;
             player.cores++;
+            window.updatePlayerHearts();
             window.updatePlayerCores();
+            return true;
         }
     }
+    return false;
 }

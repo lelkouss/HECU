@@ -19,6 +19,8 @@ class Room {
       this.width = 219;
       this.height = 184; 
       this.borderOffset = 22;
+
+      this.drops = [];
     }
 
     display() {

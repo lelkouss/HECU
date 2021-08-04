@@ -82,7 +82,6 @@ class Player {
       // check if colldied with an enemy 
       for(const enemy of enemies) {
         if(!this.invincible && collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
-          console.log(this.health);
           this.shot();
           this.invincible = true;
         }

@@ -38,6 +38,7 @@ $(document).ready(function(){
 
     $('#btn-img-yes').click(function() { //reset the game on yes
         resetGame();
+        game_over = false;
     })
     $('#btn-img-no').click(function() { //move back to the title screen on no
         console.log("object");
@@ -45,12 +46,18 @@ $(document).ready(function(){
         $('#start-game').toggleClass('move-to-left');
         $('#score').empty() //hide score
         $('#game-over').hide();
+        game_over = true;
         noLoop();
     })
     $('#start-btn').click(function(){ //start the game on title screen btn
         $('#start-game').toggleClass('move-to-left');
         $('#game-over').hide();
-        loop();
+        if(!game_over){
+            loop();
+        } else{
+            $('#game-over').css('display', 'flex');
+            noLoop();
+        }
     })
     $('#map-container').click(()=>{
         $('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer

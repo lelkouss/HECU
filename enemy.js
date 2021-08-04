@@ -20,7 +20,7 @@ class Enemy {
     let data = SPRITE_ENEMIES[sprite];
     canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
     if(this.show_health_bar){
-      canvasBuffer.fill(255, 0, 0);
+      canvasBuffer.fill(32, 250, 163);
       canvasBuffer.rect(this.x, this.y-10, this.health, 3);
     }
   }
@@ -41,8 +41,9 @@ class Enemy {
         
       for(const drop in this.drops){ 
         if(this.drops[`${drop}`]){
-          let new_drop = Reflect.construct(stringToFunction(drop), [this.x, this.y]);
-          drops.push(new_drop);
+          let new_drop = Reflect.construct(stringToFunction(drop), [this.x + random(-10, 10), this.y]);
+          console.log(`dropped a ${drop}`);
+          currentRoom.drops.push(new_drop);
         }
         
       }

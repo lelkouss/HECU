@@ -1,8 +1,8 @@
 
 function getRoom(room_ID, direction){
 
-    let col = room_ID % 10; //compute the index of the current room
-    let row = Math.floor((room_ID/10) % 10);
+    let col = room_ID % 7; //compute the index of the current room
+    let row = Math.floor((room_ID/7) % 10);
     let found_room = null;
 
     let dir_ = direction.toLowerCase();

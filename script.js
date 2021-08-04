@@ -1,7 +1,6 @@
 let currentRoom;
 let player, rooms, spawners, enemies, bullets;
-let display_map = false;
-let drops = [];
+let display_map = false, game_over = false;
 
 //SPRITES
 let spriteCrosshair;
@@ -136,9 +135,6 @@ function draw() {
     spawners[0].tick();
   }
 
-  for(const drop of drops) 
-    drop.update();
-
   for(const bullet of bullets){
     bullet.update();
   }
@@ -146,6 +142,9 @@ function draw() {
   for(const enemy of enemies) {
     enemy.update();
   }
+  
+  for(const drop of currentRoom.drops) 
+    drop.update();
   
   scale(displayScale);
   image(canvasBuffer,0,0);

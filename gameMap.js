@@ -1,21 +1,48 @@
 function drawMap(){
 
     let max_col = rooms[0].length;
-    let max_row = rooms.length;
+    let center_x = 22;
+    let center_y = 40;
+
 
     canvasBuffer.fill(255);
     canvasBuffer.stroke(0);
     for (let [i, _rooms] of rooms.entries()) {
         for (const [j, room] of _rooms.entries()) {
-            //console.log(i * max_col, j * max_row, width/max_col, height/max_row);
            if(room != undefined)
                 room.visited ? canvasBuffer.fill(0, 100, 100) : canvasBuffer.fill(200);
-            canvasBuffer.rect(j * 219/max_col, i * 184/max_row, 219/max_col, 184/max_row);   
+            canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col);   
             if(room == currentRoom){
-                canvasBuffer.image(spritePlayerIcon, j * 219/max_col + 6, i * 184/max_row + 12.5, 20, 20)
+                canvasBuffer.image(spritePlayerIcon, j * 175/max_col + 6 + center_x, i * 175/max_col + 6 + center_y, 13, 13)
             }
+
+            if(room != undefined){ //draw doors to each room
+                let room_doors = [...room.doors];
+               canvasBuffer.noStroke(0);
+                for(const [ii, room_door] of room_doors.entries()){
+                    if(room_door.exists && room_door.available){
+                        console.log(ii, room_door);
+                        if(ii == 0){
+                            canvasBuffer.fill(100, 0, 0);
+                            canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y, 10, 3);   
+                        } else if(ii == 1){
+                            canvasBuffer.fill(0, 0, 100);
+                            canvasBuffer.rect(j * 175/max_col + center_x + 175/max_col - 3, i * 175/max_col + center_y + 175/(2*max_col) - 5, 3, 10);   
+                        } else if(ii == 2){
+                            canvasBuffer.fill(100, 0, 0);
+                            canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y + 175/(max_col) -1.53, 10, 3);   
+                        } else{
+                            canvasBuffer.fill(0, 0, 100);
+                            canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y + 175/(2*max_col) - 5, 3, 10);   
+                        }
+                    }
+                }
+                canvasBuffer.stroke(0);
+
+            }
+
             //teleport to a previously visited room
-            if(mouseToMapTile(j * 219/max_col, i * 184/max_row, 219/max_col, 184/max_row, room) && mouseIsPressed && room != undefined && room.visited){
+            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined && room.visited){
                 if(enemies.length == 0 && spawners.length == 0){
                     currentRoom = room;
                     bullets = [] //clear all bullets
@@ -38,7 +65,7 @@ function mouseToMapTile(x, y, w, h, room){
         //draw spaceguy icon over the room
         if(room != undefined && room.visited && enemies.length == 0 && spawners.length == 0){
             canvasBuffer.tint(255, 127);
-            canvasBuffer.image(spritePlayerIcon, x + 6, y + 12.5, 20, 20);
+            canvasBuffer.image(spritePlayerIcon, x + 6, y + 6, 13, 13);
             canvasBuffer.noTint(); //not having this will break the game
         }
         return true;
