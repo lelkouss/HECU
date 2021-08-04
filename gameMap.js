@@ -44,7 +44,7 @@ function drawMap(){
             }
 
             //teleport to a previously visited room
-            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined && room.visited){
+            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined){
                 if(enemies.length == 0 && spawners.length == 0){
                     currentRoom = room;
                     bullets = [] //clear all bullets
