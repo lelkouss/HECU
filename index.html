@@ -7,6 +7,20 @@
 
     <title>HECU</title>
 
+    <!--Server stuff
+    <script defer src="/__/firebase/8.8.1/firebase-app.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-functions.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-storage.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-analytics.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-remote-config.js"></script>
+    <script defer src="/__/firebase/8.8.1/firebase-performance.js"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    -->
+
     <!-- import jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -36,6 +50,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/addons/p5.sound.min.js"></script>
     <script src="https://cdn.JsDelivr.net/gh/bmoren/p5.collide2D/p5.collide2d.min.js"></script>
     <!--<script src="lib/p5.play.js" type="text/javascript"></script>-->
+
+    <script>
+      var ua = navigator.userAgent.toLowerCase(); 
+        if (ua.indexOf('safari') != -1) { 
+          if (ua.indexOf('chrome') > -1) {
+            
+          } else {
+            alert("This game performs best on chrome!") // Safari
+          }
+        }
+    </script>
   </head>
   
   <body>
@@ -72,7 +97,7 @@
 
              <b>Power Core Storage:</b> Find all 4 cores, and open your map to find the boss <br><br>
 
-            <b>Health Points:</b> Lose all your health, and you must restart your journey. A handy orange syringe will restore your health. <br><br>
+            <b>Health Points:</b> Lose all your health, and come back feeling better than ever. A handy orange syringe will restore your health. <br><br>
 
             Best of luck space hero, and may the stars be with you! <br><br>
           </p>
@@ -100,18 +125,32 @@
       <div id="won-image-container">
         <img id="last-names" src="assets/endscreen_names.png"></img>
         <div id="credits">
-          <p>This is the credits <br>
+          <p>
             Made by: <br>
             Gashon Hussein <br>
             Matthew Castilleja <br>
             Lena Elkoussy <br>
             JJ <br> <br> <br>
-            Thanks to our CSSI TEAM: <br>
+            Special Thanks to our CSSI Instructors: <br>
             Dave, Courtney, and Angela <br>
 
           </p>
         </div>
     </div>
     </div>
+
+    <div id="find-boss-container">
+      <div id="find-boss">
+        <h1>Your Map Teleportation has Stopped Working...<br><br>
+        Use the Map to Locate and Find the Boss<br></h1>
+      </div>
+    </div>
+
+    <div id="boss-convo-container">
+      <div id="boss-convo">
+        <h2>You'll Have to Beat Me if You Hope to Escape</h2>
+      </div>
+    </div>
+
   </body>
 </html>

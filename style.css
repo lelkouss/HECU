@@ -276,6 +276,50 @@ html {
     transition: all 0.05s ease-in;
   }
 
+  #find-boss-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    z-index: 6;
+    transition: all 15s ease;
+  }
+
+  #find-boss{
+    width: 50vw;
+    height: 50vh;
+    display: block;
+    text-align: center;
+  }
+
+  #boss-convo-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    z-index: 6;
+    transition: all 15s ease;
+  }
+
+  #boss-convo{
+    margin-top: 20vh;
+    width: 40vw;
+    height: 50vh;
+    display: block;
+    text-align: center;
+  }
+
+  .fade-text{
+    opacity: 0 !important;
+    z-index: -2 !important;
+  }
+
   #map-container{
     position: absolute; 
     right: 45%;
@@ -326,7 +370,7 @@ html {
     font-size: 2rem;
     font-weight: 600;
     color: whitesmoke;
-    transition: all 10s none;
+    transition: all 40s ease;
   }
 
   #player_health_container{
@@ -365,8 +409,8 @@ html {
   }
 
   .move-up{ /*Move the credits up*/
-    transform: translateY(-100vh) !important;
-    transition: all 20s ease-in;
+    transform: translateY(-200vh) !important;
+    transition: all 40s ease;
   }
 
   .move-to-left{

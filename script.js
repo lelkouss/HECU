@@ -1,6 +1,6 @@
 let currentRoom;
 let player, rooms, spawners, enemies, bullets;
-let display_map = false, game_over = false, run_game = false;
+let display_map = false, game_over = false, run_game = false, play_music = false;
 let boss = null;
 let visited_rooms = [], walkers = [];
 let found_cores = 0;
@@ -154,8 +154,11 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
 
   //ABSOLUTE BANGER
-  soundBANGER.setVolume(volume_);
-  soundBANGER.loop();
+  if(!play_music){
+    soundBANGER.setVolume(volume_);
+    soundBANGER.loop();
+    play_music = true;
+  }
 
   // set up the arrays for the current state of the game
   rooms = Array.from(Array(4), () => new Array(7)) //4 by 7 array
@@ -165,8 +168,22 @@ function setup() {
   currentRoom.visited = true;
   enemies = [];
   spawners = []; //currentRoom.spawners; 
+  console.log(visited_rooms);
+  for(let i = 0; i < visited_rooms.length; i++){ //if room has been visited, remove its spawners
+    console.log(visited_rooms[i]);
+    for(let j = 0; j < rooms.length; j++){
+      for(let k = 0; k < rooms[j].length; k++){
+        if(visited_rooms[i].id == rooms[j][k].id){
+          console.log('Similar rooms');
+          rooms[j][k].spawners = [];
+          rooms[j][k].enemyList = [];
+          console.log(visited_rooms[i],rooms[j][k]);
+        }
+      }
+    }
+  }
 
-  //startBossFight();
+
 
    // currentSpawner.enemies; 
   player = new Player(3*currentRoom.tileWidth + currentRoom.tileWidth/2, 6*currentRoom.tileHeight + currentRoom.tileHeight/2, currentRoom);

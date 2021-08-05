@@ -179,7 +179,6 @@ class Boss{
             this.phase_two = true;
         } */
         if(this.health < 50 && this.max_minions <= 4) {
-            phaseTwo();
             this.max_minions++;
         }
         if(this.health < 25 && this.max_minions <= 5) {this.max_minions++;}   
@@ -197,6 +196,10 @@ class Boss{
 function startBossFight(){ //add the boss to the room and begin the physics fight, called at getRoom
     boss = new Boss(currentRoom.width/2-12.5, currentRoom.height/2-10); //-width/2, -height/2 of boss
     currentRoom.purpleTiles = true;
+    $('#boss-convo-container').css('display', 'flex');
+    $('#boss-convo-container').ready(()=>{
+        $('#boss-convo-container').addClass('fade-text');
+    })
 }
 
 function startBoss(){ //show the boss on the map, getMap
