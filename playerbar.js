@@ -24,8 +24,13 @@ $(document).ready(function(){
     window.updatePlayerCores = () => { //display cores, call window.updatePlayerCores() to refresh colleted cores
         found_cores = player.cores;
         if(typeof player !== "undefined"){
-            if(player.cores == 4)
-              show_boss_room = true;
+            if(player.cores == 4){
+                show_boss_room = true;
+                $('#find-boss-container').css('display', 'flex');
+                $('#find-boss-container').ready(()=>{
+                    $('#find-boss-container').addClass('fade-text');
+                })
+            }
             $("#found_keys_container").empty();
             for (let i = 0; i < player.cores; i++) { //add filled cores
                 $("#found_keys_container").append(filled_core);

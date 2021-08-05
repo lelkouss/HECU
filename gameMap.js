@@ -19,11 +19,11 @@ function drawMap(){
                 }
             }
 
-           if(room != undefined)
+           if(room != undefined) //color rooms based on whether they've been visited
             room.visited ? canvasBuffer.fill(0, 100, 120) : canvasBuffer.fill(150);
         
             canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col);   
-            if(room == currentRoom){
+            if(room == currentRoom){ //draw player icon on current room
                 canvasBuffer.image(spritePlayerIcon, j * 175/max_col + 6 + center_x, i * 175/max_col + 6 + center_y, 13, 13)
             }
 
@@ -48,12 +48,14 @@ function drawMap(){
                     }
                 }
                 canvasBuffer.stroke(0);
-
             }
 
             //teleport to a previously visited room
-            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined){
+            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined && room.visited && !show_boss_room){
                 if(enemies.length == 0 && spawners.length == 0){
+                    if(visited_rooms.indexOf(currentRoom) == -1){
+                        visited_rooms.push(currentRoom);
+                    }
                     currentRoom = room;
                     bullets = [] //clear all bullets
                     player.room = currentRoom; // update player view of the room
@@ -61,6 +63,7 @@ function drawMap(){
                     player.x = doors[0].spawn_x;//set player spawn
                     player.y = doors[0].spawn_y;
                 }
+                $('#canvas_div').toggleClass('pointer'); //change the pointer back to crosshair
                 display_map = false;
                 
             }
@@ -77,7 +80,7 @@ function drawMap(){
 function mouseToMapTile(x, y, w, h, room){
     if(mouseX/3 > x && mouseX/3 < x+w && mouseY/3 > y && mouseY/3 < y+h){ //don't allow teleport after collecting all cores
         //draw spaceguy icon over the room
-        if(room != undefined && room.visited && enemies.length == 0 && spawners.length == 0){ //!show_boss_room
+        if(room != undefined && room.visited && enemies.length == 0 && spawners.length == 0 && !show_boss_room){ //!show_boss_room
             canvasBuffer.tint(255, 127);
             canvasBuffer.image(spritePlayerIcon, x + 6, y + 6, 13, 13);
             canvasBuffer.noTint(); //not having this will break the game
