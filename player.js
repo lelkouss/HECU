@@ -50,7 +50,14 @@ class Player {
     display() {
       //getting sprite and draw
       let data = SPRITE_PLAYER[this.sprite];
-      canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
+      if(this.invincible && floor(this.invincibleFrames/5) % 2 == 0) {
+        canvasBuffer.tint(255, 0, 0);
+        canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
+        canvasBuffer.noTint();
+      }
+      else {
+        canvasBuffer.image(data[0].get(floor(this.frame/5)*data[1], 0, data[1], data[2]), this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
+      }
     }
   
     move() {
@@ -81,9 +88,8 @@ class Player {
       
       // check if colldied with an enemy 
       for(const enemy of enemies) {
-        if(!this.invincible && collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
+        if(this.invincibleFrames > 90 && collideRectRect(this.x, this.y, this.width, this.height, enemy.x, enemy.y, enemy.width, enemy.height)) {
           this.shot();
-          this.invincible = true;
         }
       }
 
@@ -134,11 +140,16 @@ class Player {
 
     //remove health if shot
     shot(){
-      this.health--;
-      window.updatePlayerHearts();
-       //check if game ended
-       if(this.health < 1)
+      if(!this.invincible) {
+        this.health--;
+        this.invincible = true;
+      
+        window.updatePlayerHearts();
+        //check if game ended
+        if(this.health < 1)
           gameOver();
+      }
+      
     }
 
     setSprite() {

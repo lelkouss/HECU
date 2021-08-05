@@ -6,13 +6,22 @@ function drawMap(){
     let center_x = 22;
     let center_y = 40;
 
+    canvasBuffer.fill(0, 150);
+    canvasBuffer.rect(0, 0, width, height);
 
-    canvasBuffer.fill(255);
     canvasBuffer.stroke(0);
     for (let [i, _rooms] of rooms.entries()) {
         for (const [j, room] of _rooms.entries()) {
+
+            for(const visited_ of visited_rooms){
+                if(room.id == visited_.id){
+                    room.visited = true;
+                }
+            }
+
            if(room != undefined)
-                room.visited ? canvasBuffer.fill(0, 100, 100) : canvasBuffer.fill(200);
+            room.visited ? canvasBuffer.fill(0, 100, 120) : canvasBuffer.fill(150);
+        
             canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col);   
             if(room == currentRoom){
                 canvasBuffer.image(spritePlayerIcon, j * 175/max_col + 6 + center_x, i * 175/max_col + 6 + center_y, 13, 13)
@@ -23,7 +32,6 @@ function drawMap(){
                canvasBuffer.noStroke(0);
                 for(const [ii, room_door] of room_doors.entries()){
                     if(room_door.exists && room_door.available){
-                        console.log(ii, room_door);
                         if(ii == 0){
                             canvasBuffer.fill(100, 0, 0);
                             canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y, 10, 3);   
@@ -67,9 +75,9 @@ function drawMap(){
 }
 
 function mouseToMapTile(x, y, w, h, room){
-    if(mouseX/3 > x && mouseX/3 < x+w && mouseY/3 > y && mouseY/3 < y+h && !show_boss_room){ //don't allow teleport after collecting all cores
+    if(mouseX/3 > x && mouseX/3 < x+w && mouseY/3 > y && mouseY/3 < y+h){ //don't allow teleport after collecting all cores
         //draw spaceguy icon over the room
-        if(room != undefined && room.visited && enemies.length == 0 && spawners.length == 0){
+        if(room != undefined && room.visited && enemies.length == 0 && spawners.length == 0){ //!show_boss_room
             canvasBuffer.tint(255, 127);
             canvasBuffer.image(spritePlayerIcon, x + 6, y + 6, 13, 13);
             canvasBuffer.noTint(); //not having this will break the game

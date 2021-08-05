@@ -1,7 +1,10 @@
 function resetGame(){
     $('#game-over').hide();
+    boss.health = 100; //reset the boss's health
     frameCount = 0; //reset score system
     setup();
+    if(boss != null)
+        currentRoom.purpleTiles = true;
     loop();
 }
 

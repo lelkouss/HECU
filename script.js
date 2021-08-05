@@ -2,12 +2,15 @@ let currentRoom;
 let player, rooms, spawners, enemies, bullets;
 let display_map = false, game_over = false, run_game = false;
 let boss = null;
+let visited_rooms = [];
+let found_cores = 0;
 
 const volume_ = 0.03;
 
 //SPRITES
 let spriteCrosshair;
 let spriteTile0, spriteTile1, spriteTile2, spriteTile3, spriteTile4, spriteTile5;
+let spriteAltTile0, spriteAltTile1, spriteAltTile2, spriteAltTile3, spriteAltTile4, spriteAltTile5;
 
 let spriteBorderUpNone, spriteBorderUpBlocked, spriteBorderUpOpen;  //BORDER SPRITES
 let spriteBorderRightNone, spriteBorderRightBlocked, spriteBorderRightOpen;
@@ -27,6 +30,7 @@ let spriteEscapePod; //escape pod
 //SOUNDS
 let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot;
 let soundDoorOpen, soundDoorClose;
+let soundSyringePickup, soundCorePickup;
 let soundBANGER;
 
 
@@ -40,6 +44,13 @@ function preload() {
   spriteTile3 = loadImage("assets/tiles3.png");
   spriteTile4 = loadImage("assets/tiles4.png");
   spriteTile5 = loadImage("assets/tiles5.png");
+
+  spriteAltTile0 = loadImage("assets/tiles_alt0.png");
+  spriteAltTile1 = loadImage("assets/tiles_alt1.png");
+  spriteAltTile2 = loadImage("assets/tiles_alt2.png");
+  spriteAltTile3 = loadImage("assets/tiles_alt3.png");
+  spriteAltTile4 = loadImage("assets/tiles_alt4.png");
+  spriteAltTile5 = loadImage("assets/tiles_alt5.png");
   
   spriteBorderUpNone = loadImage("/assets/border_top_none.png");    //BORDER IMAGES
   spriteBorderUpBlocked = loadImage("/assets/border_top_closed.png");
@@ -82,6 +93,10 @@ function preload() {
   spriteBulletEnemy1 = loadImage("/assets/bullet_enemy_2.png");
   spriteBulletEnemy2 = loadImage("/assets/bullet_enemy_3.png");
   spriteBulletEnemy3 = loadImage("/assets/bullet_enemy_4.png");
+  spriteBulletBoss0 = loadImage("/assets/bullet_boss_1.png");
+  spriteBulletBoss1 = loadImage("/assets/bullet_boss_2.png");
+  spriteBulletBoss2 = loadImage("/assets/bullet_boss_3.png");
+  spriteBulletBoss3 = loadImage("/assets/bullet_boss_4.png");
 
   spriteSyringeDrop = loadImage("/assets/syringe.png"); //DROPS
   spriteCoreDrop = loadImage("/assets/power_core.png");
@@ -98,8 +113,10 @@ function preload() {
   SPRITE_PLAYER = {   "up": [spritePlayerUp, 13, 22], "right": [spritePlayerRight, 18, 22], "down": [spritePlayerDown, 13, 22], "left": [spritePlayerLeft, 18, 22]};
   SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14], 'mantis':[spriteMantis, 23, 24], 'drone':[spriteDrone, 14, 18]};
   SPRITE_TILES = {0: spriteTile0, 1: spriteTile1, 2: spriteTile2, 3: spriteTile3, 4: spriteTile4, 5: spriteTile5};
+  SPRITE_ALT_TILES = {0: spriteAltTile0, 1: spriteAltTile1, 2: spriteAltTile2, 3: spriteAltTile3, 4: spriteAltTile4, 5: spriteAltTile5};
   SPRITE_BULLETS = {  "00": [spriteBulletPlayer0, 8, 8], "01": [spriteBulletPlayer1, 8, 8], "02": [spriteBulletPlayer2, 8, 8], "03": [spriteBulletPlayer3, 8, 8],
-                      "10": [spriteBulletEnemy0, 8, 8], "11": [spriteBulletEnemy1, 8, 8], "12": [spriteBulletEnemy2, 8, 8], "13": [spriteBulletEnemy3, 8, 8] };
+                      "10": [spriteBulletEnemy0, 8, 8], "11": [spriteBulletEnemy1, 8, 8], "12": [spriteBulletEnemy2, 8, 8], "13": [spriteBulletEnemy3, 8, 8],
+                      "20": [spriteBulletBoss0, 8, 8], "21": [spriteBulletBoss1, 8, 8], "22": [spriteBulletBoss2, 8, 8], "23": [spriteBulletBoss3, 8, 8] };
   SPRITE_BOSS = {0: [spriteBoss0, 25, 35], 1:[spriteBoss1, 25, 35], 2:[spriteBoss2, 25, 35], 3:[spriteBoss3, 25, 35]};
 
 
@@ -119,6 +136,10 @@ function preload() {
   soundDoorOpen.setVolume(volume_);
   soundDoorClose = loadSound("/assets/door_close.mp3");
   soundDoorClose.setVolume(volume_);
+  soundSyringePickup = loadSound("/assets/hp_pickup.mp3");
+  soundSyringePickup.setVolume(volume_);
+  soundCorePickup = loadSound("/assets/key_pickup.mp3");
+  soundCorePickup.setVolume(volume_);
 }
 
 function setup() {
@@ -150,6 +171,7 @@ function setup() {
    // currentSpawner.enemies; 
   player = new Player(3*currentRoom.tileWidth + currentRoom.tileWidth/2, 6*currentRoom.tileHeight + currentRoom.tileHeight/2, currentRoom);
   bullets = [];
+  player.cores = found_cores;
 
   //draw players initial hearts and cores
   window.updatePlayerHearts();

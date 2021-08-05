@@ -16,20 +16,20 @@ class Boss{
         this.isBeaming = false;
         this.beamFrame = 0;
         this.beamRound = 0;
-        this.max_minions = 2;
+        this.max_minions = 4;
         this.attack_types = ["createMissiles", "beam", "spray"],
         this.missiles = [];
 
         this.show_health_bar = false;
         
-        this.frame = 0;
+        this.frame = 300;
         this.attackType = 0;
 
         this.health = 100;
     }
 
     update(){
-        if(this.frame++ > 300) {
+        if(this.frame++ > 450) {
             this.attackType++;
             this.createMinions();
             this.attack(this.attack_types[this.attackType % 3]);
@@ -50,9 +50,9 @@ class Boss{
     }
 
     display(){
-        canvasBuffer.fill(32, 250, 163);
+        canvasBuffer.fill(255, 43, 220);
         if(this.show_health_bar)
-            canvasBuffer.rect(this.x - 50 + this.width/2, this.y - 15, this.health, 3);
+            canvasBuffer.rect(this.x - 50 + this.width/2, this.y - 15, this.health, 4);
 
         this.spriteFrame = (this.spriteFrame + 1) % 60
         let data = SPRITE_BOSS[floor(this.spriteFrame/15)];
@@ -60,16 +60,26 @@ class Boss{
     }
 
     createMinions(){ //create boss wave
-       let num_roombas = Math.floor(random(0, this.max_minions));
-        let num_turrets = Math.floor(random(0, this.max_minions));
-        let num_mantis = Math.floor(random(0, this.max_minions));
+        let num_roombas, num_turrets, num_mantis;
+        if(enemies.length > this.max_minions){
+            return;
+        }
+        if (enemies.length < this.max_minions && this.health > 50) {
+            num_roombas = Math.floor(random(1, 2));
+            num_turrets = Math.floor(random(1, 2));
+            num_mantis = Math.floor(random(0, 2));
+        } else {
+            num_roombas = Math.floor(random(0, 2));
+            num_turrets = Math.floor(random(0, 2));
+            num_mantis = Math.floor(random(0, 3));
+        }
 
         this.spawner_wave = {
             wave_1:{
                 Roomba: { num: num_roombas, positions: [] },
                 Turret: { num: num_turrets, positions: [] },
                 Mantis: { num: num_mantis, positions: [] },
-                Drops: {hp_drop: Math.floor(random(5, 10)), core_drop: 0}
+                Drops: {hp_drop: Math.floor(random(0, 2)), core_drop: 0}
             },
         }
         this.spawner_wave = initSpawners(this.spawner_wave);
@@ -97,7 +107,7 @@ class Boss{
     }
 
     createMissiles(){
-        let new_missile = new Bullet(this.x+random(-3*this.width, 3*this.width), this.y+random(-3*this.height, 3*this.height), createVector(0, 0), 1);
+        let new_missile = new Bullet(this.x+random(-3*this.width, 3*this.width), this.y+random(-3*this.height, 3*this.height), createVector(0, 0), 2);
         new_missile.tracking = true;
         bullets.push(new_missile);
         this.missiles.push(new_missile);
@@ -132,9 +142,9 @@ class Boss{
 
         playerVector.mult(2);
         
-        let bulletMiddle = new Bullet(this.x+this.width/2, this.y+this.height/2, playerVector, 1);
-        let bulletSide1 = new Bullet(this.x+this.width/2+perpendicularVector.x, this.y+this.height/2+perpendicularVector.y, playerVector, 1);
-        let bulletSide2 = new Bullet(this.x+this.width/2-perpendicularVector.x, this.y+this.height/2-perpendicularVector.y, playerVector, 1);
+        let bulletMiddle = new Bullet(this.x+this.width/2, this.y+this.height/2, playerVector, 2);
+        let bulletSide1 = new Bullet(this.x+this.width/2+perpendicularVector.x, this.y+this.height/2+perpendicularVector.y, playerVector, 2);
+        let bulletSide2 = new Bullet(this.x+this.width/2-perpendicularVector.x, this.y+this.height/2-perpendicularVector.y, playerVector, 2);
         
         bullets.push(bulletSide1);
         bullets.push(bulletSide2);
@@ -145,18 +155,19 @@ class Boss{
         for(let i=0; i<2*PI; i+=PI/6) {
             let vector = createVector(cos(i), sin(i));
             vector.normalize();
-            let bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, vector.mult(2), 1);
+            let bullet = new Bullet(this.x+this.width/2, this.y+this.height/2, vector.mult(2), 2);
             bullets.push(bullet);
         }
     }
 
     shot(){
-    
         this.show_health_bar = true;
-        this.health -= 5;
+        this.health -= 0.4;
         if(this.health <= 0) { //create drops and kill on death
             this.triggerDeath();
         }
+        if(this.health < 50 && this.max_minions <= 4) {this.max_minions++;}
+        if(this.health < 25 && this.max_minions <= 5) {this.max_minions++;}   
     }
 
     triggerDeath(){ //call this when the boss dies
@@ -170,14 +181,50 @@ class Boss{
 
 function startBossFight(){ //add the boss to the room and begin the physics fight, called at getRoom
     boss = new Boss(currentRoom.width/2-12.5, currentRoom.height/2-10); //-width/2, -height/2 of boss
+    currentRoom.purpleTiles = true;
 }
 
 function startBoss(){ //show the boss on the map, getMap
     show_boss_room = true;
 }
 
-class Walker{
-    constructor(){
+function phaseTwo(){
+    for(const tile_row of currentRoom.tiles){
+        for(let tile of tile_row){
+            if(tile == 1)
+                tile = floor(random(2, 6));
+        }
+    }
 
+}
+
+/*
+class Walker{
+    constructor(position, velocity){
+        this.pos = position;
+        this.width = 25;
+        this.height = 20;
+
+        this.vel = velocity;
+    }
+
+    update(){
+        this.move();
+        this.checkCollisions();
+        this.display();
+    }
+    display(){
+        canvasBuffer.image(spriteAltTile1, this.pos.x, this.pos.y, this.width, this.height);
+    }
+    checkCollisions(){ //bullets and players
+        if(collideRectRect()) //collision with the player
+    }
+    move(){
+        this.pos.add(this.vel);
+        if(this.pos.x < currentRoom.borderOffset + currentRoom.tileWidth || this.pos.x + this.width > currentRoom.width - currentRoom.borderOffset){
+            this.vel.mult(-1);
+        }
+        if(this.pos.y < currentRoom.)
     }
 }
+*/

@@ -157,22 +157,37 @@ html {
     z-index: 5;
   }
 
+  #help-icon{
+    position: absolute; 
+    right: 55%;
+    width: 35px;
+    height: 25px;
+    transition: all 0.1s ease;
+  }
+
+  #help-icon:hover{
+    cursor:pointer;
+    transform: scale(1.05);
+    transition: all 0.1s ease;
+  }
+
   #instructions{
     position: absolute;
     width: 711px;
     height: 650px;
     display: flex;
     align-items: center;
-    background: tomato;
+    justify-content: center;
+    background: rgb(7, 11, 43);
   }
 
   #instructions img{
     position: absolute;
     right: 0;
+    top: 0;
     width: 50px;
     height: 50px;
     margin: 10px;
-    float: right;
     transition: all 0.15s ease-in;
   }
 
@@ -182,9 +197,13 @@ html {
     transition: all 0.15s ease-in;
   }
 
+  #instructions-text{
+    width: 90%;
+    height: 90%;
+  }
 
   #instruction p{
-
+    padding: 10px;
   } 
 
   #game-over{
@@ -259,9 +278,9 @@ html {
 
   #map-container{
     position: absolute; 
-    right: 47%;
+    right: 45%;
     width: 25px;
-    height: 25px;
+    height: 30px;
     background-image: url('assets/pin.png');
     background-position: center;
     background-size: contain;
@@ -307,7 +326,7 @@ html {
     font-size: 2rem;
     font-weight: 600;
     color: whitesmoke;
-    transition: all 10s ease-in;
+    transition: all 10s none;
   }
 
   #player_health_container{

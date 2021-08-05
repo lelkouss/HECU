@@ -6,7 +6,7 @@ class Room {
       this.doors = createDoors(borders);
       this.spawners = [];
       this.spawner_info = spawner_info;
-      this.visited = false; //for map
+      this.visited = false;
 
       if(this.spawner_info != -1)
         this.spawners = initSpawners(this.spawner_info);
@@ -21,6 +21,9 @@ class Room {
       this.borderOffset = 22;
 
       this.drops = [];
+      this.purpleTiles = false;
+      if(this.id == 3 || this.id == 5 || this.id == 16 || this.id == 27)
+        this.purpleTiles = true;
     }
 
     display() {
@@ -33,7 +36,7 @@ class Room {
       // display tiles
       for(let i=0; i<this.tiles.length; i++) {
         for(let j=0; j<this.tiles[i].length; j++) {
-          let sprite = SPRITE_TILES[this.tiles[i][j]];
+          let sprite = this.purpleTiles? SPRITE_ALT_TILES[this.tiles[i][j]]: SPRITE_TILES[this.tiles[i][j]];
           canvasBuffer.image(sprite, j*this.tileWidth+this.borderOffset, i*this.tileHeight+this.borderOffset, this.tileWidth, this.tileHeight);
         }
       }

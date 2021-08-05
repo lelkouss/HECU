@@ -58,18 +58,17 @@ class Ship extends Drop{
 
 function collectDrop(drop_type){ //Needs to be scaled for more drops
     if(drop_type instanceof Syringe && player.health < 10){ //collect drop and then delete it
+        soundSyringePickup.play();
         player.health += Math.min(10 - player.health, 3);
         window.updatePlayerHearts();
         return true;
     } else if(drop_type instanceof Core){
         if(player.cores < 4){
+            soundCorePickup.play();
             player.health = 10;
             player.cores++;
             window.updatePlayerHearts();
             window.updatePlayerCores();
-            if(player.cores == 4){
-                startBoss();
-            }
             return true;
         }
     } else if(drop_type instanceof Ship){ //beat game after picking up the ship

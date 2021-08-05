@@ -22,9 +22,10 @@ $(document).ready(function(){
     }
 
     window.updatePlayerCores = () => { //display cores, call window.updatePlayerCores() to refresh colleted cores
+        found_cores = player.cores;
         if(typeof player !== "undefined"){
             if(player.cores == 4)
-                show_boss_room = true;
+              show_boss_room = true;
             $("#found_keys_container").empty();
             for (let i = 0; i < player.cores; i++) { //add filled cores
                 $("#found_keys_container").append(filled_core);
@@ -63,7 +64,7 @@ $(document).ready(function(){
         }
     })
     $('#map-container').click(()=>{ //map interaction
-        //$('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
+        $('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
         display_map ? display_map = false : display_map = true; //show the map
     })
     $('#help-btn').click(()=>{
@@ -73,5 +74,8 @@ $(document).ready(function(){
     $('#close-help').click(()=>{
         $('#help-container').hide();
        // $('#start-game').hide();
+    })
+    $('#help-icon').click(()=>{
+        $('#help-container').css('display', 'flex');
     })
 })

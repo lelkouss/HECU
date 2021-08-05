@@ -54,7 +54,7 @@ class Enemy {
 class Roomba extends Enemy{
   constructor(x, y) {
       super(x, y);
-      this.health = 20;
+      this.health = 15;
       
       this.speedX = 1;
       this.speedY = 0;
@@ -134,7 +134,7 @@ class Roomba extends Enemy{
 class Turret extends Enemy{
   constructor(x, y) {
     super(x, y);
-    this.health = 30;
+    this.health = 25;
     this.sprite = 'turret_closed';
     this.aimFrames = 0;
   }
@@ -271,32 +271,38 @@ class Drone extends Enemy{
     super(x, y);
     this.health = 50;
     this.sprite = 'drone';
-    this.destinationX = player.x;
-    this.destinationY = player.y;
+    this.destinationX = this.x;
+    this.destinationY = this.y;
     this.arrived = true;
     this.waitFrames = 0;
   }
 
 
   update() {
+    canvasBuffer.image(spriteCrosshair, this.destinationX+5-25/2, this.destinationY+5-20/2, 25, 20);
     super.display(this.sprite);
     if(this.arrived == true) {
-      if(this.waitFrames % 20 == 0)
-        this.shoot_drone();
-      if(this.waitFrames++ > 20) {
-        
-        this.updatePath();
-        this.arrived = false;
-        this.waitFrames = 0;
+      this.updatePath();
+      if(this.waitFrames == 0) {
+        this.shoot_drone();  
       }
-      
+
+      if(this.waitFrames++ > 20) {
+          this.arrived = false;
+          this.waitFrames = 0;
+      }
     }
-    this.move();
+    else {
+      this.move();
+    }
+   
   }
 
   updatePath() {
-    this.destinationX = player.x;
-    this.destinationY = player.y;
+    let vector = createVector(player.x-this.destinationX, player.y-this.destinationY);
+    vector.div(10);   
+    this.destinationX += vector.x;
+    this.destinationY += vector.y;
   }
 
   move() {
@@ -306,11 +312,8 @@ class Drone extends Enemy{
     }
 
     let to_player = createVector(this.destinationX - this.x, this.destinationY-this.y).mult(0.055);
-
-    if(dist(this.x, this.y, player.x, player.y) > 25){
-      this.x += to_player.x;
-      this.y += to_player.y;
-    }
+    this.x += to_player.x;
+    this.y += to_player.y;
   }
 
   shoot_drone() {
