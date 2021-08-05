@@ -1,4 +1,4 @@
-
+let hard_reset = false;
 
 $(document).ready(function(){
     let heart = '<img src="./assets/hp_unit_filled.png" alt="player health" class = "heart">';
@@ -50,17 +50,24 @@ $(document).ready(function(){
         $('#score').empty() //hide score
         $('#game-over').hide();
         game_over = true;
-        noLoop();
+        hard_reset = true;
+        hardReset();
+        setup();
     })
     $('#start-btn').click(function(){ //start the game on title screen btn
         $('#start-game').toggleClass('move-to-left');
         $('#game-over').hide();
-        if(!game_over){
+        if(hard_reset){
+            run_game = true;
+            loop();
+            hard_reset = false;
+        }else if(!game_over){
             run_game = true;
             loop();
         } else{
             $('#game-over').css('display', 'flex');
-            noLoop();
+            run_game = true;
+             noLoop();
         }
     })
     $('#map-container').click(()=>{ //map interaction

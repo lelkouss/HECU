@@ -2,7 +2,7 @@ let currentRoom;
 let player, rooms, spawners, enemies, bullets;
 let display_map = false, game_over = false, run_game = false;
 let boss = null;
-let visited_rooms = [];
+let visited_rooms = [], walkers = [];
 let found_cores = 0;
 
 const volume_ = 0.03;
@@ -188,6 +188,10 @@ function draw() {
   background(0);
   currentRoom.display();
 
+  
+  for(const walker of walkers){ //only active during the boss fight
+    walker.update();
+  }
   for(const drop of currentRoom.drops) 
     drop.update();
 
@@ -202,6 +206,7 @@ function draw() {
   for(const enemy of enemies) {
     enemy.update();
   }
+
   if(boss != null)
       boss.update();
   player.update();

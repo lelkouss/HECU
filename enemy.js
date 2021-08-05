@@ -7,6 +7,7 @@ class Enemy {
     this.width = 10;
     this.height = 10;
     this.health = 10; //needs to be dependent on type - inheritance
+    this.max_health = 10;
     this.shootCoolDown = 120;
     this.show_health_bar = false;
     this.drops = {
@@ -21,7 +22,11 @@ class Enemy {
     canvasBuffer.image(data[0], this.x-(data[1]-this.width)/2, this.y-(data[2]-this.height)/2, data[1], data[2]);
     if(this.show_health_bar){
       canvasBuffer.fill(32, 250, 163);
-      canvasBuffer.rect(this.x, this.y-10, this.health, 3);
+      canvasBuffer.noStroke();
+      canvasBuffer.rect(this.x  - this.max_health/2 + this.width/2, this.y-10, this.health, 3);
+      canvasBuffer.stroke(0);
+      canvasBuffer.noFill();
+      canvasBuffer.rect(this.x  - this.max_health/2 + this.width/2, this.y-10, this.max_health, 3);
     }
   }
 
@@ -55,7 +60,7 @@ class Roomba extends Enemy{
   constructor(x, y) {
       super(x, y);
       this.health = 15;
-      
+      this.max_health = 15;
       this.speedX = 1;
       this.speedY = 0;
       this.sprite = 'roomba';
@@ -135,6 +140,7 @@ class Turret extends Enemy{
   constructor(x, y) {
     super(x, y);
     this.health = 25;
+    this.max_health = 25;
     this.sprite = 'turret_closed';
     this.aimFrames = 0;
   }
@@ -177,6 +183,7 @@ class Turret extends Enemy{
 class Mantis extends Enemy{
   constructor(x, y) {
     super(x, y);
+    this.max_health = 25;
     this.health = 25;
     this.sprite = 'mantis';
     this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
@@ -251,24 +258,35 @@ class Mantis extends Enemy{
       this.arrived = true;
       return;
     }
-    
+    let dx = 0;
+    let dy = 0;
     if(this.x > this.destination%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5) {
-      this.x--;
+      dx--;
     } else if(this.x < this.destination%7 * currentRoom.tileWidth + currentRoom.tileWidth/2 + currentRoom.borderOffset - 5) {
-      this.x++;
+      dx++;
     }
 
     if(this.y > floor(this.destination/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5) {
-      this.y--;
+      dy--;
     } else if(this.y < floor(this.destination/7) * currentRoom.tileHeight + currentRoom.tileHeight/2 + currentRoom.borderOffset - 5) {
-      this.y++;
+      dy++;
     }
+
+    for(const walker of walkers){
+      if(collideRectRect(this.x, this.y, this.width, this.height, walker.pos.x, walker.pos.y, walker.width, walker.height)) {
+        //dx *= -2;
+        //dy *= -2;
+      }
+    }
+    this.x += dx; this.y += dy;
   }
+  
 }
 
 class Drone extends Enemy{
   constructor(x, y) {
     super(x, y);
+    this.max_health = 50;
     this.health = 50;
     this.sprite = 'drone';
     this.destinationX = this.x;

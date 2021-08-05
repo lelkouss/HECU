@@ -1,11 +1,26 @@
 function resetGame(){
     $('#game-over').hide();
-    boss.health = 100; //reset the boss's health
     frameCount = 0; //reset score system
     setup();
-    if(boss != null)
+    if(boss != null){
+        boss.phase_two = false;
         currentRoom.purpleTiles = true;
+        boss.health = 100; //reset the boss's health
+    }
+    while(walkers.length > 0){
+        walkers.pop();
+    }
     loop();
+}
+
+function hardReset(){
+    visited_rooms = [];
+    found_cores = 0;
+    boss = null;
+    while(walkers.length > 0){
+        walkers.pop();
+    }
+    setup();
 }
 
 let gameOver = () => { //show game over screen and compute score

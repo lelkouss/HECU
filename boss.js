@@ -21,11 +21,13 @@ class Boss{
         this.missiles = [];
 
         this.show_health_bar = false;
+        this.phase_two = false;
         
         this.frame = 300;
         this.attackType = 0;
 
         this.health = 100;
+        this.max_health = 100;
     }
 
     update(){
@@ -50,9 +52,15 @@ class Boss{
     }
 
     display(){
-        canvasBuffer.fill(255, 43, 220);
-        if(this.show_health_bar)
-            canvasBuffer.rect(this.x - 50 + this.width/2, this.y - 15, this.health, 4);
+
+        if(this.show_health_bar){
+            canvasBuffer.fill(255, 43, 220);
+            canvasBuffer.noStroke();
+            canvasBuffer.rect(this.x - this.max_health/2 + this.width/2, this.y-15, this.health, 3);
+            canvasBuffer.stroke(0);
+            canvasBuffer.noFill();
+            canvasBuffer.rect(this.x  - this.max_health/2 + this.width/2, this.y-15, this.max_health, 3);
+        }
 
         this.spriteFrame = (this.spriteFrame + 1) % 60
         let data = SPRITE_BOSS[floor(this.spriteFrame/15)];
@@ -67,12 +75,12 @@ class Boss{
         if (enemies.length < this.max_minions && this.health > 50) {
             num_roombas = Math.floor(random(1, 2));
             num_turrets = Math.floor(random(1, 2));
-            num_mantis = Math.floor(random(0, 2));
+            num_mantis = Math.floor(random(2, 2));
         } else {
             num_roombas = Math.floor(random(0, 2));
             num_turrets = Math.floor(random(0, 2));
             num_mantis = Math.floor(random(0, 3));
-        }
+        }        
 
         this.spawner_wave = {
             wave_1:{
@@ -166,7 +174,14 @@ class Boss{
         if(this.health <= 0) { //create drops and kill on death
             this.triggerDeath();
         }
-        if(this.health < 50 && this.max_minions <= 4) {this.max_minions++;}
+       /*if(this.health < 95 && !this.phase_two){
+            phaseTwo();
+            this.phase_two = true;
+        } */
+        if(this.health < 50 && this.max_minions <= 4) {
+            phaseTwo();
+            this.max_minions++;
+        }
         if(this.health < 25 && this.max_minions <= 5) {this.max_minions++;}   
     }
 
@@ -189,16 +204,30 @@ function startBoss(){ //show the boss on the map, getMap
 }
 
 function phaseTwo(){
-    for(const tile_row of currentRoom.tiles){
-        for(let tile of tile_row){
-            if(tile == 1)
-                tile = floor(random(2, 6));
+    for(let i=0; i<currentRoom.tiles.length; i++) {
+        for(let j=0; j<currentRoom.tiles[i].length; j++) {
+            if(currentRoom.tiles[i][j] == 1){
+                console.log("found a tile");
+                currentRoom.tiles[i][j] = floor(random(2, 6));
+            }
         }
     }
 
-}
+    player.room = currentRoom;
 
-/*
+    //init the new walkers
+    let new_walker = new Walker(createVector(currentRoom.borderOffset+currentRoom.tileWidth, currentRoom.borderOffset+currentRoom.tileHeight), createVector(0, 1));
+    walkers.push(new_walker);
+
+    new_walker = new Walker(createVector(currentRoom.borderOffset+currentRoom.tileWidth*5, currentRoom.borderOffset+currentRoom.tileHeight), createVector(-1, 0));
+    walkers.push(new_walker);
+
+    new_walker = new Walker(createVector(currentRoom.borderOffset+currentRoom.tileWidth, currentRoom.borderOffset+currentRoom.tileHeight*5), createVector(1, 0));
+    walkers.push(new_walker);
+
+    new_walker = new Walker(createVector(currentRoom.borderOffset+currentRoom.tileWidth*5, currentRoom.borderOffset+currentRoom.tileHeight*5), createVector(0, -1));
+    walkers.push(new_walker);
+}
 class Walker{
     constructor(position, velocity){
         this.pos = position;
@@ -217,14 +246,30 @@ class Walker{
         canvasBuffer.image(spriteAltTile1, this.pos.x, this.pos.y, this.width, this.height);
     }
     checkCollisions(){ //bullets and players
-        if(collideRectRect()) //collision with the player
+        if(collideRectRect(this.pos.x, this.pos.y, this.width, this.height, player.x, player.y, player.width, player.height)){ //check collision w/ the player
+            //push the player
+            let to_player = createVector(player.x+player.width/2 - this.pos.x-this.width/2, player.y+player.height/2 - this.pos.y-this.height/2);
+            to_player.normalize().mult(2);  
+
+            let player_v = createVector(player.dx, player.dy).mult(-2);
+            to_player.add(player_v);
+
+            player.x += to_player.x;
+            player.y += to_player.y;
+        }
+        for(const bullet of bullets){ //collision w/ bullets
+            if(collideRectCircle(this.pos.x, this.pos.y, this.width, this.height, bullet.x, bullet.y, bullet.radius)){
+                bullets.splice(bullets.indexOf(bullet), 1); //delete bullet
+            }
+        }
     }
     move(){
         this.pos.add(this.vel);
-        if(this.pos.x < currentRoom.borderOffset + currentRoom.tileWidth || this.pos.x + this.width > currentRoom.width - currentRoom.borderOffset){
+        if(this.pos.x < currentRoom.borderOffset + currentRoom.tileWidth || this.pos.x + this.width > currentRoom.width - currentRoom.borderOffset - currentRoom.tileWidth){
             this.vel.mult(-1);
         }
-        if(this.pos.y < currentRoom.)
+        if(this.pos.y < currentRoom.borderOffset + currentRoom.tileHeight || this.pos.y + this.height > currentRoom.height - currentRoom.borderOffset - currentRoom.tileHeight) {
+            this.vel.mult(-1);
+        }
     }
 }
-*/
