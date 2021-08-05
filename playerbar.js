@@ -1,4 +1,5 @@
 let hard_reset = false;
+let first_try = true;
 
 $(document).ready(function(){
     let heart = '<img src="./assets/hp_unit_filled.png" alt="player health" class = "heart">';
@@ -28,7 +29,7 @@ $(document).ready(function(){
                 show_boss_room = true;
                 $('#find-boss-container').css('display', 'flex');
                 $('#find-boss-container').ready(()=>{
-                    $('#find-boss-container').addClass('fade-text');
+                $('#find-boss-container').addClass('fade-text');
                 })
             }
             $("#found_keys_container").empty();
@@ -60,8 +61,15 @@ $(document).ready(function(){
         setup();
     })
     $('#start-btn').click(function(){ //start the game on title screen btn
+        
         $('#start-game').toggleClass('move-to-left');
         $('#game-over').hide();
+        
+        if(first_try){ //show instructions on first load
+            $('#help-container').css('display', 'flex'); 
+            first_try = false;
+        }        
+
         if(hard_reset){
             run_game = true;
             loop();
@@ -76,6 +84,23 @@ $(document).ready(function(){
         }
     })
     $('#map-container').click(()=>{ //map interaction
+
+        if(!display_map){
+            if(enemies.length != 0 || spawners.length != 0){
+                if(!display_map){
+                    
+                }
+                $('#map-warning-container').css('display', 'flex');
+                $('#map-warning-container').css('opacity', '1');
+                $('#map-warning-container').css('z-index', '8');
+                $('#map-warning-container').ready(()=>{
+                    $('#map-warning-container').toggle('fade-text');
+                    //$('#map-warning-container').addClass('remove');
+                });
+                return;
+            }
+        }
+        
         $('#canvas_div').toggleClass('pointer'); //change the cursor to a pointer
         display_map ? display_map = false : display_map = true; //show the map
     })
@@ -83,7 +108,7 @@ $(document).ready(function(){
         $('#help-container').css('display', 'flex');
        // $('#start-game').hide();
     })
-    $('#close-help').click(()=>{
+    $('#close-instructions').click(()=>{
         $('#help-container').hide();
        // $('#start-game').hide();
     })

@@ -190,6 +190,7 @@ class Mantis extends Enemy{
     this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
     this.path = [];
     this.arrived = true;
+    this.mantisTime = random(30, 90);
   }
 
   update() {
@@ -201,7 +202,8 @@ class Mantis extends Enemy{
     }
     this.move();
 
-    if(this.shootCoolDown++ > 30) {
+    if(this.shootCoolDown++ > this.mantisTime) {
+      soundMantisShoot.play();
       super.shoot();
       this.shootCoolDown = 0;
     }
@@ -293,15 +295,19 @@ class Drone extends Enemy{
     this.destinationY = this.y;
     this.arrived = true;
     this.waitFrames = 0;
+    this.warmedUp = false;
+    this.warmFrames = 0;
   }
 
 
   update() {
+
     canvasBuffer.image(spriteCrosshair, this.destinationX+5-25/2, this.destinationY+5-20/2, 25, 20);
     super.display(this.sprite);
     if(this.arrived == true) {
       this.updatePath();
-      if(this.waitFrames == 0) {
+      if(this.waitFrames == 0 && this.warmedUp) {
+        soundDroneShoot.play();
         this.shoot_drone();  
       }
 
@@ -311,9 +317,13 @@ class Drone extends Enemy{
       }
     }
     else {
-      this.move();
+      if(this.warmedUp)
+        this.move();
     }
-   
+
+    if(this.warmFrames++ > 60) {
+      this.warmedUp = true;
+    }
   }
 
   updatePath() {

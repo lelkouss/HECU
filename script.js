@@ -28,10 +28,11 @@ let spriteBossIcon; //boss map icon
 let spriteEscapePod; //escape pod
 
 //SOUNDS
-let soundPlayerShoot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot;
+let soundPlayerShoot, soundPlayerShot, soundPlayerFootstep, soundRoombaCollide, soundTurretShoot;
 let soundDoorOpen, soundDoorClose;
 let soundSyringePickup, soundCorePickup;
-let soundBANGER;
+let soundBANGER, soundBANGER2;
+let soundMantisShoot, soundDroneShoot, soundBossShoot;
 
 
 // PRELOAD ALL SPRITES AND MUSIC
@@ -124,8 +125,12 @@ function preload() {
   soundFormats('mp3');
   soundBANGER = loadSound("/assets/HECU_stage.mp3");
   soundBANGER.setVolume(volume_);
+  soundBANGER2 = loadSound("/assets/parasite.mp3");
+  soundBANGER2.setVolume(volume_);
   soundPlayerShoot = loadSound("/assets/player_shoot.mp3");
   soundPlayerShoot.setVolume(volume_);
+  soundPlayerShot = loadSound("/assets/player_hit.mp3");
+  soundPlayerShot.setVolume(volume_);
   soundPlayerFootstep = loadSound("/assets/footstep.mp3");
   soundPlayerFootstep.setVolume(3*volume_);
   soundRoombaCollide = loadSound("/assets/enemy_hit.mp3");
@@ -140,6 +145,12 @@ function preload() {
   soundSyringePickup.setVolume(volume_);
   soundCorePickup = loadSound("/assets/key_pickup.mp3");
   soundCorePickup.setVolume(volume_);
+  soundMantisShoot = loadSound("/assets/mantis.mp3");
+  soundMantisShoot.setVolume(volume_);
+  soundDroneShoot = loadSound("/assets/drone.mp3");
+  soundDroneShoot.setVolume(volume_);
+  soundBossShoot = loadSound("/assets/boss.mp3");
+  soundBossShoot.setVolume(volume_);
 }
 
 function setup() {
@@ -155,7 +166,7 @@ function setup() {
 
   //ABSOLUTE BANGER
   if(!play_music){
-    soundBANGER.setVolume(volume_);
+    soundBANGER.setVolume(1.5*volume_);
     soundBANGER.loop();
     play_music = true;
   }
@@ -182,8 +193,6 @@ function setup() {
       }
     }
   }
-
-
 
    // currentSpawner.enemies; 
   player = new Player(3*currentRoom.tileWidth + currentRoom.tileWidth/2, 6*currentRoom.tileHeight + currentRoom.tileHeight/2, currentRoom);

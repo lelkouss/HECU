@@ -13,12 +13,6 @@ function drawMap(){
     for (let [i, _rooms] of rooms.entries()) {
         for (const [j, room] of _rooms.entries()) {
 
-            for(const visited_ of visited_rooms){
-                if(room.id == visited_.id){
-                    room.visited = true;
-                }
-            }
-
            if(room != undefined) //color rooms based on whether they've been visited
             room.visited ? canvasBuffer.fill(0, 100, 120) : canvasBuffer.fill(150);
         
@@ -27,31 +21,8 @@ function drawMap(){
                 canvasBuffer.image(spritePlayerIcon, j * 175/max_col + 6 + center_x, i * 175/max_col + 6 + center_y, 13, 13)
             }
 
-            if(room != undefined){ //draw doors to each room
-                let room_doors = [...room.doors];
-               canvasBuffer.noStroke(0);
-                for(const [ii, room_door] of room_doors.entries()){
-                    if(room_door.exists && room_door.available){
-                        if(ii == 0){
-                            canvasBuffer.fill(100, 0, 0);
-                            canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y, 10, 3);   
-                        } else if(ii == 1){
-                            canvasBuffer.fill(0, 0, 100);
-                            canvasBuffer.rect(j * 175/max_col + center_x + 175/max_col - 3, i * 175/max_col + center_y + 175/(2*max_col) - 5, 3, 10);   
-                        } else if(ii == 2){
-                            canvasBuffer.fill(100, 0, 0);
-                            canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 5, i * 175/max_col + center_y + 175/(max_col) - 3, 10, 3);   
-                        } else{
-                            canvasBuffer.fill(0, 0, 100);
-                            canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y + 175/(2*max_col) - 5, 3, 10);   
-                        }
-                    }
-                }
-                canvasBuffer.stroke(0);
-            }
-
             //teleport to a previously visited room
-            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room != undefined && room.visited && !show_boss_room){
+            if(mouseToMapTile(j * 175/max_col + center_x, i * 175/max_col + center_y, 175/max_col, 175/max_col, room) && mouseIsPressed && room.visited && room != undefined && !show_boss_room){
                 if(enemies.length == 0 && spawners.length == 0){
                     if(visited_rooms.indexOf(currentRoom) == -1){
                         visited_rooms.push(currentRoom);
@@ -65,8 +36,35 @@ function drawMap(){
                 }
                 $('#canvas_div').toggleClass('pointer'); //change the pointer back to crosshair
                 display_map = false;
-                
             }
+
+
+            for(const visited_ of visited_rooms){
+                if(room.id == visited_.id){
+                    room.visited = true;
+                    console.log(room);
+
+                    canvasBuffer.noStroke(0);
+                    canvasBuffer.fill(0);
+                    for(const [ii, room_door] of room.doors.entries()){
+                        room_door.available = true;
+                        if(room_door.exists && room_door.available){
+                            console.log(room_door);
+                            if(ii == 0){
+                                canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 2.5, i * 175/max_col + center_y, 5, 1.5);   
+                            } else if(ii == 1){
+                                canvasBuffer.rect(j * 175/max_col + center_x + 175/max_col - 1.5, i * 175/max_col + center_y + 175/(2*max_col) - 2.5, 1.5, 5);   
+                            } else if(ii == 2){
+                                canvasBuffer.rect(j * 175/max_col + center_x + 175/(2*max_col) - 2.5, i * 175/max_col + center_y + 175/(max_col) - 1.5, 5, 1.5);   
+                            } else{
+                                canvasBuffer.rect(j * 175/max_col + center_x, i * 175/max_col + center_y + 175/(2*max_col) - 2.5, 1.5, 5);   
+                            }
+                        }
+                    }
+                    canvasBuffer.stroke(0);
+                }
+            }
+
         }
     }
 

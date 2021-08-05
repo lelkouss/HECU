@@ -33,7 +33,7 @@ class Core extends Drop{
         this.waitForSpawn();
     }
     display(){
-        canvasBuffer.image(spriteCoreDrop, this.x-(15-10)/2, this.y-(16-10)/2, 15, 16);
+        canvasBuffer.image(spriteCoreDrop, currentRoom.width/2 - 7.5, currentRoom.height/2 - 8, 15, 16);
     }
     waitForSpawn(){
         if(currentRoom.spawners <= 1){

@@ -23,8 +23,9 @@ function getRoom(room_ID, direction){
     return (found_room == undefined || found_room == null) ? rooms[row][col] : found_room;
 }
 
-
 function moveRooms(door){    
+    //player.cores = 4;
+    //window.updatePlayerCores();
 
     visited_rooms.push(currentRoom);
     currentRoom = getRoom(currentRoom.id, door.direction); //change current room

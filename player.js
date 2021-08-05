@@ -165,6 +165,7 @@ class Player {
     //remove health if shot
     shot(){
       if(!this.invincible) {
+        soundPlayerShot.play();
         this.health--;
         this.invincible = true;
       

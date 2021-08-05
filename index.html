@@ -57,7 +57,7 @@
           if (ua.indexOf('chrome') > -1) {
             
           } else {
-            alert("This game performs best on chrome!") // Safari
+            alert("HECU performs best on chrome!") // Safari
           }
         }
     </script>
@@ -68,8 +68,8 @@
     <div id="player_bar"> <!-- Player hp and cores-->
       <div id="player_health_container" onload='updatePlayerHearts()'></div>
       <div id="found_keys_container"></div>
-      <div id="map-container"></div>
-      <img id="help-icon" src="assets/help_pin.png" alt="Help">
+      <img id="map-container" src="assets/pin.png" alt="Map"><p style="position: absolute; left: 322px; top: -15px">Map</p></img>
+      <img id="help-icon" src="assets/help_pin.png" alt="Help"><p style="position: absolute; left: 249px; top: -15px">Help</p>
     </div>
 
     <div id="canvas_div"></div> <!--Sketch-->
@@ -83,21 +83,22 @@
 
     <div id="help-container">
       <div id="instructions">
-        <img id="close-help" src="assets/cross.png" alt="close instuctions" id="close-instructions">
+        <img src="assets/cross.png" alt="close instuctions" id="close-instructions">
         <div id="instructions-text">
           <p>
-            Instructional Briefing: <br><br>
-            Welcome to HECU, the Hostile Extraterrestrial Containment Unit! This abandoned, broken down spaceship contains threats to the local space systems. It’s your job to defeat them, repower the ship, and restore peace. <br><br>
+            <b style="color: rgb(32, 250, 163); font-size: 2.5rem; text-decoration: underline;"> Instructional Briefing:</b> <br><br>
+             
+            <b style="color: rgb(103, 159, 0);" class ="sub-title">Movement:</b> WASD <img src="assets/wasd.png" alt="WASD" class='img-icon'> or arrow keys <img src="assets/arrow_keys.png" alt="Arrow Keys" class='img-icon'> <br><br>
+             
+            <img src="assets/pistol.png" alt="Pistol" class='img-icon'> <b style="color: rgb(192, 37, 0);" class ="sub-title">Plasma Shooter:</b> HOLD left click (shoot) + mouse (aim)<br><br>
+            
+            <img src="assets/pin.png" alt="Pin" class='img-icon'><b style="color: rgb(165, 219, 209);" class ="sub-title">Map:</b> Navigate and teleport to a previously visited room around the ship using the left mouse button.<br><br>
+            
+            <img src="assets/power_core.png" alt="Power Core" class='img-icon'><b style="color: rgb(191, 126, 255);" class ="sub-title">Power Core Storage:</b> Find all 4 cores, and open your map to find the boss <br><br>
+            
+            <img src="assets/syringe.png" alt="Syringe" class='img-icon'><b style="color: rgb(255, 132, 24);" class ="sub-title">Health Points:</b> If you lose all your health, your map progress will still persist. A handy orange syringe will restore 3 health. <br><br>
 
-            Your spacesuit is equipped with features to assist with securing this ship, including: <br><br>
-
-             <b>Movement:</b> WASD or arrow keys <br><br>
-             <b>Plasma Shooter:</b> mouse (aim) + left click (shoot) <br><br>
-             <b>Map:</b> Navigate and teleport around the ship <br><br>
-
-             <b>Power Core Storage:</b> Find all 4 cores, and open your map to find the boss <br><br>
-
-            <b>Health Points:</b> Lose all your health, and come back feeling better than ever. A handy orange syringe will restore your health. <br><br>
+            Welcome to HECU, the Hostile Extraterrestrial Containment Unit! Defeat the aliens, repower the ship, and restore peace. <br><br>
 
             Best of luck space hero, and may the stars be with you! <br><br>
           </p>
@@ -107,7 +108,6 @@
 
     <div id="game-over"> <!-- Game over screen-->
         <div id="over-image-container">
-          <div id="score"></div>
           <div class="btn-container">
               <div class="btn" style="margin-top: 30vh !important">
                 <div id="btn-img-yes"></div>
@@ -131,9 +131,10 @@
             Matthew Castilleja <br>
             Lena Elkoussy <br>
             JJ <br> <br> <br>
-            Special Thanks to our CSSI Instructors: <br>
-            Dave, Courtney, and Angela <br>
-
+            Special Thanks to the Cohort 14 CSSI Team: <br>
+            Dave, Courtney, Angela, + Rob <br>
+            Jasmine, Tomas, Gabriel, Raymond, +  Brooke <br> <br> <br>
+            Special shoutout to everyone who playtested HECU <br>
           </p>
         </div>
     </div>
@@ -150,6 +151,10 @@
       <div id="boss-convo">
         <h2>You'll Have to Beat Me if You Hope to Escape</h2>
       </div>
+    </div>
+
+    <div id="map-warning-container">
+      <p>Kill all enemies first</p>
     </div>
 
   </body>

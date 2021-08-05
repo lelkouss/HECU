@@ -20,6 +20,7 @@ function hardReset(){
     while(walkers.length > 0){
         walkers.pop();
     }
+    soundBANGER2.stop();
     setup();
 }
 

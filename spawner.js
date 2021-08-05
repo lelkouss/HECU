@@ -139,7 +139,7 @@ function manageDrops(room_drops, enemy_list){ //give the drops to random enemies
 
     if(room_drops[`${drop}`] && drop == "core_drop"){ // cores are not dropped by enemies
         console.log("new core");
-        let new_drop =  new Core(currentRoom.doors[0].spawn_x+7.5, currentRoom.doors[0].spawn_y-2.5);
+        let new_drop =  new Core(currentRoom.doors[0].spawn_x+7.5, currentRoom.doors[0].spawn_y-(25*3)+7.5);
         currentRoom.drops.push(new_drop);
     } else{
       let enemy_arr = [...enemy_list];

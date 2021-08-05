@@ -75,7 +75,7 @@ class Boss{
         if (enemies.length < this.max_minions && this.health > 50) {
             num_roombas = Math.floor(random(1, 2));
             num_turrets = Math.floor(random(1, 2));
-            num_mantis = Math.floor(random(2, 2));
+            num_mantis = Math.floor(random(0, 2));
         } else {
             num_roombas = Math.floor(random(0, 2));
             num_turrets = Math.floor(random(0, 2));
@@ -99,6 +99,7 @@ class Boss{
     attack(attack_type){
         switch(attack_type){
             case "createMissiles":
+                soundBossShoot.play();
                 for(let i = 0; i < 15; i++){
                     this.createMissiles();
                 }
@@ -142,6 +143,8 @@ class Boss{
 
     beam(){ //shoot 3 bullets in a row
         //THIS MATH MAY BE WRONG
+        soundBossShoot.play();
+
         let playerVector = createVector( (player.x+player.width/2) - (this.x+this.width/2), (player.y+player.height/2) - (this.y+this.height/2)); //track the player
         playerVector.normalize();
         
@@ -160,6 +163,7 @@ class Boss{
     }
 
     spray(){ //shoot 12 bullets in a circle
+        soundBossShoot.play();
         for(let i=0; i<2*PI; i+=PI/6) {
             let vector = createVector(cos(i), sin(i));
             vector.normalize();
@@ -186,16 +190,19 @@ class Boss{
 
     triggerDeath(){ //call this when the boss dies
         console.log("I died");
-        enemies = [], spawners = [];
+        enemies = [], spawners = [], bullets = [];
         let new_ship = new Ship(this.x + 12.5 - 13.5, this.y + 12.5 - 9);
         currentRoom.drops.push(new_ship);
         boss = null;
+        soundBANGER2.stop();
     }
 }
 
 function startBossFight(){ //add the boss to the room and begin the physics fight, called at getRoom
     boss = new Boss(currentRoom.width/2-12.5, currentRoom.height/2-10); //-width/2, -height/2 of boss
     currentRoom.purpleTiles = true;
+    soundBANGER.stop();
+    soundBANGER2.loop();
     $('#boss-convo-container').css('display', 'flex');
     $('#boss-convo-container').ready(()=>{
         $('#boss-convo-container').addClass('fade-text');
