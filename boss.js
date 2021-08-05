@@ -72,10 +72,14 @@ class Boss{
         if(enemies.length > this.max_minions){
             return;
         }
-        if (enemies.length < this.max_minions && this.health > 50) {
+        if (this.health < 50) {
             num_roombas = Math.floor(random(1, 2));
             num_turrets = Math.floor(random(1, 2));
-            num_mantis = Math.floor(random(2, 2));
+            num_mantis = Math.floor(random(0, 3));
+        } else if (enemies.length < this.max_minions && this.health > 50) {
+            num_roombas = Math.floor(random(1, 2));
+            num_turrets = Math.floor(random(1, 2));
+            num_mantis = Math.floor(random(0, 2));
         } else {
             num_roombas = Math.floor(random(0, 2));
             num_turrets = Math.floor(random(0, 2));
@@ -179,7 +183,6 @@ class Boss{
             this.phase_two = true;
         } */
         if(this.health < 50 && this.max_minions <= 4) {
-            phaseTwo();
             this.max_minions++;
         }
         if(this.health < 25 && this.max_minions <= 5) {this.max_minions++;}   
