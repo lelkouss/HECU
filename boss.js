@@ -72,7 +72,7 @@ class Boss{
         if(enemies.length > this.max_minions){
             return;
         }
-        if (enemies.length < this.max_minions && this.health > 50) {
+        if (this.health < 50) {
             num_roombas = Math.floor(random(1, 2));
             num_turrets = Math.floor(random(1, 2));
             num_mantis = Math.floor(random(0, 2));
