@@ -47,6 +47,9 @@
                     [0, 0, 0, 0, 0, 0, 0] ];
     borders =      ["A_0", "B_0", "C_0", "D_1"];
     rooms[0][2] = new Room(2, tiles, borders);
+    let new_ship = new Ship(currentRoom.width/2 - 13.5, currentRoom.height/2 - 9);
+    rooms[0][2].drops.push(new_ship); // add the pod to the first room
+    console.log(rooms[0][2].drops);
 
     tiles = [       [0, 0, 0, 0, 0, 0, 0], //room 4 - core room
                     [0, 1, 1, 0, 1, 1, 0],

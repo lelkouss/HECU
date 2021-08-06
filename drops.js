@@ -49,7 +49,8 @@ class Ship extends Drop{
     }
     update(){
         this.display();
-        super.checkCollision();
+        if(activate_pod)
+            super.checkCollision();
     }   
     display(){
         canvasBuffer.image(spriteEscapePod, this.x-(12-10)/2, this.y-(13-10)/2, 27, 18);

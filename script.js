@@ -1,6 +1,6 @@
 let currentRoom;
 let player, rooms, spawners, enemies, bullets;
-let display_map = false, game_over = false, run_game = false, play_music = false;
+let display_map = false, game_over = false, run_game = false, play_music = false, activate_pod = false;
 let boss = null;
 let visited_rooms = [], walkers = [];
 let found_cores = 0;

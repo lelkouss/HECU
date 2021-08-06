@@ -17,6 +17,7 @@ function hardReset(){
     visited_rooms = [];
     found_cores = 0;
     boss = null;
+    first_try = false;
     while(walkers.length > 0){
         walkers.pop();
     }

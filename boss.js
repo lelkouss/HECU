@@ -75,13 +75,16 @@ class Boss{
         if (this.health < 50) {
             num_roombas = Math.floor(random(1, 2));
             num_turrets = Math.floor(random(1, 2));
+            num_mantis = Math.floor(random(0, 3));
+        }  else if (enemies.length < this.max_minions && this.health > 50) {
+            num_roombas = Math.floor(random(1, 2));
+            num_turrets = Math.floor(random(1, 2));
             num_mantis = Math.floor(random(0, 2));
         } else {
             num_roombas = Math.floor(random(0, 2));
             num_turrets = Math.floor(random(0, 2));
-            num_mantis = Math.floor(random(0, 3));
-        }        
-
+        }
+        
         this.spawner_wave = {
             wave_1:{
                 Roomba: { num: num_roombas, positions: [] },
@@ -189,12 +192,11 @@ class Boss{
     }
 
     triggerDeath(){ //call this when the boss dies
-        console.log("I died");
         enemies = [], spawners = [], bullets = [];
-        let new_ship = new Ship(this.x + 12.5 - 13.5, this.y + 12.5 - 9);
-        currentRoom.drops.push(new_ship);
+        activate_pod = true;
         boss = null;
         soundBANGER2.stop();
+        activate_pod = true;
     }
 }
 

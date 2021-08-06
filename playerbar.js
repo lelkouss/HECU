@@ -47,6 +47,9 @@ $(document).ready(function(){
 
     $('#btn-img-yes').click(function() { //reset the game on yes
         resetGame();
+        if(boss == null) //show the respawn text if not at boss stage
+            printRespawn();
+        
         game_over = false;
     })
     $('#btn-img-no').click(function() { //move back to the title screen on no
@@ -67,7 +70,6 @@ $(document).ready(function(){
         
         if(first_try){ //show instructions on first load
             $('#help-container').css('display', 'flex'); 
-            first_try = false;
         }        
 
         if(hard_reset){
@@ -85,11 +87,9 @@ $(document).ready(function(){
     })
     $('#map-container').click(()=>{ //map interaction
 
-        if(!display_map){
-            if(enemies.length != 0 || spawners.length != 0){
-                if(!display_map){
-                    
-                }
+        if(!display_map){ 
+            if(enemies.length != 0 || spawners.length != 0){ //allow user to close map if it's open while they're entering a new room
+
                 $('#map-warning-container').css('display', 'flex');
                 $('#map-warning-container').css('opacity', '1');
                 $('#map-warning-container').css('z-index', '8');
@@ -110,9 +110,35 @@ $(document).ready(function(){
     })
     $('#close-instructions').click(()=>{
         $('#help-container').hide();
+        if(first_try){ //show the objective on first load
+            printObjective();
+        }
        // $('#start-game').hide();
     })
     $('#help-icon').click(()=>{
         $('#help-container').css('display', 'flex');
     })
 })
+
+function printObjective(){
+    $('#starting-objective').css('display', 'flex');
+    $('#starting-objective').css('opacity', '1');
+    $('#starting-objective').css('z-index', '8');
+    $('#starting-objective').ready(()=>{
+        $('#starting-objective').addClass('fade-text');
+        
+        //$('#map-warning-container').addClass('remove');
+    });
+    first_try = false;
+}
+
+function printRespawn(){
+    $('#respawn-text').css('display', 'flex');
+    $('#respawn-text').css('opacity', '1');
+    $('#respawn-text').css('z-index', '8');
+    $('#respawn-text').ready(()=>{
+        $('#respawn-text').addClass('fade-text');
+        
+        //$('#map-warning-container').addClass('remove');
+    });
+}
