@@ -195,7 +195,7 @@ class Boss{
         enemies = [], spawners = [], bullets = [];
         activate_pod = true;
         boss = null;
-        soundBANGER2.stop();
+        soundBANGER2.pause();
         activate_pod = true;
     }
 }
@@ -203,8 +203,8 @@ class Boss{
 function startBossFight(){ //add the boss to the room and begin the physics fight, called at getRoom
     boss = new Boss(currentRoom.width/2-12.5, currentRoom.height/2-10); //-width/2, -height/2 of boss
     currentRoom.purpleTiles = true;
-    soundBANGER.stop();
-    soundBANGER2.loop();
+    soundBANGER.pause();
+    soundBANGER2.play();
     $('#boss-convo-container').css('display', 'flex');
     $('#boss-convo-container').ready(()=>{
         $('#boss-convo-container').addClass('fade-text');

@@ -14,6 +14,8 @@ function resetGame(){
 }
 
 function hardReset(){
+    if(boss != null)
+        soundBANGER2.stop();
     visited_rooms = [];
     found_cores = 0;
     boss = null;
@@ -21,7 +23,7 @@ function hardReset(){
     while(walkers.length > 0){
         walkers.pop();
     }
-    soundBANGER2.stop();
+    
     setup();
 }
 

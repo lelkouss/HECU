@@ -185,15 +185,22 @@ class Mantis extends Enemy{
     super(x, y);
     this.max_health = 25;
     this.health = 25;
-    this.sprite = 'mantis';
+    this.sprite = 'mantis1';
     this.currentTileRow = floor((this.y-currentRoom.borderOffset) / currentRoom.tileHeight);
     this.currentTileCol = floor((this.x-currentRoom.borderOffset) / currentRoom.tileWidth);
     this.path = [];
     this.arrived = true;
     this.mantisTime = random(30, 90);
+    this.spriteFrame = 0;
+    this.spriteIndex = 1;
   }
 
   update() {
+    this.spriteFrame = (this.spriteFrame+1) % 30;
+    this.spriteIndex = (floor(this.spriteFrame/10) + 1);
+    if (player.x > this.x) {this.spriteIndex = this.spriteIndex + 3;}
+    this.sprite = "mantis" +this.spriteIndex;
+
     super.display(this.sprite);
     if(this.arrived) {
       this.updatePath();
@@ -274,12 +281,6 @@ class Mantis extends Enemy{
       dy++;
     }
 
-    for(const walker of walkers){
-      if(collideRectRect(this.x, this.y, this.width, this.height, walker.pos.x, walker.pos.y, walker.width, walker.height)) {
-        //dx *= -2;
-        //dy *= -2;
-      }
-    }
     this.x += dx; this.y += dy;
   }
   

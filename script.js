@@ -18,7 +18,7 @@ let spriteBorderDownNone, spriteBorderDownBlocked, spriteBorderDownOpen;
 let spriteBorderLeftNone, spriteBorderLeftBlocked, spriteBorderLeftOpen;
 
 let spritePlayerUp, spritePlayerRight, spritePlayerDown, spritePlayerLeft, spritePlayerIcon;  //PLAYER ANIMATIONS
-let spriteTurretStatic, spriteTurretClosed, spriteRoomba, spriteMantis, spriteDrone; //ENEMY SPRITES
+let spriteTurretStatic, spriteTurretClosed, spriteRoomba, spriteMantis, spriteMantis1, spriteMantis2, spriteMantis3, spriteMantis4, spriteMantis5, spriteMantis6, spriteDrone; //ENEMY SPRITES
 let spriteBulletPlayer, spriteBulletEnemy; //BULLET ANIMATIONS
 let spriteBoss0, spriteBoss1, spriteBoss2, spriteBoss3; //BOSS ANIMATIONS
 
@@ -33,7 +33,6 @@ let soundDoorOpen, soundDoorClose;
 let soundSyringePickup, soundCorePickup;
 let soundBANGER, soundBANGER2;
 let soundMantisShoot, soundDroneShoot, soundBossShoot;
-
 
 // PRELOAD ALL SPRITES AND MUSIC
 function preload() {
@@ -84,6 +83,12 @@ function preload() {
   spriteTurretClosed = loadImage("/assets/turret_closed.png");
   spriteRoomba = loadImage("/assets/roomba.png");
   spriteMantis = loadImage("/assets/mantis.png");
+  spriteMantis1 = loadImage("/assets/mantis1.png");
+  spriteMantis2 = loadImage("/assets/mantis2.png");
+  spriteMantis3 = loadImage("/assets/mantis3.png");
+  spriteMantis4 = loadImage("/assets/mantis4.png");
+  spriteMantis5 = loadImage("/assets/mantis5.png");
+  spriteMantis6 = loadImage("/assets/mantis6.png");
   spriteDrone = loadImage("/assets/drone.png");
 
   spriteBulletPlayer0 = loadImage("/assets/bullet_player_1.png"); //BULLET ANIMATIONS
@@ -112,7 +117,7 @@ function preload() {
                       "down_NONE": spriteBorderDownNone, "down_BLOCKED": spriteBorderDownBlocked, "down_OPEN": spriteBorderDownOpen,
                       "left_NONE": spriteBorderLeftNone, "left_BLOCKED": spriteBorderLeftBlocked, "left_OPEN": spriteBorderLeftOpen };
   SPRITE_PLAYER = {   "up": [spritePlayerUp, 13, 22], "right": [spritePlayerRight, 18, 22], "down": [spritePlayerDown, 13, 22], "left": [spritePlayerLeft, 18, 22]};
-  SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14], 'mantis':[spriteMantis, 23, 24], 'drone':[spriteDrone, 14, 18]};
+  SPRITE_ENEMIES = {  "turret_static": [spriteTurretStatic, 11, 13], "turret_closed": [spriteTurretClosed, 11, 13], "roomba": [spriteRoomba, 13, 14], 'mantis1':[spriteMantis1, 23, 24], 'mantis2':[spriteMantis2, 23, 24], 'mantis3':[spriteMantis3, 23, 24], 'mantis4':[spriteMantis4, 23, 24], 'mantis5':[spriteMantis5, 23, 24], 'mantis6':[spriteMantis6, 23, 24], 'drone':[spriteDrone, 14, 18]};
   SPRITE_TILES = {0: spriteTile0, 1: spriteTile1, 2: spriteTile2, 3: spriteTile3, 4: spriteTile4, 5: spriteTile5};
   SPRITE_ALT_TILES = {0: spriteAltTile0, 1: spriteAltTile1, 2: spriteAltTile2, 3: spriteAltTile3, 4: spriteAltTile4, 5: spriteAltTile5};
   SPRITE_BULLETS = {  "00": [spriteBulletPlayer0, 8, 8], "01": [spriteBulletPlayer1, 8, 8], "02": [spriteBulletPlayer2, 8, 8], "03": [spriteBulletPlayer3, 8, 8],
@@ -120,9 +125,40 @@ function preload() {
                       "20": [spriteBulletBoss0, 8, 8], "21": [spriteBulletBoss1, 8, 8], "22": [spriteBulletBoss2, 8, 8], "23": [spriteBulletBoss3, 8, 8] };
   SPRITE_BOSS = {0: [spriteBoss0, 25, 35], 1:[spriteBoss1, 25, 35], 2:[spriteBoss2, 25, 35], 3:[spriteBoss3, 25, 35]};
 
-
   // SOUNDS
-  soundFormats('mp3');
+
+  soundBANGER = new Audio("/assets/HECU_stage.mp3");
+  soundBANGER.volume = volume_;
+  soundBANGER.loop = true;
+  soundBANGER2 = new Audio("/assets/parasite.mp3");
+  soundBANGER2.volume = volume_;
+  soundBANGER2.loop = true;
+  soundPlayerShoot = new Audio("/assets/player_shoot.mp3");
+  soundPlayerShoot.volume = volume_;
+  soundPlayerShot = new Audio("/assets/player_hit.mp3");
+  soundPlayerShot.volume = volume_;
+  soundPlayerFootstep = new Audio("/assets/footstep.mp3");
+  soundPlayerFootstep.volume = volume_;
+  soundRoombaCollide = new Audio("/assets/enemy_hit.mp3");
+  soundRoombaCollide.volume = volume_;
+  soundTurretShoot = new Audio("/assets/turret.mp3");
+  soundTurretShoot.volume = volume_;
+  soundDoorOpen = new Audio("/assets/door_open.mp3");
+  soundDoorOpen.volume = volume_;
+  soundDoorClose = new Audio("/assets/door_close.mp3");
+  soundDoorClose.volume = volume_;
+  soundSyringePickup = new Audio("/assets/hp_pickup.mp3");
+  soundSyringePickup.volume = volume_;
+  soundCorePickup = new Audio("/assets/key_pickup.mp3");
+  soundCorePickup.volume = volume_;
+  soundMantisShoot = new Audio("/assets/mantis.mp3");
+  soundMantisShoot.volume = volume_;
+  soundDroneShoot = new Audio("/assets/drone.mp3");
+  soundDroneShoot.volume = volume_;
+  soundBossShoot = new Audio("/assets/boss.mp3");
+  soundBossShoot.volume = volume_;
+  
+  /*soundFormats('mp3');
   soundBANGER = loadSound("/assets/HECU_stage.mp3");
   soundBANGER.setVolume(volume_);
   soundBANGER2 = loadSound("/assets/parasite.mp3");
@@ -150,7 +186,7 @@ function preload() {
   soundDroneShoot = loadSound("/assets/drone.mp3");
   soundDroneShoot.setVolume(volume_);
   soundBossShoot = loadSound("/assets/boss.mp3");
-  soundBossShoot.setVolume(volume_);
+  soundBossShoot.setVolume(volume_);*/
 }
 
 function setup() {
@@ -166,8 +202,8 @@ function setup() {
 
   //ABSOLUTE BANGER
   if(!play_music){
-    soundBANGER.setVolume(1.5*volume_);
-    soundBANGER.loop();
+    soundBANGER.volume = 1.5*volume_;
+    soundBANGER.play();
     play_music = true;
   }
 
@@ -202,9 +238,6 @@ function setup() {
   //draw players initial hearts and cores
   window.updatePlayerHearts();
   window.updatePlayerCores();
-
-  //ABSOLUTE BANGER
-  soundBANGER.loop();
 }
 
 function draw() {
